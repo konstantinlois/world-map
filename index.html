@@ -26,15 +26,27 @@
             width: 100%;
 						background: #9999FF;
         }
-				button {
-				  position:absolute;
+				#countries {
+					position:absolute;
 				  top:100px;
 					left: 10px;
 					z-index: 1000;
 				}
-				#countries {
+				#next-button {
+				  position:absolute;
+				  top:140px;
+					left: 10px;
+					z-index: 1000;
+				}
+				#state-name {
 					position:absolute;
-				  top:150px;
+				  top:170px;
+					left: 10px;
+					z-index: 1000;
+				}
+				#check-state-name-button {
+				  position:absolute;
+				  top:200px;
 					left: 10px;
 					z-index: 1000;
 				}
@@ -47,14 +59,30 @@
 
 <div id="map" style="width: 100%; height: 100%;"></div>
 
-<button onclick="togglePoints();">toggle some data!</button>
-
-<button onclick="next();">Next</button>
-
 <select name="countries" id="countries" onchange="countrySelected()">
 </select>
 
+<button id="next-button" onclick="next();">Next</button>
+
+<form onsubmit="checkStateName(event);">
+	<input id="state-name" type="text">
+	<button id="check-state-name-button" type="submit">Check</button>
+</form>
+
 <script type="text/javascript">
+
+	function checkStateName(event) {
+			event.preventDefault();
+			console.log(lastState.feature.properties.name);
+			console.log(document.getElementById("state-name").value);
+			if(lastState.feature.properties.name == document.getElementById("state-name").value){
+				alert('correct');
+				document.getElementById("state-name").value = "";
+				next();
+			}else{
+				alert('wrong');
+			}
+	}
 
 	var lastState;
 
@@ -80,12 +108,18 @@
 			});
 		});
 
-		const randomValue = values[parseInt(Math.random() * values.length)]
-		console.log(randomValue);
+		if(values.length > 0){
+			var randomValue = lastState;
+			do{
+				randomValue = values[parseInt(Math.random() * values.length)]
+			}while(values.length > 1 && randomValue == lastState)
 
-		lastState = randomValue;
+			console.log(randomValue);
 
-		highlightFeature(randomValue);
+			lastState = randomValue;
+
+			highlightFeature(randomValue);
+		}
 	}
 
 	var map = L.map('map').setView([37.8, -96], 4);
@@ -278,6 +312,8 @@
 		layerGroup.addLayer(layer);
 
 		map.fitBounds(layerGroup.getBounds());
+
+		next();
 	}
 
 	// General
