@@ -24,7 +24,20 @@
         html, body, #map {
             height: 100%;
             width: 100%;
+						background: #9999FF;
         }
+				button {
+				  position:absolute;
+				  top:100px;
+					left: 10px;
+					z-index: 1000;
+				}
+				#countries {
+					position:absolute;
+				  top:150px;
+					left: 10px;
+					z-index: 1000;
+				}
     </style>
 
 </head>
@@ -33,7 +46,47 @@
 
 
 <div id="map" style="width: 100%; height: 100%;"></div>
+
+<button onclick="togglePoints();">toggle some data!</button>
+
+<button onclick="next();">Next</button>
+
+<select name="countries" id="countries" onchange="countrySelected()">
+</select>
+
 <script type="text/javascript">
+
+	var lastState;
+
+	function next(){
+		if(lastState != undefined){
+			resetHighlight(lastState);
+		}
+
+		//console.log(states.features);
+		/*const values = Object.values(geojson._layers)
+
+		valuesFiltered = values.filter(function (a) {
+			var selectBox = document.getElementById("countries");
+	    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+    	return a.feature.properties.geonunit === selectedValue;
+		});*/
+
+		var values = [];
+
+		layerGroup.eachLayer(function (layer) {
+			layer.eachLayer(function(layer2) {
+  			values.push(layer2);
+			});
+		});
+
+		const randomValue = values[parseInt(Math.random() * values.length)]
+		console.log(randomValue);
+
+		lastState = randomValue;
+
+		highlightFeature(randomValue);
+	}
 
 	var map = L.map('map').setView([37.8, -96], 4);
 
@@ -46,8 +99,6 @@
 		zoomOffset: -1
 	}).addTo(map);*/
 
-
-	// control that shows state info on hover
 	var info = L.control();
 
 	info.onAdd = function (map) {
@@ -57,50 +108,81 @@
 	};
 
 	info.update = function (props) {
-		this._div.innerHTML = '<h4>US Population Density</h4>' +  (props ?
-			'<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
+		this._div.innerHTML = '<h4>Info</h4>' +  (props ?
+			'<b>' + props.name + '</b><br />' + props.geonunit
 			: 'Hover over a state');
 	};
 
 	info.addTo(map);
 
+	// Countries
 
-	// get color depending on population density value
-	function getColor(d) {
-		return d > 1000 ? '#800026' :
-				d > 500  ? '#BD0026' :
-				d > 200  ? '#E31A1C' :
-				d > 100  ? '#FC4E2A' :
-				d > 50   ? '#FD8D3C' :
-				d > 20   ? '#FEB24C' :
-				d > 10   ? '#FED976' :
-							'#FFEDA0';
+	function styleCountry(feature) {
+		return {
+			weight: 2,
+			opacity: 1,
+			color: '#003839',
+			//dashArray: '3',
+			fillOpacity: 1.0,
+			fillColor: '#6abf69'
+		};
 	}
+
+	function highlightFeatureCountries(e) {
+		var layer = e.target;
+
+		layer.setStyle({
+			weight: 4,
+			color: '#222222',
+			dashArray: '',
+			fillOpacity: 1.0
+		});
+
+		/*if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+			layer.bringToFront();
+		}*/
+
+		//info.update(layer.feature.properties);
+	}
+
+	function resetHighlightCountries(e) {
+		geojson2.resetStyle(e.target);
+		//info.update();
+	}
+
+	function zoomToFeatureCountries(e) {
+		map.fitBounds(e.target.getBounds(), {padding: [1000, 1000]});
+	}
+
+	function onEachFeatureCountries(feature, layer) {
+		layer.on({
+			//mouseover: highlightFeatureCountries,
+			//mouseout: resetHighlightCountries,
+			//click: zoomToFeature
+		});
+	}
+
+	var geojson2;
+	geojson2 = L.geoJson(countries, {
+    style: styleCountry,
+    onEachFeature: onEachFeatureCountries
+  }).addTo(map);
+
+	// States and Provinces
 
 	function style(feature) {
 		return {
-			weight: 2,
+			weight: 1,
 			opacity: 1,
 			color: 'white',
 			dashArray: '3',
-			fillOpacity: 1,
-			fillColor: '#9499b7'
+			//fillOpacity: 1,
+			//fillColor: '#6abf69'
 		};
 	}
 
-  function styleCountry(feature) {
-		return {
-			weight: 2,
-			opacity: 1,
-			color: '#6f74dd',
-			dashArray: '3',
-			fillOpacity: 0.0,
-			fillColor: '#FFEDA0'
-		};
-	}
-
-	function highlightFeature(e) {
-    layer = e.target;
+	function highlightFeature(layer) {
+    //layer = e.target;
 		layer.setStyle({
 			weight: 5,
 			color: '#666',
@@ -114,92 +196,127 @@
 		info.update(layer.feature.properties);
 	}
 
-  function highlightFeatureCountries(e) {
-		var layer = e.target;
+  function resetHighlight(layer) {
+		//geojson.resetStyle(e.target);
+		//geojson.resetStyle(layer);
+		//info.update();
 
-		layer.setStyle({
-			weight: 2,
-			color: '#222222',
-			dashArray: '',
-			fillOpacity: 0.0
+		layerGroup.eachLayer(function (l) {
+    	l.resetStyle(layer);
 		});
-
-		/*if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-			layer.bringToFront();
-		}*/
-
-		info.update(layer.feature.properties);
 	}
 
-	var geojson;
-  var geojson2;
+	function zoomToFeature(layer) {
+		//map.fitBounds(e.target.getBounds());
 
-  function resetHighlight(e) {
-		geojson.resetStyle(e.target);
-		info.update();
-	}
-
-	function zoomToFeature(e) {
-		map.fitBounds(e.target.getBounds());
+		map.fitBounds(layer.getBounds(), {padding: [300, 300]});
 	}
 
 	function onEachFeature(feature, layer) {
-		layer.on({
+		/*layer.on({
 			mouseover: highlightFeature,
 			mouseout: resetHighlight,
-			click: zoomToFeature
-		});
+			click: updateInfo
+		});*/
 	}
 
-  function resetHighlightCountries(e) {
-		geojson2.resetStyle(e.target);
-		info.update();
-	}
-
-	function zoomToFeatureCountries(e) {
-		map.fitBounds(e.target.getBounds());
-	}
-
-	function onEachFeatureCountries(feature, layer) {
-		layer.on({
-			mouseover: highlightFeatureCountries,
-			mouseout: resetHighlightCountries,
-			click: zoomToFeature
-		});
-	}
-
+	/*var geojson;
 	geojson = L.geoJson(states, {
-		style: style,
-		onEachFeature: onEachFeature
+		//style: style,
+		//onEachFeature: onEachFeature
+	});*/
+
+	/*var layersControl = L.control.layers().addTo(map);
+
+	var categories = new Set();
+
+	for (var i in states[0].features) {
+		var feature = states[0].features[i];
+		categories.add(feature.properties.geonunit);
+	}
+
+	categories.forEach(function(category) {
+      var layer = L.geoJSON(states[0].features, {
+				style: style,
+        filter: function(f){ return f.properties.geonunit === category }
+
+			}).addTo(map);
+      layersControl.addOverlay(layer, category);
+  });*/
+
+	var x = document.getElementById("countries");
+
+	var categories = new Set();
+
+	for (var i in states[0].features) {
+		var feature = states[0].features[i];
+
+		if(!categories.has(feature.properties.geonunit)){
+			var opt = document.createElement('option');
+			opt.value = feature.properties.geonunit;
+			opt.innerHTML = feature.properties.geonunit;
+			x.add(opt);
+
+			categories.add(feature.properties.geonunit);
+		}
+	}
+
+	var layerGroup = L.featureGroup([]).addTo(map);
+
+	function countrySelected(){
+		layerGroup.eachLayer(function(layer) { layerGroup.removeLayer(layer);});
+
+		var selectBox = document.getElementById("countries");
+    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+
+		var layer = L.geoJSON(states[0].features, {
+			style: style,
+			filter: function(f){ return f.properties.geonunit === selectedValue }
+
+		});
+
+		layerGroup.addLayer(layer);
+
+		map.fitBounds(layerGroup.getBounds());
+	}
+
+	// General
+	function updateInfo(e){
+		layer = e.target;
+		info.update(layer.feature.properties);
+		highlightFeature(e);
+	}
+
+	const myEventForwarder = new L.eventForwarder({
+	  // ref to leaflet map
+	  map: map,
+	  // events to forward
+	  events: {
+	    click: true,
+	    mousemove: true,
+	    mouseout: true
+	  },
+	  // throttle options for mousemove events (same as underscore.js)
+	  throttleMs: 100,
+	  throttleOptions: {
+	    leading: true,
+	    trailing: false
+	  }
 	});
 
-  geojson2 = L.geoJson(countries, {
-    style: styleCountry,
-    onEachFeature: onEachFeatureCountries
-  });
+	// enable event forwarding
+	myEventForwarder.enable();
 
-  var geoJSONlayerGroup = L.layerGroup([geojson, geojson2]).addTo(map);
+	window.toggle = false;
 
-const myEventForwarder = new L.eventForwarder({
-  // ref to leaflet map
-  map: map,
-  // events to forward
-  events: {
-    click: true,
-    mousemove: true,
-    mouseout: true
-  },
-  // throttle options for mousemove events (same as underscore.js)
-  throttleMs: 100,
-  throttleOptions: {
-    leading: true,
-    trailing: false
-  }
-});
-
-// enable event forwarding
-myEventForwarder.enable();
-
+	function togglePoints() {
+	  if(!toggle) {
+	    map.removeLayer(geojson);
+	  } else {
+	    map.addLayer(geojson);
+	  }
+	  toggle = !toggle;
+	}
 
 	map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
 
