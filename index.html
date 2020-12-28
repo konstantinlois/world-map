@@ -13,8 +13,8 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <script src="./leaflet-event-forwarder.js"></script>
 
-    <script src="states_provinces.json"></script>
-    <script src="countries.json"></script>
+		<script src="countries.json"></script>
+    <script src="states.json"></script>
 		<script src="cities.json"></script>
 
     <style>
@@ -57,25 +57,25 @@
 
 <div id="quiz">
 
-<select name="countries" id="countries" onchange="countrySelected()">
+<!--<select name="countries" id="countries" onchange="countrySelected()">
 </select>
-<br>
+<br>-->
 
 <button id="next-button" onclick="nextCountry();">Next Country</button>
 <form onsubmit="checkCountryName(event);">
-	<input id="country-name" type="text">
+	<input id="country-name" type="text" autocomplete="off">
 	<button id="check-country-name-button" type="submit">Check</button>
 </form>
 
 <button id="next-button" onclick="nextState();">Next State</button>
 <form onsubmit="checkStateName(event);">
-	<input id="state-name" type="text">
+	<input id="state-name" type="text" autocomplete="off">
 	<button id="check-state-name-button" type="submit">Check</button>
 </form>
 
 <button id="next-button" onclick="nextCity();">Next City</button>
 <form onsubmit="checkCityName(event);">
-	<input id="city-name" type="text">
+	<input id="city-name" type="text" autocomplete="off">
 	<button id="check-city-name-button" type="submit">Check</button>
 </form>
 
@@ -142,15 +142,17 @@
 	}
 
 	function onEachCountry(feature, layer) {
-		layer.on({
+		/*layer.on({
 			//mouseover: highlightFeatureCountries,
 			//mouseout: resetHighlightCountries,
 			click: selectCountry
+		});*/
+		layer.on('click', function(event){
+			selectCountry(event.target);
 		});
 	}
 
-	function selectCountry(e){
-		var layer = e.target;
+	function selectCountry(layer){
 		if(currentCountry == layer){
 			return;
 		}else{
@@ -187,11 +189,9 @@
 	}
 
 	function resetHighlightCountry(layer) {
-		layerCountries.resetStyle(layer);
-	}
-
-	function zoomToCountry(e) {
-		map.fitBounds(e.target.getBounds(), {padding: [50, 50]});
+		layerGroupCountries.eachLayer(function (l) {
+    	l.resetStyle(layer);
+		});
 	}
 
 	// States and Provinces
@@ -218,18 +218,15 @@
 	}
 
 	function onEachState(feature, layer) {
-		layer.on({
-			//mouseover: highlightFeature,
-			//mouseout: resetHighlight,
-			click: selectState
+		layer.on('click', function(event){
+			selectState(event.target);
 		});
 	}
 
-	function selectState(e){
+	function selectState(layer){
 		if(currentState != undefined){
 			resetHighlightState(currentState);
 		}
-		var layer = e.target;
 		currentState = layer;
 		highlightState(layer);
 		updateDetails();
@@ -253,10 +250,6 @@
 		layerGroupStates.eachLayer(function (l) {
     	l.resetStyle(layer);
 		});
-	}
-
-	function zoomToState(layer) {
-		map.fitBounds(layer.getBounds(), {padding: [300, 300]});
 	}
 
 	// Cities
@@ -284,16 +277,15 @@
 	}
 
 	function onEachCity(feature, layer) {
-		layer.on({
-			click: selectCity
+		layer.on('click', function(event){
+			selectCity(event.target);
 		});
 	}
 
-	function selectCity(e){
+	function selectCity(layer){
 		if(currentCity != undefined){
 			resetHighlightCity(currentCity);
 		}
-		var layer = e.target;
 		currentCity = layer;
 		highlightCity(layer);
 		updateDetails();
@@ -340,7 +332,7 @@
 
 	// Country Selection
 
-	var x = document.getElementById("countries");
+	/*var x = document.getElementById("countries");
 
 	var countries = new Set();
 
@@ -355,7 +347,7 @@
 
 			countries.add(feature.properties.geonunit);
 		}
-	}
+	}*/
 
 	// Quiz
 
@@ -365,7 +357,7 @@
 			event.preventDefault();
 			if(currentCountry.feature.properties.NAME_EN == document.getElementById("country-name").value){
 				alert('correct');
-				document.getElementById("state-name").value = "";
+				document.getElementById("country-name").value = "";
 				nextCountry();
 			}else{
 				alert('wrong');
@@ -378,21 +370,23 @@
 		}
 
 		var values = [];
-		layerGroupStates.eachLayer(function (layer) {
+		layerGroupCountries.eachLayer(function (layer) {
 			layer.eachLayer(function(layer2) {
   			values.push(layer2);
 			});
 		});
 
 		if(values.length > 0){
-			var randomValue = currentState;
+			var randomValue = currentCountry;
 			do{
 				randomValue = values[parseInt(Math.random() * values.length)]
-			}while(values.length > 1 && randomValue == currentState)
+			}while(values.length > 1 && randomValue == currentCountry)
 
-			currentState = randomValue;
-			highlightState(randomValue);
-			updateDetails();
+			/*currentCountry = randomValue;
+			highlightCountry(randomValue);
+			updateDetails();*/
+
+			selectCountry(randomValue);
 		}
 	}
 
@@ -427,9 +421,11 @@
 				randomValue = values[parseInt(Math.random() * values.length)]
 			}while(values.length > 1 && randomValue == currentState)
 
-			currentState = randomValue;
+			/*currentState = randomValue;
 			highlightState(randomValue);
-			updateDetails();
+			updateDetails();*/
+
+			selectState(randomValue);
 		}
 	}
 
@@ -464,9 +460,11 @@
 				randomValue = values[parseInt(Math.random() * values.length)]
 			}while(values.length > 1 && randomValue == currentCity)
 
-			currentCity = randomValue;
+			/*currentCity = randomValue;
 			highlightCity(randomValue);
-			updateDetails();
+			updateDetails();*/
+
+			selectCity(randomValue);
 		}
 	}
 
