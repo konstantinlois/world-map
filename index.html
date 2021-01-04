@@ -53,8 +53,8 @@
 			#details {
 				position:absolute;
 				width: 250px;
-				top:400px;
-				left: 10px;
+				top:100px;
+				right: 10px;
 				z-index: 1000;
 				background: #fff;
 				padding: 20px;
@@ -64,6 +64,12 @@
 
 			.details-heading {
 				line-height: 0.1;
+			}
+
+			.container { border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll; }
+
+			.container label {
+				display: block;
 			}
 
 	</style>
@@ -80,10 +86,17 @@
 <div id="quiz-setup">
 	<h2>Setup</h2>
 	<h4>Countries</h4>
-	<select name="country-select" id="country-select" onchange="selectCountrySelect()">
+	<select multiple id="country-select" onchange="selectCountrySelect()">
 		<option value="">Select a country</country>
 	</select>
 	<br></br>
+	<div class="container">
+    <label><input type="checkbox" name="quiz-setup-question-type" value="country-name"/> Country Name</label>
+    <label><input type="checkbox" name="quiz-setup-question-type" value="country-population"/> Country Population</label>
+		<label><input type="checkbox" name="quiz-setup-question-type" value="state-name"/> State Name</label>
+		<label><input type="checkbox" name="quiz-setup-question-type" value="city-name"/> City Name</label>
+	</div>
+	<br>
 	<button onclick="startQuiz()">Start</button>
 </div>
 
@@ -95,24 +108,6 @@
 		<button id="quiz-panel-submit-button" type="submit">Submit</button>
 	</form>
 	<button onclick="finishQuiz()">Quit</button>
-
-	<!--<button id="next-button" onclick="nextCountry();">Next Country</button>
-	<form onsubmit="checkCountryName(event);">
-		<input id="country-name" type="text" autocomplete="off">
-		<button id="check-country-name-button" type="submit">Check</button>
-	</form>
-
-	<button id="next-button" onclick="nextState();">Next State</button>
-	<form onsubmit="checkStateName(event);">
-		<input id="state-name" type="text" autocomplete="off">
-		<button id="check-state-name-button" type="submit">Check</button>
-	</form>
-
-	<button id="next-button" onclick="nextCity();">Next City</button>
-	<form onsubmit="checkCityName(event);">
-		<input id="city-name" type="text" autocomplete="off">
-		<button id="check-city-name-button" type="submit">Check</button>
-	</form>-->
 </div>
 
 </div>
@@ -252,7 +247,11 @@
 		layerGroupCountries.eachLayer(function(layer){
 			layer.eachLayer(function(countryLayer){
 				if(countryLayer.feature.properties.NAME_EN == countrySelect.value){
+					removeStatesOfCurrentCountry();
+					removeCitiesOfCurrentCountry();
 					selectCountry(countryLayer);
+					showStatesOfCurrentCountry();
+					showCitiesOfCurrentCountry();
 				}
 			});
 		});
@@ -447,6 +446,7 @@
 	// Quiz
 
 	var quizCountries;
+	var quizQuestionTypes;
 
 	function startQuiz(){
 		if(document.getElementById("country-select").value == ""){
@@ -461,6 +461,13 @@
 		quizCountries = [];
 		quizCountries.push(currentCountry);
 
+		var checkedQuestionTypeCheckBoxes = document.querySelectorAll('input[name=quiz-setup-question-type]:checked');
+		quizQuestionTypes = [];
+
+		for (var i = 0; i < checkedQuestionTypeCheckBoxes.length; i++) {
+  		quizQuestionTypes.push(checkedQuestionTypeCheckBoxes[i].value)
+		}
+
 		generateQuestions();
 		nextQuestion();
 	}
@@ -470,35 +477,43 @@
 	function generateQuestions(){
 		tasks = [];
 		quizCountries.forEach((quizCountry, i) => {
-			var countryNameTask = {
-				"type": "country-name",
-				"country": quizCountry
+			if(quizQuestionTypes.includes("country-name")){
+				var countryNameTask = {
+					"type": "country-name",
+					"country": quizCountry
+				}
+				tasks.push(countryNameTask);
 			}
-			tasks.push(countryNameTask);
-			var countryPopulationTask = {
-				"type": "country-population",
-				"country": quizCountry
+			if(quizQuestionTypes.includes("country-population")){
+				var countryPopulationTask = {
+					"type": "country-population",
+					"country": quizCountry
+				}
+				tasks.push(countryPopulationTask);
 			}
-			tasks.push(countryPopulationTask);
 			layerGroupStates.eachLayer(function(layerStates){
 				layerStates.eachLayer(function(layerState){
 					if(quizCountry.feature.properties.NAME_EN == layerState.feature.properties.geonunit){
-						var stateNameTask = {
-							"type": "state-name",
-							"country": quizCountry,
-							"state": layerState
+						if(quizQuestionTypes.includes("state-name")){
+							var stateNameTask = {
+								"type": "state-name",
+								"country": quizCountry,
+								"state": layerState
+							}
+							tasks.push(stateNameTask);
 						}
-						tasks.push(stateNameTask);
 						layerGroupCities.eachLayer(function(layerCities){
 							layerCities.eachLayer(function(layerCity){
 								if(layerCity.feature.properties.ADM1NAME == layerState.feature.properties.name){
-									var cityNameTask = {
-										"type": "city-name",
-										"country": quizCountry,
-										"state": layerState,
-										"city": layerCity
+									if(quizQuestionTypes.includes("city-name")){
+										var cityNameTask = {
+											"type": "city-name",
+											"country": quizCountry,
+											"state": layerState,
+											"city": layerCity
+										}
+										tasks.push(cityNameTask);
 									}
-									tasks.push(cityNameTask);
 								}
 							});
 						});
