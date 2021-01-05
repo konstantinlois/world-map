@@ -30,24 +30,47 @@
 				color: #ffffff;
 			}
 
-			#quiz {
+			#menu-button {
+				position: absolute;
+				top: 55px;
+				left: 12px;
+				z-index: 1000;
+				font-size: 23px;
+				background: #fff;
+				padding: 0px 5px 2px 5px;
+				border-radius: 2px;
+				box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			}
+
+			#menu {
 				position:absolute;
-				top:100px;
+				top:130px;
 				left: 10px;
 				z-index: 1000;
 				background: #fff;
 				padding: 20px 20px 20px 20px;
 				border-radius: 5px;
 				box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+				display: none;
 			}
 
 			#quiz-setup {
-				display: block;
+				display: none;
 			}
 
 			#quiz-panel {
-				width: 250px;
+				position: absolute;
+				bottom: 10px;
+				max-width: 400px;
+				left: 0;
+				right: 0;
+				margin: 0 auto;
+				z-index: 1000;
+				background: #fff;
 				display: none;
+				padding: 20px 20px 20px 20px;
+				border-radius: 5px;
+				box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 			}
 
 			#details {
@@ -75,14 +98,7 @@
 			}
 
 			#controls {
-				position:absolute;
-				top:350px;
-				right: 10px;
-				z-index: 1000;
-				background: #fff;
-				padding: 20px;
-				border-radius: 5px;
-				box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+				display: block;
 			}
 
 			#controls-countries {
@@ -101,6 +117,72 @@
 				display: block;
 			}
 
+			/* Toggle Button */
+
+			/* The switch - the box around the slider */
+			.switch {
+				position: relative;
+				display: inline-block;
+				width: 60px;
+				height: 34px;
+				z-index: 1000;
+			}
+
+			/* Hide default HTML checkbox */
+			.switch input {
+				opacity: 0;
+				width: 0;
+				height: 0;
+			}
+
+			/* The slider */
+			.slider {
+				position: absolute;
+				cursor: pointer;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: #ccc;
+				-webkit-transition: .4s;
+				transition: .4s;
+			}
+
+			.slider:before {
+				position: absolute;
+				content: "";
+				height: 26px;
+				width: 26px;
+				left: 4px;
+				bottom: 4px;
+				background-color: white;
+				-webkit-transition: .4s;
+				transition: .4s;
+			}
+
+			input:checked + .slider {
+				background-color: #2196F3;
+			}
+
+			input:focus + .slider {
+				box-shadow: 0 0 1px #2196F3;
+			}
+
+			input:checked + .slider:before {
+				-webkit-transform: translateX(26px);
+				-ms-transform: translateX(26px);
+				transform: translateX(26px);
+			}
+
+			/* Rounded sliders */
+			.slider.round {
+				border-radius: 34px;
+			}
+
+			.slider.round:before {
+				border-radius: 50%;
+			}
+
 	</style>
 
 </head>
@@ -110,29 +192,34 @@
 
 <div id="map" style="width: 100%; height: 100%;"></div>
 
-<div id="controls">
-	<h2>Controls</h2>
-	<h4>Countries</h4>
-	<div id="controls-countries">
-	</div>
-	<br>
-	<div id="controls-info-types">
-		<label><input type="checkbox" id="controls-info-states" value="controls-info-states" onclick="toggleStates()"/> States</label>
-		<label><input type="checkbox" id="controls-info-cities" value="controls-info-cities" onclick="toggleCities()"/> Cities</label>
-	</div>
-</div>
+<p id="menu-button" onclick="toggleMenu()">☰</p>
 
-<div id="quiz">
+<div id="menu">
+
+	<label class="switch">
+		<input id="checkbox-controls-quiz" type="checkbox" onclick="toggleControlsQuiz()">
+		<span class="slider round"></span>
+	</label>
+
+	<div id="controls">
+		<h2>Controls</h2>
+		<h4>Countries</h4>
+		<div id="controls-countries">
+		</div>
+		<br>
+		<div id="controls-info-types">
+			<label><input type="checkbox" id="controls-info-states" value="controls-info-states" onclick="toggleStates()"/> States</label>
+			<label><input type="checkbox" id="controls-info-cities" value="controls-info-cities" onclick="toggleCities()"/> Cities</label>
+		</div>
+	</div>
 
 	<div id="quiz-setup">
-		<h2>Setup</h2>
-		<h4>Countries</h4>
-		<div id="quiz-setup-countries">
-		</div>
-		<br></br>
+		<h2>Quiz</h2>
+		<h3>Setup</h3>
+		<h4>Question Types</h4>
 		<div id="quiz-setup-question-types">
-	    <label><input type="checkbox" name="quiz-setup-question-type" value="country-name"/> Country Name</label>
-	    <label><input type="checkbox" name="quiz-setup-question-type" value="country-population"/> Country Population</label>
+			<label><input type="checkbox" name="quiz-setup-question-type" value="country-name"/> Country Name</label>
+			<label><input type="checkbox" name="quiz-setup-question-type" value="country-population"/> Country Population</label>
 			<label><input type="checkbox" id="quiz-setup-question-type-states" name="quiz-setup-question-type" value="state-name" /> State Name</label>
 			<label><input type="checkbox" id="quiz-setup-question-type-cities" name="quiz-setup-question-type" value="city-name" /> City Name</label>
 		</div>
@@ -140,16 +227,15 @@
 		<button onclick="startQuiz()">Start</button>
 	</div>
 
-	<div id="quiz-panel">
-		<h2>Question</h2>
-		<h4 id="quiz-panel-question"></h4>
-		<form onsubmit="checkAnswer(event)">
-			<input id="quiz-panel-input" type="text" autocomplete="off">
-			<button id="quiz-panel-submit-button" type="submit">Submit</button>
-		</form>
-		<button onclick="finishQuiz()">Quit</button>
-	</div>
+</div>
 
+<div id="quiz-panel">
+	<h4 id="quiz-panel-question"></h4>
+	<form onsubmit="checkAnswer(event)">
+		<input id="quiz-panel-input" type="text" autocomplete="off">
+		<button id="quiz-panel-submit-button" type="submit">Submit</button>
+	</form>
+	<button onclick="finishQuiz()">Quit</button>
 </div>
 
 <div id="details">
@@ -174,6 +260,29 @@
 	var layerGroupCities = L.featureGroup([]).addTo(map);
 
 	showCountries();
+
+	var menuOpen = false;
+	function toggleMenu(){
+		if(menuOpen){
+			document.getElementById('menu').style.display = "none";
+			menuOpen = false;
+		}else{
+			document.getElementById('menu').style.display = "block";
+			menuOpen = true;
+		}
+	}
+
+	function toggleControlsQuiz(){
+		var controls = document.getElementById('controls');
+		var quizSetup = document.getElementById('quiz-setup');
+		if(document.getElementById('checkbox-controls-quiz').checked){
+			controls.style.display = "none";
+			quizSetup.style.display = "block";
+		}else{
+			controls.style.display = "block";
+			quizSetup.style.display = "none";
+		}
+	}
 
 	// Details
 
@@ -542,7 +651,8 @@
 
 		setUpQuizVisuals();
 
-		document.getElementById('quiz-setup').style.display = "none";
+		document.getElementById('menu-button').style.display = "none";
+		document.getElementById('menu').style.display = "none";
 		document.getElementById('quiz-panel').style.display = "block";
 
 		var checkedQuestionTypeCheckBoxes = document.querySelectorAll('input[name=quiz-setup-question-type]:checked');
@@ -713,7 +823,8 @@
 		tearDownQuizVisuals();
 
 		document.getElementById('quiz-panel').style.display = "none";
-		document.getElementById('quiz-setup').style.display = "block";
+		document.getElementById('menu-button').style.display = "block";
+		document.getElementById('menu').style.display = "block";
 		quizMode = false;
 	}
 
