@@ -66,19 +66,38 @@
 				line-height: 0.1;
 			}
 
-			#quiz-setup-countries {
-				border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll;
-			}
-
-			#quiz-setup-countries label {
-				display: block;
-			}
-
 			#quiz-setup-question-types {
 				border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll;
 			}
 
 			#quiz-setup-question-types label {
+				display: block;
+			}
+
+			#controls {
+				position:absolute;
+				top:350px;
+				right: 10px;
+				z-index: 1000;
+				background: #fff;
+				padding: 20px;
+				border-radius: 5px;
+				box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			}
+
+			#controls-countries {
+				border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll;
+			}
+
+			#controls-countries label {
+				display: block;
+			}
+
+			#controls-info-types {
+				border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll;
+			}
+
+			#controls-info-types label {
 				display: block;
 			}
 
@@ -91,33 +110,45 @@
 
 <div id="map" style="width: 100%; height: 100%;"></div>
 
-<div id="quiz">
-
-<div id="quiz-setup">
-	<h2>Setup</h2>
+<div id="controls">
+	<h2>Controls</h2>
 	<h4>Countries</h4>
-	<div id="quiz-setup-countries">
-	</div>
-	<br></br>
-	<div id="quiz-setup-question-types">
-    <label><input type="checkbox" name="quiz-setup-question-type" value="country-name"/> Country Name</label>
-    <label><input type="checkbox" name="quiz-setup-question-type" value="country-population"/> Country Population</label>
-		<label><input type="checkbox" name="quiz-setup-question-type" value="state-name"/> State Name</label>
-		<label><input type="checkbox" name="quiz-setup-question-type" value="city-name"/> City Name</label>
+	<div id="controls-countries">
 	</div>
 	<br>
-	<button onclick="startQuiz()">Start</button>
+	<div id="controls-info-types">
+		<label><input type="checkbox" id="controls-info-states" value="controls-info-states" onclick="toggleStates()"/> States</label>
+		<label><input type="checkbox" id="controls-info-cities" value="controls-info-cities" onclick="toggleCities()"/> Cities</label>
+	</div>
 </div>
 
-<div id="quiz-panel">
-	<h2>Question</h2>
-	<h4 id="quiz-panel-question"></h4>
-	<form onsubmit="checkAnswer(event)">
-		<input id="quiz-panel-input" type="text" autocomplete="off">
-		<button id="quiz-panel-submit-button" type="submit">Submit</button>
-	</form>
-	<button onclick="finishQuiz()">Quit</button>
-</div>
+<div id="quiz">
+
+	<div id="quiz-setup">
+		<h2>Setup</h2>
+		<h4>Countries</h4>
+		<div id="quiz-setup-countries">
+		</div>
+		<br></br>
+		<div id="quiz-setup-question-types">
+	    <label><input type="checkbox" name="quiz-setup-question-type" value="country-name"/> Country Name</label>
+	    <label><input type="checkbox" name="quiz-setup-question-type" value="country-population"/> Country Population</label>
+			<label><input type="checkbox" id="quiz-setup-question-type-states" name="quiz-setup-question-type" value="state-name" /> State Name</label>
+			<label><input type="checkbox" id="quiz-setup-question-type-cities" name="quiz-setup-question-type" value="city-name" /> City Name</label>
+		</div>
+		<br>
+		<button onclick="startQuiz()">Start</button>
+	</div>
+
+	<div id="quiz-panel">
+		<h2>Question</h2>
+		<h4 id="quiz-panel-question"></h4>
+		<form onsubmit="checkAnswer(event)">
+			<input id="quiz-panel-input" type="text" autocomplete="off">
+			<button id="quiz-panel-submit-button" type="submit">Submit</button>
+		</form>
+		<button onclick="finishQuiz()">Quit</button>
+	</div>
 
 </div>
 
@@ -152,9 +183,6 @@
 	var currentState;
 	var currentCity;
 
-	// Quiz
-	var quizMode = false;
-
 	function updateDetails(){
 		var detailsCountry = document.getElementById('details-country');
 		detailsCountry.innerHTML = currentCountry != undefined ? currentCountry.feature.properties.NAME_EN + " (" + numberWithCommas(currentCountry.feature.properties.POP_EST) + ")" : 'none';
@@ -174,44 +202,19 @@
 		createCountryCheckboxes();
 
 		var layerCountries = L.geoJSON(countries[0].features, {
-			style: styleCountry,
-			//filter: function(f){ return f.properties.geonunit === countryLayer.feature.properties.NAME_EN },
+			style: function(){
+				return {
+					weight: 2,
+					opacity: 1,
+					color: '#003839',
+					//dashArray: '3',
+					fillOpacity: 0.0,
+					//fillColor: '#6abf69'
+				};
+			},
 			onEachFeature: onEachCountry
 		});
 		layerGroupCountries.addLayer(layerCountries);
-	}
-
-	function createCountryCheckboxes(){
-		var quizSetupCountries = document.getElementById("quiz-setup-countries");
-
-		for (i = 0; i < countries[0].features.length; i++){
-			var feature = countries[0].features[i];
-
-			var checkbox = document.createElement('input');
-			checkbox.type = "checkbox";
-			checkbox.name = "quiz-setup-country";
-			checkbox.value = feature.properties.NAME_EN;
-			checkbox.id = "checkbox-" + feature.properties.NAME_EN;
-			checkbox.onclick = selectCountryCheckbox;
-
-			var label = document.createElement('label');
-			label.htmlFor = "checkbox-" + feature.properties.NAME_EN;
-			label.appendChild(checkbox);
-			label.appendChild(document.createTextNode(feature.properties.NAME_EN));
-
-			quizSetupCountries.appendChild(label);
-		}
-	}
-
-	function styleCountry(feature) {
-		return {
-			weight: 2,
-			opacity: 1,
-			color: '#003839',
-			//dashArray: '3',
-			fillOpacity: 0.0,
-			//fillColor: '#6abf69'
-		};
 	}
 
 	function onEachCountry(feature, layer) {
@@ -223,31 +226,51 @@
 		layer.on('click', function(event){
 			if(!quizMode){
 				document.getElementById('checkbox-' + event.target.feature.properties.NAME_EN).checked = true;
+				addCountryToCurrentCountries(event.target);
 				selectCountry(event.target);
-				showStatesOfCountry(event.target);
-				showCitiesOfCountry(event.target);
 			}
 		});
+	}
+
+	function addCountryToCurrentCountries(layerCountry){
+		if(!layerGroupCountriesSelected.hasLayer(layerCountry)){
+			layerGroupCountriesSelected.addLayer(layerCountry);
+			if(document.getElementById('controls-info-states').checked){
+				showStatesOfCountry(layerCountry);
+			}
+			if(document.getElementById('controls-info-cities').checked){
+				showCitiesOfCountry(layerCountry);
+			}
+			highlightCurrentCountry(layerCountry);
+		}
+	}
+
+	function removeCountryFromCurrentCountries(layerCountry){
+		layerGroupCountriesSelected.removeLayer(layerCountry);
+		if(document.getElementById('controls-info-states').checked){
+			removeStatesOfCountry(layerCountry);
+		}
+		if(document.getElementById('controls-info-cities').checked){
+			removeCitiesOfCountry(layerCountry);
+		}
+		resetHighlightCurrentCountry(layerCountry);
 	}
 
 	function selectCountry(layer){
 		if(currentCountry == layer){
 			return;
-		}else{
-			unselectState(currentState);
-			unselectCity(currentCity);
-			currentState = undefined;
-			currentCity = undefined;
 		}
 		if(currentCountry != undefined){
 			resetHighlightCountry(currentCountry);
 		}
 		currentCountry = layer;
-		if(!layerGroupCountriesSelected.hasLayer(layer)){
-			layerGroupCountriesSelected.addLayer(layer);
-		}
 		highlightCountry(layer);
 		updateDetails();
+	}
+
+	function unselectCountry(country){
+		resetHighlightCountry(country);
+		currentCountry = undefined;
 	}
 
 	function zoomToBiggestSelectedArea(){
@@ -258,46 +281,76 @@
 		}
 	}
 
-	function selectCountryCheckbox(event){
-		var countryName = event.target.value;
-		layerGroupCountries.eachLayer(function(layer){
-			layer.eachLayer(function(countryLayer){
-				if(countryLayer.feature.properties.NAME_EN == countryName){
-					//removeStatesOfCurrentCountry();
-					//removeCitiesOfCurrentCountry();
-					if(event.target.checked){
-						selectCountry(countryLayer);
-						showStatesOfCountry(countryLayer);
-						showCitiesOfCountry(countryLayer);
-					}else{
-						unselectCountry(countryLayer);
-						removeStatesOfCountry(countryLayer);
-						removeCitiesOfCountry(countryLayer);
-					}
-				}
-			});
-		});
-	}
-
 	function highlightCountry(layer) {
 		layer.setStyle({
 			weight: 4,
-			color: '#222222',
+			color: '#81d4fa',
 			dashArray: '',
 			fillOpacity: 0.0
 		});
-	}
-
-	function unselectCountry(country){
-		resetHighlightCountry(country);
-		currentCountry = undefined;
-		layerGroupCountriesSelected.removeLayer(country);
-		console.log(layerGroupCountries);
+		layer.bringToFront();
 	}
 
 	function resetHighlightCountry(layer) {
 		layerGroupCountries.eachLayer(function (l) {
     	l.resetStyle(layer);
+		});
+		if(layerGroupCountriesSelected.hasLayer(layer)){
+			highlightCurrentCountry(layer);
+		}
+	}
+
+	function highlightCurrentCountry(layer) {
+		layer.setStyle({
+			weight: 4,
+			color: '#66bb6a',
+			dashArray: '',
+			fillOpacity: 0.0
+		});
+	}
+
+	function resetHighlightCurrentCountry(layer) {
+		layerGroupCountries.eachLayer(function (l) {
+    	l.resetStyle(layer);
+		});
+	}
+
+	function createCountryCheckboxes(){
+		var quizSetupCountries = document.getElementById("controls-countries");
+
+		for (i = 0; i < countries[0].features.length; i++){
+			var feature = countries[0].features[i];
+
+			var checkbox = document.createElement('input');
+			checkbox.type = "checkbox";
+			checkbox.name = "controls-setup-country";
+			checkbox.value = feature.properties.NAME_EN;
+			checkbox.id = "checkbox-" + feature.properties.NAME_EN;
+			checkbox.onclick = toggleCountryCheckbox;
+
+			var label = document.createElement('label');
+			label.htmlFor = "checkbox-" + feature.properties.NAME_EN;
+			label.appendChild(checkbox);
+			label.appendChild(document.createTextNode(feature.properties.NAME_EN));
+
+			quizSetupCountries.appendChild(label);
+		}
+	}
+
+	function toggleCountryCheckbox(event){
+		var countryName = event.target.value;
+		layerGroupCountries.eachLayer(function(layerCountries){
+			layerCountries.eachLayer(function(layerCountry){
+				if(layerCountry.feature.properties.NAME_EN == countryName){
+					if(event.target.checked){
+						addCountryToCurrentCountries(layerCountry);
+						selectCountry(layerCountry);
+					}else{
+						removeCountryFromCurrentCountries(layerCountry);
+						unselectCountry(layerCountry);
+					}
+				}
+			});
 		});
 	}
 
@@ -305,7 +358,16 @@
 
 	function showStatesOfCountry(country){
 		var layerStates = L.geoJSON(states[0].features, {
-			style: styleState,
+			style: function(){
+				return {
+					weight: 1,
+					//opacity: 1,
+					color: '#c5e1a5',
+					dashArray: '3',
+					fillOpacity: 0.0,
+					//fillColor: '#6abf69'
+				};
+			},
 			filter: function(f){
 				return f.properties.geonunit === country.feature.properties.NAME_EN;
 			},
@@ -321,17 +383,6 @@
 				layerGroupStates.removeLayer(layerStates);
 			}
 		});
-	}
-
-	function styleState(feature) {
-		return {
-			weight: 1,
-			//opacity: 1,
-			color: 'white',
-			dashArray: '3',
-			fillOpacity: 0.0,
-			//fillColor: '#6abf69'
-		};
 	}
 
 	function onEachState(feature, layer) {
@@ -351,18 +402,18 @@
 		updateDetails();
 	}
 
-	function highlightState(layer) {
-		layer.setStyle({
-			weight: 5,
-			color: '#81d4fa',
-			dashArray: '',
-			fillOpacity: 0.0
-		});
-	}
-
 	function unselectState(state){
 		resetHighlightState(state);
 		currentState = undefined;
+	}
+
+	function highlightState(layer) {
+		layer.setStyle({
+			weight: 5,
+			color: '#e0f2f1',
+			dashArray: '',
+			fillOpacity: 0.0
+		});
 	}
 
   function resetHighlightState(layer) {
@@ -371,13 +422,25 @@
 		});
 	}
 
+	function toggleStates(){
+		if(document.getElementById('controls-info-states').checked){
+			layerGroupCountriesSelected.eachLayer(function(layerCountrySelected){
+				showStatesOfCountry(layerCountrySelected);
+			});
+		}else{
+			layerGroupCountriesSelected.eachLayer(function(layerCountrySelected){
+				removeStatesOfCountry(layerCountrySelected);
+			});
+		}
+	}
+
 	// Cities
 
 	function showCitiesOfCountry(countryLayer){
 		var layerCities = L.geoJSON(cities[0].features, {
 			pointToLayer: function(feature, latlng) {
 				return new L.marker(latlng, {
-					icon: getCityIcon(feature),
+					icon: getCityIcon(),
 				});
       },
 			onEachFeature: onEachCity,
@@ -397,12 +460,19 @@
 		});
 	}
 
+	function getCityIcon(){
+		return new L.Icon.Default({
+			iconSize: [25, 41],
+			iconAnchor:   [12, 41]
+		})
+	}
+
 	function onEachCity(feature, layer) {
-		layer.on('click', function(event){
+		/*layer.on('click', function(event){
 			if(!quizMode){
 				selectCity(event.target);
 			}
-		});
+		});*/
 	}
 
 	function selectCity(layer){
@@ -422,16 +492,12 @@
 		updateDetails();
 	}
 
-	function highlightCity(layer) {
-    //layer = e.target;
-		/*layer.setStyle({
-			weight: 8,
-			radius: 1,
-			color: '#81d4fa',
-			dashArray: '',
-			fillOpacity: 0.0
-		});*/
+	function unselectCity(city){
+		resetHighlightCity(city);
+		currentCity = undefined;
+	}
 
+	function highlightCity(layer) {
 		layer.setIcon(new L.Icon({
 		  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
 		  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -440,34 +506,32 @@
 		  popupAnchor: [1, -34],
 		  shadowSize: [41, 41]
 		}));
-
-		/*if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-			layer.bringToFront();
-		}*/
-	}
-
-	function unselectCity(city){
-		resetHighlightCity(city);
-		currentCity = undefined;
 	}
 
   function resetHighlightCity(layer) {
 		if(layer != undefined){
-			layer.setIcon(getCityIcon(layer.feature));
+			layer.setIcon(getCityIcon());
 		}
 	}
 
-	function getCityIcon(feature){
-		return new L.Icon.Default({
-			iconSize: [25, 41],
-			iconAnchor:   [12, 41]
-		})
+	function toggleCities(){
+		if(document.getElementById('controls-info-cities').checked){
+			layerGroupCountriesSelected.eachLayer(function(layerCountrySelected){
+				showCitiesOfCountry(layerCountrySelected);
+			});
+		}else{
+			layerGroupCountriesSelected.eachLayer(function(layerCountrySelected){
+				removeCitiesOfCountry(layerCountrySelected);
+			});
+		}
 	}
 
 	// Quiz
 
-	var quizCountries;
+	var quizMode = false;
 	var quizQuestionTypes;
+	var tasks;
+	var currentTask;
 
 	function startQuiz(){
 		if(layerGroupCountriesSelected.getLayers().length == 0){
@@ -476,12 +540,13 @@
 		}
 		quizMode = true;
 
+		setUpQuizVisuals();
+
 		document.getElementById('quiz-setup').style.display = "none";
 		document.getElementById('quiz-panel').style.display = "block";
 
 		var checkedQuestionTypeCheckBoxes = document.querySelectorAll('input[name=quiz-setup-question-type]:checked');
 		quizQuestionTypes = [];
-
 		for (var i = 0; i < checkedQuestionTypeCheckBoxes.length; i++) {
   		quizQuestionTypes.push(checkedQuestionTypeCheckBoxes[i].value);
 		}
@@ -490,7 +555,36 @@
 		nextQuestion();
 	}
 
-	var tasks;
+	function setUpQuizVisuals(){
+		//resetHighlightCountry(currentCountry);
+		layerGroupCountriesSelected.eachLayer(function(layerCountrySelected){
+			if(document.getElementById('quiz-setup-question-type-states').checked){
+				showStatesOfCountry(layerCountrySelected);
+			}else{
+				removeStatesOfCountry(layerCountrySelected);
+			}
+			if(document.getElementById('quiz-setup-question-type-cities').checked){
+				showCitiesOfCountry(layerCountrySelected);
+			}else{
+				removeCitiesOfCountry(layerCountrySelected);
+			}
+		});
+	}
+
+	function tearDownQuizVisuals(){
+		layerGroupCountriesSelected.eachLayer(function(layerCountrySelected){
+			if(document.getElementById('controls-info-states').checked){
+				showStatesOfCountry(layerCountrySelected);
+			}else{
+				removeStatesOfCountry(layerCountrySelected);
+			}
+			if(document.getElementById('controls-info-cities').checked){
+				showCitiesOfCountry(layerCountrySelected);
+			}else{
+				removeCitiesOfCountry(layerCountrySelected);
+			}
+		});
+	}
 
 	function generateQuestions(){
 		tasks = [];
@@ -540,8 +634,6 @@
 			});
 		});
 	}
-
-	var currentTask;
 
 	function nextQuestion(){
 		if(tasks.length == 0){
@@ -614,144 +706,24 @@
 	}
 
 	function finishQuiz(){
-		//unselectCountry(currentCountry);
+		unselectCountry(currentCountry);
 		unselectState(currentState);
 		unselectCity(currentCity);
-		//removeStatesOfCurrentCountry();
-		//removeCitiesOfCurrentCountry();
+
+		tearDownQuizVisuals();
+
 		document.getElementById('quiz-panel').style.display = "none";
 		document.getElementById('quiz-setup').style.display = "block";
 		quizMode = false;
 	}
 
-	// Country Quiz
-
-	function checkCountryName(event) {
-			event.preventDefault();
-			if(currentCountry.feature.properties.NAME_EN == document.getElementById("country-name").value){
-				alert('correct');
-				document.getElementById("country-name").value = "";
-				nextCountry();
-			}else{
-				alert('wrong');
-			}
-	}
-
-	function nextCountry(){
-		if(currentCountry != undefined){
-			resetHighlightCountry(currentCountry);
-		}
-
-		if(quizCountries.length > 0){
-			var randomValue = currentCountry;
-			do{
-				randomValue = quizCountries[parseInt(Math.random() * quizCountries.length)]
-			}while(quizCountries.length > 1 && randomValue == currentCountry)
-
-			/*currentCountry = randomValue;
-			highlightCountry(randomValue);
-			updateDetails();*/
-
-			selectCountry(randomValue);
-		}
-	}
-
-	// State Quiz
-
-	function checkStateName(event) {
-			event.preventDefault();
-			if(currentState.feature.properties.name == document.getElementById("state-name").value){
-				alert('correct');
-				document.getElementById("state-name").value = "";
-				nextState();
-			}else{
-				alert('wrong');
-			}
-	}
-
-	function nextState(){
-		if(currentState != undefined){
-			resetHighlightState(currentState);
-		}
-
-		var values = [];
-		layerGroupStates.eachLayer(function (layer) {
-			layer.eachLayer(function(layer2) {
-  			values.push(layer2);
-			});
-		});
-
-		if(values.length > 0){
-			var randomValue = currentState;
-			do{
-				randomValue = values[parseInt(Math.random() * values.length)]
-			}while(values.length > 1 && randomValue == currentState)
-
-			/*currentState = randomValue;
-			highlightState(randomValue);
-			updateDetails();*/
-
-			selectState(randomValue);
-		}
-	}
-
-	// City Quiz
-
-	function checkCityName(event) {
-			event.preventDefault();
-			if(currentCity.feature.properties.NAME == document.getElementById("city-name").value){
-				alert('correct\npopulation: ' + currentCity.feature.properties.POP_MAX);
-				document.getElementById("city-name").value = "";
-				nextCity();
-			}else{
-				alert('wrong');
-			}
-	}
-
-	function nextCity(){
-		if(currentCity != undefined){
-			resetHighlightCity(currentCity);
-		}
-
-		var values = [];
-		layerGroupCities.eachLayer(function (layer) {
-			layer.eachLayer(function(layer2) {
-  			values.push(layer2);
-			});
-		});
-
-		if(values.length > 0){
-			var randomValue = currentCity;
-			do{
-				randomValue = values[parseInt(Math.random() * values.length)]
-			}while(values.length > 1 && randomValue == currentCity)
-
-			/*currentCity = randomValue;
-			highlightCity(randomValue);
-			updateDetails();*/
-
-			selectCity(randomValue);
-		}
-	}
-
-	// General
-
-	/*function updateInfo(e){
-		layer = e.target;
-		info.update(layer.feature.properties);
-		highlightState(e);
-	}*/
-
 	const myEventForwarder = new L.eventForwarder({
-	  // ref to leaflet map
 	  map: map,
-	  // events to forward
 	  events: {
 	    click: true,
 	    mousemove: true,
 	    mouseout: true
 	  },
-	  // throttle options for mousemove events (same as underscore.js)
 	  throttleMs: 100,
 	  throttleOptions: {
 	    leading: true,
