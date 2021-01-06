@@ -92,12 +92,15 @@
 </div>
 
 <div id="details">
-	<h4 class="details-heading">Country</h4>
-	<p id="details-country">Test</p>
-	<h4 class="details-heading">State</h4>
-	<p id="details-state">Test</p>
-	<h4 class="details-heading">City</h4>
-	<p id="details-city">Test</p>
+	<div id="details-content">
+		<div id="details-button-close" onclick="unselectCountry(currentCountry)">✕</div>
+		<h4 class="details-heading">Country</h4>
+		<p id="details-country">Test</p> <button id="details-country-add-remove" onclick="clickAddRemoveCountryButton()">Add</button>
+		<h4 class="details-heading">State</h4>
+		<p id="details-state">Test</p>
+		<h4 class="details-heading">City</h4>
+		<p id="details-city">Test</p>
+	</div>
 </div>
 
 <script type="text/javascript">
@@ -132,15 +135,6 @@
 		}
 	}
 
-	function toggleControlsQuiz(){
-		var quizSetup = document.getElementById('quiz-setup');
-		if(document.getElementById('checkbox-controls-quiz').checked){
-			quizSetup.style.display = "block";
-		}else{
-			quizSetup.style.display = "none";
-		}
-	}
-
 	var coll = document.getElementsByClassName("collapsible-button");
 	var i;
 
@@ -165,14 +159,45 @@
 	var currentCity;
 
 	function updateDetails(){
-		var detailsCountry = document.getElementById('details-country');
-		detailsCountry.innerHTML = currentCountry != undefined ? currentCountry.feature.properties.NAME_EN + " (" + numberWithCommas(currentCountry.feature.properties.POP_EST) + ")" : 'none';
+		if(quizMode == true){
+			return;
+		}
+		if(currentCountry == undefined){
+			toggleDetails(false);
+		}else{
+			toggleDetails(true);
+			var detailsCountry = document.getElementById('details-country');
+			detailsCountry.innerHTML = currentCountry != undefined ? currentCountry.feature.properties.NAME_EN + " (" + numberWithCommas(currentCountry.feature.properties.POP_EST) + ")" : 'none';
+			if(document.getElementById('checkbox-' + currentCountry.feature.properties.NAME_EN).checked){
+				document.getElementById('details-country-add-remove').innerHTML = 'Remove';
+			}else{
+				document.getElementById('details-country-add-remove').innerHTML = 'Add';
+			}
+			
+			var detailsState = document.getElementById('details-state');
+			detailsState.innerHTML = currentState != undefined ? currentState.feature.properties.name : 'none';
 
-		var detailsState = document.getElementById('details-state');
-		detailsState.innerHTML = currentState != undefined ? currentState.feature.properties.name : 'none';
+			var detailsCity = document.getElementById('details-city');
+			detailsCity.innerHTML = currentCity != undefined ? currentCity.feature.properties.name_en + " (" + numberWithCommas(currentCity.feature.properties.POP_MIN) + ")" : 'none';
+		}
+	}
 
-		var detailsCity = document.getElementById('details-city');
-		detailsCity.innerHTML = currentCity != undefined ? currentCity.feature.properties.name_en + " (" + numberWithCommas(currentCity.feature.properties.POP_MIN) + ")" : 'none';
+	function toggleDetails(show){
+		var details = document.getElementById('details');
+		if (show){
+			details.style.maxHeight = "250px";
+		} else {
+			details.style.maxHeight = null;
+		}
+	}
+
+	function clickAddRemoveCountryButton(){
+		if(document.getElementById('checkbox-' + currentCountry.feature.properties.NAME_EN).checked){
+			removeCountryFromCurrentCountries(currentCountry);
+		}else{
+			addCountryToCurrentCountries(currentCountry);
+		}
+		updateDetails();
 	}
 
 	// Countries
@@ -206,8 +231,6 @@
 		});*/
 		layer.on('click', function(event){
 			if(!quizMode){
-				document.getElementById('checkbox-' + event.target.feature.properties.NAME_EN).checked = true;
-				addCountryToCurrentCountries(event.target);
 				selectCountry(event.target);
 			}
 		});
@@ -216,25 +239,31 @@
 	function addCountryToCurrentCountries(layerCountry){
 		if(!layerGroupCountriesSelected.hasLayer(layerCountry)){
 			layerGroupCountriesSelected.addLayer(layerCountry);
+			document.getElementById('checkbox-' + layerCountry.feature.properties.NAME_EN).checked = true;
 			if(document.getElementById('controls-info-states').checked){
 				showStatesOfCountry(layerCountry);
 			}
 			if(document.getElementById('controls-info-cities').checked){
 				showCitiesOfCountry(layerCountry);
 			}
-			highlightCurrentCountry(layerCountry);
+			if(layerCountry != currentCountry){
+				highlightCurrentCountry(layerCountry);
+			}
 		}
 	}
 
 	function removeCountryFromCurrentCountries(layerCountry){
 		layerGroupCountriesSelected.removeLayer(layerCountry);
+		document.getElementById('checkbox-' + layerCountry.feature.properties.NAME_EN).checked = false;
 		if(document.getElementById('controls-info-states').checked){
 			removeStatesOfCountry(layerCountry);
 		}
 		if(document.getElementById('controls-info-cities').checked){
 			removeCitiesOfCountry(layerCountry);
 		}
-		resetHighlightCurrentCountry(layerCountry);
+		if(layerCountry != currentCountry){
+			resetHighlightCurrentCountry(layerCountry);
+		}
 	}
 
 	function selectCountry(layer){
@@ -252,6 +281,7 @@
 	function unselectCountry(country){
 		resetHighlightCountry(country);
 		currentCountry = undefined;
+		updateDetails();
 	}
 
 	function zoomToBiggestSelectedArea(){
@@ -273,11 +303,13 @@
 	}
 
 	function resetHighlightCountry(layer) {
-		layerGroupCountries.eachLayer(function (l) {
-    	l.resetStyle(layer);
-		});
-		if(layerGroupCountriesSelected.hasLayer(layer)){
-			highlightCurrentCountry(layer);
+		if(layer != undefined){
+			layerGroupCountries.eachLayer(function (l) {
+				l.resetStyle(layer);
+			});
+			if(layerGroupCountriesSelected.hasLayer(layer)){
+				highlightCurrentCountry(layer);
+			}
 		}
 	}
 
@@ -292,7 +324,7 @@
 
 	function resetHighlightCurrentCountry(layer) {
 		layerGroupCountries.eachLayer(function (l) {
-    	l.resetStyle(layer);
+    		l.resetStyle(layer);
 		});
 	}
 
@@ -325,10 +357,8 @@
 				if(layerCountry.feature.properties.NAME_EN == countryName){
 					if(event.target.checked){
 						addCountryToCurrentCountries(layerCountry);
-						selectCountry(layerCountry);
 					}else{
 						removeCountryFromCurrentCountries(layerCountry);
-						unselectCountry(layerCountry);
 					}
 				}
 			});
@@ -398,9 +428,11 @@
 	}
 
   function resetHighlightState(layer) {
+	  if(layer != undefined){
 		layerGroupStates.eachLayer(function (l) {
-    	l.resetStyle(layer);
+    		l.resetStyle(layer);
 		});
+	  }
 	}
 
 	function toggleStates(){
@@ -524,8 +556,8 @@
 		setUpQuizVisuals();
 
 		document.getElementById('menu-button-open').style.display = "none";
-		document.getElementById('menu').style.display = "none";
-		document.getElementById('details').style.display = "none";
+		toggleMenu();
+		toggleDetails(false);
 		document.getElementById('quiz-panel').style.display = "block";
 
 		var checkedQuestionTypeCheckBoxes = document.querySelectorAll('input[name=quiz-setup-question-type]:checked');
@@ -539,7 +571,7 @@
 	}
 
 	function setUpQuizVisuals(){
-		//resetHighlightCountry(currentCountry);
+		resetHighlightCountry(currentCountry);
 		layerGroupCountriesSelected.eachLayer(function(layerCountrySelected){
 			if(document.getElementById('quiz-setup-question-type-states').checked){
 				showStatesOfCountry(layerCountrySelected);
@@ -685,7 +717,7 @@
 	}
 
 	function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 
 	function finishQuiz(){
@@ -697,8 +729,7 @@
 
 		document.getElementById('quiz-panel').style.display = "none";
 		document.getElementById('menu-button-open').style.display = "block";
-		document.getElementById('details').style.display = "block";
-		document.getElementById('menu').style.display = "block";
+		toggleMenu();
 		quizMode = false;
 	}
 
