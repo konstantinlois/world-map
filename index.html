@@ -30,37 +30,54 @@
 
 <div id="menu">
 
-	<div id="menu-button-close" onclick="toggleMenu()">✕</div>
+	<div id="menu-content">
 
-	<label class="switch">
-		<input id="checkbox-controls-quiz" type="checkbox" onclick="toggleControlsQuiz()">
-		<span class="slider round"></span>
-	</label>
+		<div id="menu-button-close" onclick="toggleMenu()">✕</div>
 
-	<div id="controls">
-		<h2>Controls</h2>
-		<h4>Countries</h4>
-		<div id="controls-countries">
-		</div>
+		<br></br>
 		<br>
-		<div id="controls-info-types">
-			<label><input type="checkbox" id="controls-info-states" value="controls-info-states" onclick="toggleStates()"/> States</label>
-			<label><input type="checkbox" id="controls-info-cities" value="controls-info-cities" onclick="toggleCities()"/> Cities</label>
-		</div>
-	</div>
 
-	<div id="quiz-setup">
-		<h2>Quiz</h2>
-		<h3>Setup</h3>
-		<h4>Question Types</h4>
-		<div id="quiz-setup-question-types">
-			<label><input type="checkbox" name="quiz-setup-question-type" value="country-name"/> Country Name</label>
-			<label><input type="checkbox" name="quiz-setup-question-type" value="country-population"/> Country Population</label>
-			<label><input type="checkbox" id="quiz-setup-question-type-states" name="quiz-setup-question-type" value="state-name" /> State Name</label>
-			<label><input type="checkbox" id="quiz-setup-question-type-cities" name="quiz-setup-question-type" value="city-name" /> City Name</label>
+		<div id="regions">
+			<h2 class="collapsible-button">Selected Regions</h2>
+			<div class="collapsible-content">
+				<h4>Countries</h4>
+				<div id="controls-countries">
+				</div>
+				<br>
+			</div>
 		</div>
-		<br>
-		<button onclick="startQuiz()">Start</button>
+
+		<div id="controls">
+			<h2 class="collapsible-button">Controls</h2>
+			<div id="controls-content" class="collapsible-content">
+				<div id="controls-info-types">
+					<label><input type="checkbox" id="controls-info-states" value="controls-info-states" onclick="toggleStates()"/> States</label>
+					<label><input type="checkbox" id="controls-info-cities" value="controls-info-cities" onclick="toggleCities()"/> Cities</label>
+				</div>
+				<br>
+			</div>
+		</div>
+
+		<!--<label class="switch">
+			<input id="checkbox-controls-quiz" type="checkbox" onclick="toggleControlsQuiz()">
+			<span class="slider round"></span>
+		</label>-->
+		<div class="quiz-setup">
+			<h2 class="collapsible-button">Quiz</h2>
+			<div id="quiz-setup-content" class="collapsible-content">
+				<h4>Question Types</h4>
+				<div id="quiz-setup-question-types">
+					<label><input type="checkbox" name="quiz-setup-question-type" value="country-name"/> Country Name</label>
+					<label><input type="checkbox" name="quiz-setup-question-type" value="country-population"/> Country Population</label>
+					<label><input type="checkbox" id="quiz-setup-question-type-states" name="quiz-setup-question-type" value="state-name" /> State Name</label>
+					<label><input type="checkbox" id="quiz-setup-question-type-cities" name="quiz-setup-question-type" value="city-name" /> City Name</label>
+				</div>
+				<br>
+				<button onclick="startQuiz()">Start</button>
+				<br></br>
+			</div>
+		</div>
+
 	</div>
 
 </div>
@@ -105,25 +122,38 @@
 
 	var menuOpen = false;
 	function toggleMenu(){
+		var menu = document.getElementById('menu');
 		if(menuOpen){
-			document.getElementById('menu').style.display = "none";
+			menu.style.maxWidth = null;
 			menuOpen = false;
 		}else{
-			document.getElementById('menu').style.display = "block";
+			menu.style.maxWidth = menu.scrollWidth + "px";
 			menuOpen = true;
 		}
 	}
 
 	function toggleControlsQuiz(){
-		var controls = document.getElementById('controls');
 		var quizSetup = document.getElementById('quiz-setup');
 		if(document.getElementById('checkbox-controls-quiz').checked){
-			controls.style.display = "none";
 			quizSetup.style.display = "block";
 		}else{
-			controls.style.display = "block";
 			quizSetup.style.display = "none";
 		}
+	}
+
+	var coll = document.getElementsByClassName("collapsible-button");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+	coll[i].addEventListener("click", function() {
+		//this.classList.toggle("active");
+		var content = this.nextElementSibling;
+		if (content.style.maxHeight){
+		content.style.maxHeight = null;
+		} else {
+		content.style.maxHeight = content.scrollHeight + "px";
+		} 
+	});
 	}
 
 	// Details

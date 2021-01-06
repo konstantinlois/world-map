@@ -1,11 +1,16 @@
 body {
     padding: 0;
     margin: 0;
+
+    font: 16px Arial, sans-serif;
 }
 html, body, #map {
     height: 100%;
     width: 100%;
     background: #9999FF;
+}
+h1, h2, h3, h4, h5 {
+  
 }
 
 /* Others */
@@ -15,6 +20,23 @@ html, body, #map {
 }
 
 /* Elements */
+
+/* -> Collapsible */
+
+.collapsible-button {
+  cursor: pointer;
+  width: 100%;
+}
+
+/*.active, .collapsible:hover {
+  background-color: #ccc;
+}*/
+
+.collapsible-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
 
 /* -> Toggle Button */
 
@@ -107,21 +129,30 @@ input:checked + .slider:before {
 #menu-button-close {
   font-size: 33px;
   position: absolute;
-  top: 12px;
-  right: 25px;
+  top: 5px;
+  right: 15px;
 }
 
 #menu {
   position:absolute;
   top: 0px;
   left: 0px;
-  height: calc(100% - 40px);
+  height: calc(100% - 22px);
   z-index: 1001;
   background: #fff;
-  padding: 20px 20px 20px 20px;
-  border-radius: 5px;
+  padding: 2px 0px 20px 0px;
+  border-radius: 0px 5px 5px 0px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  display: none;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-width: 0px;
+  transition: max-width 0.5s;
+}
+
+#menu-content {
+  padding: 0px 40px 0px 20px;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 #controls {
@@ -142,10 +173,6 @@ input:checked + .slider:before {
 
 #controls-info-types label {
   display: block;
-}
-
-#quiz-setup {
-  display: none;
 }
 
 #quiz-setup-question-types {
