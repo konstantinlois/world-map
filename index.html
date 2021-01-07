@@ -83,12 +83,19 @@
 </div>
 
 <div id="quiz-panel">
-	<div id="quiz-panel-button-close" onclick="finishQuiz()">✕</div>
-	<h4 id="quiz-panel-question"></h4>
-	<form onsubmit="checkAnswer(event)">
-		<input id="quiz-panel-input" type="text" autocomplete="off">
-		<button id="quiz-panel-submit-button" type="submit">Submit</button>
-	</form>
+	<div id="quiz-panel-question-content">
+		<div id="quiz-panel-button-close" onclick="finishQuiz()">✕</div>
+		<h4 id="quiz-panel-question"></h4>
+		<form onsubmit="checkAnswer(event)">
+			<input id="quiz-panel-input" type="text" autocomplete="off">
+			<button id="quiz-panel-submit-button" type="submit">Submit</button>
+		</form>
+	</div>
+	<div id="quiz-panel-question-evaluation">
+		<h3 id="quiz-panel-question-evaluation-right-wrong"></h3>
+		<p id="quiz-panel-question-evaluation-infos"></p>
+		<button id="quiz-panel-question-evaluation-button" onclick="nextQuestion()">Next</button>
+	</div>
 </div>
 
 <div id="details">
@@ -290,6 +297,10 @@
 		}else{
 			map.fitBounds(layerGroupCountries.getBounds());
 		}
+	}
+
+	function zoomToCountry(layerCountry){
+		map.fitBounds(layerCountry.getBounds(), {padding: [300, 300]});
 	}
 
 	function highlightCountry(layer) {
@@ -655,7 +666,10 @@
 			finishQuiz();
 			return;
 		}
+		document.getElementById("quiz-panel-question-evaluation").style.display = "none";
+		document.getElementById("quiz-panel-question-content").style.display = "block";
 		document.getElementById("quiz-panel-input").value = "";
+		document.getElementById("quiz-panel-input").focus();
 		currentTask = tasks.shift();
 		switch(currentTask.type){
 			case "country-name":
@@ -678,6 +692,7 @@
 				document.getElementById("quiz-panel-question").innerHTML = "What is the name of the selected city?";
 				break;
 		}
+		zoomToCountry(currentCountry);
 	}
 
 	function checkAnswer(event){
@@ -685,9 +700,9 @@
 		switch(currentTask.type){
 			case "country-name":
 				if(document.getElementById("quiz-panel-input").value == currentTask.country.feature.properties.NAME_EN){
-					alert("correct");
+					showAnswerRightWrong(true, null);
 				}else{
-					alert("false, the correct answer is: " + currentTask.country.feature.properties.NAME_EN);
+					showAnswerRightWrong(false, "The correct answer is: " + currentTask.country.feature.properties.NAME_EN);
 				}
 				break;
 			case "country-population":
@@ -713,11 +728,18 @@
 				resetHighlightCity(currentTask.city);
 				break;
 		}
-		nextQuestion();
 	}
 
 	function numberWithCommas(x) {
     	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
+	function showAnswerRightWrong(right, infos){
+		document.getElementById("quiz-panel-question-content").style.display = "none";
+		document.getElementById("quiz-panel-question-evaluation").style.display = "block";
+		document.getElementById("quiz-panel-question-evaluation-right-wrong").innerHTML = right ? "Correct" : "False";
+		document.getElementById("quiz-panel-question-evaluation-infos").innerHTML = infos != null ? infos : "";
+		document.getElementById("quiz-panel-question-evaluation-button").focus();
 	}
 
 	function finishQuiz(){
