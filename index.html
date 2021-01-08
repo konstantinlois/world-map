@@ -272,19 +272,26 @@
 		}
 	}
 
-	function selectCountry(layer){
-		if(currentCountry == layer){
+	function selectCountry(country){
+		if(currentCountry == country){
 			return;
 		}
-		if(currentCountry != undefined){
-			resetHighlightCountry(currentCountry);
-		}
-		currentCountry = layer;
-		highlightCountry(layer);
+
+		unselectCountry(currentCountry);
+		
+		currentCountry = country;
+		highlightCountry(country);
 		updateDetails();
 	}
 
 	function unselectCountry(country){
+		if(currentState != undefined && country != undefined && currentState.feature.properties.layerCountry == country){
+			unselectState(currentState);
+		}
+		if(currentCity != undefined && country != undefined && currentCity.feature.properties.layerCountry == country){
+			unselectCity(currentCity);
+		}
+
 		resetHighlightCountry(country);
 		currentCountry = undefined;
 		updateDetails();
@@ -313,6 +320,13 @@
 			fillOpacity: 0.0
 		});
 		layer.bringToFront();
+		layerGroupStates.eachLayer(function(layerStates){
+			if(layerStates.country == layer){
+				layerStates.eachLayer(function(layerState){
+					layerState.bringToFront();
+				});
+			}
+		});
 	}
 
 	function resetHighlightCountry(layer) {
@@ -322,6 +336,8 @@
 			});
 			if(layerGroupCountriesSelected.hasLayer(layer)){
 				highlightCurrentCountry(layer);
+			}else{
+				layer.bringToBack();
 			}
 		}
 	}
@@ -381,6 +397,15 @@
 	// States and Provinces
 
 	function showStatesOfCountry(country){
+		var alreadyShown = false;
+		layerGroupStates.eachLayer(function(layerStates){
+			if(layerStates.country == country){
+				alreadyShown = true;
+			}
+		});
+		if(alreadyShown){
+			return;
+		}
 		var layerStates = L.geoJSON(states[0].features, {
 			style: function(){
 				return {
@@ -395,40 +420,44 @@
 			filter: function(f){
 				return f.properties.geonunit === country.feature.properties.NAME_EN;
 			},
-			onEachFeature: onEachState
+			onEachFeature: function(feature, layer){
+				layer.feature.properties.layerCountry = country;
+				layer.on('click', function(event){
+					if(!quizMode){
+						selectCountry(event.target.feature.properties.layerCountry)
+						selectState(event.target);
+					}
+				});
+			}
 		});
-		layerStates.country = country.feature.properties.NAME_EN;
+		layerStates.country = country;
 		layerGroupStates.addLayer(layerStates);
 	}
 
 	function removeStatesOfCountry(country){
 		layerGroupStates.eachLayer(function(layerStates) {
-			if(layerStates.country === country.feature.properties.NAME_EN){
+			if(layerStates.country === country){
 				layerGroupStates.removeLayer(layerStates);
 			}
 		});
 	}
 
-	function onEachState(feature, layer) {
-		layer.on('click', function(event){
-			if(!quizMode){
-				selectState(event.target);
-			}
-		});
-	}
-
 	function selectState(layer){
-		if(currentState != undefined){
-			resetHighlightState(currentState);
-		}
+		unselectState(currentState);
+
 		currentState = layer;
 		highlightState(layer);
 		updateDetails();
 	}
 
 	function unselectState(state){
+		if(currentCity != undefined && state != undefined && currentCity.feature.properties.ADM1NAME == state.feature.properties.name){
+			unselectCity(currentCity);
+		}
+
 		resetHighlightState(state);
 		currentState = undefined;
+		updateDetails();
 	}
 
 	function highlightState(layer) {
@@ -463,24 +492,41 @@
 	// Cities
 
 	function showCitiesOfCountry(countryLayer){
+		var alreadyShown = false;
+		layerGroupCities.eachLayer(function(layerCities){
+			if(layerCities.country == countryLayer){
+				alreadyShown = true;
+			}
+		});
+		if(alreadyShown){
+			return;
+		}
 		var layerCities = L.geoJSON(cities[0].features, {
 			pointToLayer: function(feature, latlng) {
 				return new L.marker(latlng, {
 					icon: getCityIcon(),
 				});
-      },
-			onEachFeature: onEachCity,
+      		},
+			onEachFeature: function(feature, layer) {
+				layer.feature.properties.layerCountry = countryLayer;
+				layer.on('click', function(event){
+					if(!quizMode){
+						selectCountry(layer.feature.properties.layerCountry);
+						selectCity(event.target);
+					}
+				});
+			},
 			filter: function(f){
 				return f.properties.ADM0NAME === countryLayer.feature.properties.NAME_EN && f.properties.RANK_MIN >= 9;
 			}
 		});
-		layerCities.country = countryLayer.feature.properties.NAME_EN;
+		layerCities.country = countryLayer;
 		layerGroupCities.addLayer(layerCities);
 	}
 
 	function removeCitiesOfCountry(countryLayer){
 		layerGroupCities.eachLayer(function(layerCities) {
-			if(layerCities.country === countryLayer.feature.properties.NAME_EN){
+			if(layerCities.country === countryLayer){
 				layerGroupCities.removeLayer(layerCities);
 			}
 		});
@@ -493,16 +539,8 @@
 		})
 	}
 
-	function onEachCity(feature, layer) {
-		/*layer.on('click', function(event){
-			if(!quizMode){
-				selectCity(event.target);
-			}
-		});*/
-	}
-
 	function selectCity(layer){
-		unselectState(currentState);
+		//layerGroupCountries.eachLayer()
 		layerGroupStates.eachLayer(function(layerStates){
 			layerStates.eachLayer(function(layerState){
 				if(layerState.feature.properties.name == layer.feature.properties.ADM1NAME){
@@ -521,6 +559,7 @@
 	function unselectCity(city){
 		resetHighlightCity(city);
 		currentCity = undefined;
+		updateDetails();
 	}
 
 	function highlightCity(layer) {
@@ -576,7 +615,7 @@
 		var checkedQuestionTypeCheckBoxes = document.querySelectorAll('input[name=quiz-setup-question-type]:checked');
 		quizQuestionTypes = [];
 		for (var i = 0; i < checkedQuestionTypeCheckBoxes.length; i++) {
-  		quizQuestionTypes.push(checkedQuestionTypeCheckBoxes[i].value);
+  			quizQuestionTypes.push(checkedQuestionTypeCheckBoxes[i].value);
 		}
 
 		generateQuestions();
@@ -743,7 +782,6 @@
 		document.getElementById("quiz-panel-question-evaluation").style.display = "block";
 		document.getElementById("quiz-panel-question-evaluation-right-wrong").innerHTML = right ? "Correct" : "False";
 		document.getElementById("quiz-panel-question-evaluation-infos").innerHTML = infos != null ? infos : "";
-		//document.getElementById("quiz-panel-next-button").focus();
 	}
 
 	function checkResizeMap(focus){
@@ -785,15 +823,10 @@
 	    click: true,
 	    mousemove: true,
 	    mouseout: true
-	  },
-	  throttleMs: 100,
-	  throttleOptions: {
-	    leading: true,
-	    trailing: false
 	  }
 	});
 
-	myEventForwarder.enable();
+	//myEventForwarder.enable();
 
 	map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
 
