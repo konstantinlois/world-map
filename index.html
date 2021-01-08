@@ -123,9 +123,17 @@
 		maxZoom: 16
 	}).addTo(map);
 
-	var layerGroupCountries = L.featureGroup([]).addTo(map);
-	var layerGroupStates = L.featureGroup([]).addTo(map);
-	var layerGroupCities = L.featureGroup([]).addTo(map);
+	map.createPane('countries');
+	map.createPane('states');
+	map.createPane('cities');
+
+	map.getPane('countries').style.zIndex = 1001;
+	map.getPane('states').style.zIndex = 1002;
+	map.getPane('cities').style.zIndex = 1003;
+
+	var layerGroupCountries = L.featureGroup([], {pane: map.getPane('countries')}).addTo(map);
+	var layerGroupStates = L.featureGroup([], {pane: map.getPane('states')}).addTo(map);
+	var layerGroupCities = L.featureGroup([], {pane: map.getPane('cities')}).addTo(map);
 
 	showCountries();
 
@@ -214,6 +222,7 @@
 		createCountryCheckboxes();
 
 		var layerCountries = L.geoJSON(countries[0].features, {
+			pane: 'countries',
 			style: function(){
 				return {
 					weight: 2,
@@ -320,13 +329,13 @@
 			fillOpacity: 0.0
 		});
 		layer.bringToFront();
-		layerGroupStates.eachLayer(function(layerStates){
+		/*layerGroupStates.eachLayer(function(layerStates){
 			if(layerStates.country == layer){
 				layerStates.eachLayer(function(layerState){
 					layerState.bringToFront();
 				});
 			}
-		});
+		});*/
 	}
 
 	function resetHighlightCountry(layer) {
@@ -407,6 +416,7 @@
 			return;
 		}
 		var layerStates = L.geoJSON(states[0].features, {
+			pane: 'states',
 			style: function(){
 				return {
 					weight: 1,
@@ -469,12 +479,16 @@
 		});
 	}
 
-  function resetHighlightState(layer) {
+  	function resetHighlightState(layer) {
 	  if(layer != undefined){
 		layerGroupStates.eachLayer(function (l) {
     		l.resetStyle(layer);
 		});
 	  }
+	}
+
+	function zoomToState(stateLayer){
+		map.fitBounds(stateLayer.getBounds().pad(0.5));
 	}
 
 	function toggleStates(){
@@ -502,10 +516,22 @@
 			return;
 		}
 		var layerCities = L.geoJSON(cities[0].features, {
+			pane: 'cities',
 			pointToLayer: function(feature, latlng) {
-				return new L.marker(latlng, {
+				/*return new L.marker(latlng, {
 					icon: getCityIcon(),
-				});
+				});*/
+				return L.circleMarker(latlng, {
+					pane: 'cities',
+					radius: map.getZoom()*1.5,
+					stroke: true,
+					weight: 1,
+                    opacity: 1,                            
+                    color: '#000000',
+                    fillColor: '#e0f2f1',
+                    fillOpacity: 0.3,
+                	//  html: feature.properties.iconcategory[0].toUpperCase(),
+                });
       		},
 			onEachFeature: function(feature, layer) {
 				layer.feature.properties.layerCountry = countryLayer;
@@ -515,6 +541,7 @@
 						selectCity(event.target);
 					}
 				});
+				layer.bringToFront();
 			},
 			filter: function(f){
 				return f.properties.ADM0NAME === countryLayer.feature.properties.NAME_EN && f.properties.RANK_MIN >= 9;
@@ -533,9 +560,11 @@
 	}
 
 	function getCityIcon(){
-		return new L.Icon.Default({
-			iconSize: [25, 41],
-			iconAnchor:   [12, 41]
+		return new L.Icon({
+			iconSize: [12.5, 22.5],
+			iconAnchor:   [6, 22.5],
+			shadowSize: [12.5, 22.5],
+			shadowAnchor: [6, 22.5]
 		})
 	}
 
@@ -563,19 +592,30 @@
 	}
 
 	function highlightCity(layer) {
-		layer.setIcon(new L.Icon({
+		/*layer.setIcon(new L.Icon({
 		  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
 		  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
 			iconSize: [25, 41],
 			iconAnchor:   [12 ,41],
 		  popupAnchor: [1, -34],
 		  shadowSize: [41, 41]
-		}));
+		}));*/
+
+		layer.setStyle({ 
+			fillColor: "#FCFF4B",
+			fillOpacity: 0.9,
+			radius: map.getZoom()*1.5
+  		})
 	}
 
   function resetHighlightCity(layer) {
 		if(layer != undefined){
-			layer.setIcon(getCityIcon());
+			//layer.setIcon(getCityIcon());
+			layer.setStyle({ 
+				fillColor: "#e0f2f1",
+				fillOpacity: 0.3,
+				radius: map.getZoom()*1.5
+  			})
 		}
 	}
 
@@ -590,6 +630,29 @@
 			});
 		}
 	}
+
+	var layer = '';//define the layer that contains the markers
+	map.on('zoomend', function() {
+		var currentZoom = map.getZoom();
+
+		//Update X and Y based on zoom level
+		/*var x= 50; //Update x 
+		var y= 50; //Update Y         
+		var LeafIcon = L.Icon.extend({
+			options: {
+				iconSize:     [x, y] // Change icon size according to zoom level
+			}
+		});
+		layer.setIcon(LeafIcon);*/
+
+		layerGroupCities.eachLayer(function(layerCities){
+			layerCities.eachLayer(function(layerCity){
+				layerCity.setStyle({
+					radius: currentZoom*1.5
+				})
+			});
+		});
+	});
 
 	// Quiz
 
@@ -617,6 +680,8 @@
 		for (var i = 0; i < checkedQuestionTypeCheckBoxes.length; i++) {
   			quizQuestionTypes.push(checkedQuestionTypeCheckBoxes[i].value);
 		}
+
+		savedBounds = undefined;
 
 		generateQuestions();
 		nextQuestion();
@@ -702,6 +767,8 @@
 		});
 	}
 
+	var savedBounds;
+
 	function nextQuestion(){
 		if(tasks.length == 0){
 			finishQuiz();
@@ -713,6 +780,11 @@
 		document.getElementById("quiz-panel-submit-button").innerHTML = "Submit";
 		document.getElementById("quiz-panel-input").value = "";
 		currentTask = tasks.shift();
+
+		if(savedBounds != undefined && currentTask.type != "city-name"){
+			map.fitBounds(savedBounds);
+			savedBounds = undefined;
+		}
 		switch(currentTask.type){
 			case "country-name":
 				selectCountry(currentTask.country);
@@ -731,7 +803,16 @@
 			case "city-name":
 				selectCountry(currentTask.country);
 				selectState(currentTask.state);
-				selectCity(currentTask.city)
+				selectCity(currentTask.city);
+				if(savedBounds == undefined){
+					savedBounds = map.getBounds();
+				}
+				/*var bounds = currentState.getBounds().pad(0.5);
+				bounds._southWest.lat = bounds._southWest.lat-2;
+				bounds._northEast.lat = bounds._northEast.lat-2;
+				map.fitBounds(bounds);*/
+				var point = currentTask.city.getLatLng();
+				map.flyTo([point.lat-1, point.lng], 6);
 				document.getElementById("quiz-panel-question").innerHTML = "What is the name of the selected city?";
 				break;
 		}
@@ -767,7 +848,7 @@
 				}else{
 					showAnswerRightWrong(false, "The correct answer is: " + currentTask.city.feature.properties.name_en);
 				}
-				resetHighlightCity(currentTask.city);
+				//resetHighlightCity(currentTask.city);
 				break;
 		}
 	}
@@ -828,7 +909,7 @@
 
 	//myEventForwarder.enable();
 
-	map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
+	//map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
 
 </script>
 
