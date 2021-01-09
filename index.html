@@ -681,12 +681,13 @@
 
 		savedBounds = undefined;
 
+		currentIndex = 0;
 		generateQuestions();
 		nextQuestion();
 	}
 
 	function setUpQuizVisuals(){
-		resetHighlightCountry(currentCountry);
+		unselectCountry(currentCountry);
 		layerGroupCountriesSelected.eachLayer(function(layerCountrySelected){
 			if(document.getElementById('quiz-setup-question-type-states').checked){
 				showStatesOfCountry(layerCountrySelected);
@@ -716,7 +717,7 @@
 		});
 	}
 
-	function generateQuestions(){
+	function generateQuestionsOld(){
 		tasks = [];
 		layerGroupCountriesSelected.eachLayer(function(layerCountry){
 			if(quizQuestionTypes.includes("country-name")){
@@ -786,6 +787,65 @@
 		});
 	}
 
+	function generateQuestions(){
+		tasks = [];
+		var tasksCountries = [];
+
+		layerGroupCountriesSelected.eachLayer(function(layerCountrySelected){
+			tasksCountry = [];
+
+			if(quizQuestionTypes.includes("country-name")){
+				var taskCountryName = {
+					"type": "country-name",
+					"country": layerCountrySelected
+				}
+				tasksCountry.push(taskCountryName);
+			}
+
+			if(quizQuestionTypes.includes("country-population")){
+				var taskCountryPopulation = {
+					"type": "country-population",
+					"country": layerCountrySelected
+				}
+				tasksCountry.push(taskCountryPopulation);
+			}
+
+			if(quizQuestionTypes.includes("state-name")){
+				var tasksStates = [];
+				layerGroupStates.eachLayer(function(layerStates){
+					layerStates.eachLayer(function(layerState){
+						var task = {
+							"type": "state-name",
+							"country": layerCountrySelected,
+							"state": layerState
+						}
+						tasksStates.push(task);
+					});
+				});
+				tasksCountry.push.apply(tasksCountry, shuffle(tasksStates));
+			}
+
+			if(quizQuestionTypes.includes("city-name")){
+				var tasksCities = [];
+				layerGroupCities.eachLayer(function(layerCities){
+					layerCities.eachLayer(function(layerCity){
+						var task = {
+							"type": "city-name",
+							"country": layerCountrySelected,
+							"city": layerCity
+						}
+						tasksCities.push(task);
+					});
+				});
+				tasksCountry.push.apply(tasksCountry, shuffle(tasksCities));
+			}
+
+			tasksCountries.push.apply(tasksCountries, tasksCountry);
+		});
+
+		tasks.push.apply(tasks, tasksCountries);
+	}
+
 	function shuffle(a) {
 		var j, x, i;
 		for (i = a.length - 1; i > 0; i--) {
@@ -799,8 +859,11 @@
 
 	var savedBounds;
 
+	var currentIndex = 0;
+	var repeat = false;
+
 	function nextQuestion(){
-		if(tasks.length == 0){
+		if(currentIndex == tasks.length){
 			finishQuiz();
 			return;
 		}
@@ -811,7 +874,7 @@
 		document.getElementById("quiz-panel-input").value = "";
 		document.getElementById("quiz-panel-input-container").style.width = "auto";
 		document.getElementById("quiz-panel-input-container").style.height = "auto";
-		currentTask = tasks.shift();
+		currentTask = tasks[currentIndex];
 
 		if(savedBounds != undefined && currentTask.type != "city-name"){
 			map.fitBounds(savedBounds);
@@ -834,7 +897,6 @@
 				break;
 			case "city-name":
 				selectCountry(currentTask.country);
-				selectState(currentTask.state);
 				selectCity(currentTask.city);
 				if(savedBounds == undefined){
 					savedBounds = map.getBounds();
@@ -844,7 +906,7 @@
 				bounds._northEast.lat = bounds._northEast.lat-2;
 				map.fitBounds(bounds);*/
 				var point = currentTask.city.getLatLng();
-				map.flyTo([point.lat-1, point.lng], 6);
+				map.flyTo([point.lat-1, point.lng], 5);
 				document.getElementById("quiz-panel-question").innerHTML = "What is the name of the selected city?";
 				break;
 		}
@@ -855,6 +917,7 @@
 		switch(currentTask.type){
 			case "country-name":
 				if(document.getElementById("quiz-panel-input").value == currentTask.country.feature.properties.NAME_EN){
+					answerRight(currentTask);
 					showAnswerRightWrong(true, null);
 				}else{
 					answerWrong(currentTask);
@@ -863,6 +926,7 @@
 				break;
 			case "country-population":
 				if(Math.abs(document.getElementById("quiz-panel-input").value.replace(/,/g, '') - currentTask.country.feature.properties.POP_EST) <= 1000000){
+					answerRight(currentTask);
 					showAnswerRightWrong(true, "the exact answer is: " + numberWithCommas(currentTask.country.feature.properties.POP_EST));
 				}else{
 					answerWrong(currentTask);
@@ -871,6 +935,7 @@
 				break;
 			case "state-name":
 				if(document.getElementById("quiz-panel-input").value == currentTask.state.feature.properties.name){
+					answerRight(currentTask);
 					showAnswerRightWrong(true, null);
 				}else{
 					answerWrong(currentTask);
@@ -879,6 +944,7 @@
 				break;
 			case "city-name":
 				if(document.getElementById("quiz-panel-input").value == currentTask.city.feature.properties.name_en){
+					answerRight(currentTask);
 					showAnswerRightWrong(true, null);
 				}else{
 					answerWrong(currentTask);
@@ -889,9 +955,20 @@
 		}
 	}
 
+	function answerRight(task){
+		currentIndex++;
+		if(repeat){
+			repeat = false;
+			tasks.splice(currentIndex+1, 0, task);
+			tasks.splice(currentIndex+4, 0, task);
+			tasks.splice(currentIndex+9, 0, task);
+		}
+	}
+
 	function answerWrong(task){
-		tasks.splice(0, 0, task);
-		tasks.splice(2, 0, task);
+		if(!repeat){
+			repeat = true;
+		}
 	}
 
 	function numberWithCommas(x) {
