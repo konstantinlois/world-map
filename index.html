@@ -88,12 +88,16 @@
 		<h4 id="quiz-panel-question"></h4>
 	</div>
 	<div id="quiz-panel-question-evaluation">
-		<h3 id="quiz-panel-question-evaluation-right-wrong"></h3>
+		<h4 id="quiz-panel-question-evaluation-right-wrong"></h4>
 		<p id="quiz-panel-question-evaluation-infos"></p>
 	</div>
 	<form onsubmit="questionPanelSubmitButtonClicked(event)">
-		<input id="quiz-panel-input" type="text" autocomplete="off" onfocus="checkResizeMap(true)" onfocusout="checkResizeMap(false)">
-		<button id="quiz-panel-submit-button" type="submit" >Submit</button>
+		<div id="quiz-panel-form-container">
+			<div id="quiz-panel-input-container">
+				<input id="quiz-panel-input" type="text" autocomplete="off" onfocus="checkResizeMap(true)" onfocusout="checkResizeMap(false)">
+			</div>
+			<button id="quiz-panel-submit-button" type="submit" >Submit</button>
+		</div>
 	</form>
 </div>
 
@@ -741,6 +745,7 @@
 								}
 								tasks.push(stateNameTask);
 							}
+							var tasksCities = [];
 							layerGroupCities.eachLayer(function(layerCities){
 								layerCities.eachLayer(function(layerCity){
 									if(layerCity.feature.properties.ADM1NAME == layerState.feature.properties.name){
@@ -751,15 +756,17 @@
 												"state": layerState,
 												"city": layerCity
 											}
-											tasks.push(cityNameTask);
+											tasksCities.push(cityNameTask);
 										}
 									}
 								});
 							});
+							tasks.push.apply(tasks, shuffle(tasksCities));
 						}
 					});
 				});
 			}else if(quizQuestionTypes.includes("city-name")){
+				var tasksCities = [];
 				layerGroupCities.eachLayer(function(layerCities){
 					layerCities.eachLayer(function(layerCity){
 						if(layerCity.feature.properties.ADM0NAME === layerCountry.feature.properties.NAME_EN){
@@ -769,13 +776,25 @@
 									"country": layerCountry,
 									"city": layerCity
 								}
-								tasks.push(cityNameTask);
+								tasksCities.push(cityNameTask);
 							}
 						}
 					});
 				});
+				tasks.push.apply(tasks, shuffle(tasksCities));
 			}
 		});
+	}
+
+	function shuffle(a) {
+		var j, x, i;
+		for (i = a.length - 1; i > 0; i--) {
+			j = Math.floor(Math.random() * (i + 1));
+			x = a[i];
+			a[i] = a[j];
+			a[j] = x;
+		}
+		return a;
 	}
 
 	var savedBounds;
@@ -790,6 +809,8 @@
 		document.getElementById("quiz-panel-question-content").style.display = "block";
 		document.getElementById("quiz-panel-submit-button").innerHTML = "Submit";
 		document.getElementById("quiz-panel-input").value = "";
+		document.getElementById("quiz-panel-input-container").style.width = "auto";
+		document.getElementById("quiz-panel-input-container").style.height = "auto";
 		currentTask = tasks.shift();
 
 		if(savedBounds != undefined && currentTask.type != "city-name"){
@@ -883,6 +904,8 @@
 		document.getElementById("quiz-panel-question-evaluation").style.display = "block";
 		document.getElementById("quiz-panel-question-evaluation-right-wrong").innerHTML = right ? "Correct" : "False";
 		document.getElementById("quiz-panel-question-evaluation-infos").innerHTML = infos != null ? infos : "";
+		document.getElementById("quiz-panel-input-container").style.width = "0px";
+		document.getElementById("quiz-panel-input-container").style.height = "0px";
 	}
 
 	function checkResizeMap(focus){

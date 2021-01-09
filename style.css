@@ -217,8 +217,37 @@ input:checked + .slider:before {
   cursor: pointer;
 }
 
+#quiz-panel-question {
+  margin-block-start: 16px;
+  margin-block-end: 16px
+}
+
+#quiz-panel-form-container{
+  display: flex;
+  align-items: center;
+}
+
+#quiz-panel-input-container {
+  display: inline-block;
+  width: auto;
+  overflow: hidden;
+}
+
+#quiz-panel-input{
+  margin-right: 10px;
+}
+
+#quiz-panel-input:focus {
+  outline:none;  
+}
+
 #quiz-panel-question-evaluation {
   display: none;
+}
+
+#quiz-panel-question-evaluation-right-wrong {
+  margin-block-start: 16px;
+  margin-block-end: 16px
 }
 
 /* Details */
