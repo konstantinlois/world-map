@@ -453,6 +453,10 @@
 	}
 
 	function selectState(layer){
+		if(layer == undefined){
+			return;
+		}
+
 		unselectState(currentState);
 
 		currentState = layer;
@@ -635,16 +639,6 @@
 	map.on('zoomend', function() {
 		var currentZoom = map.getZoom();
 
-		//Update X and Y based on zoom level
-		/*var x= 50; //Update x 
-		var y= 50; //Update Y         
-		var LeafIcon = L.Icon.extend({
-			options: {
-				iconSize:     [x, y] // Change icon size according to zoom level
-			}
-		});
-		layer.setIcon(LeafIcon);*/
-
 		layerGroupCities.eachLayer(function(layerCities){
 			layerCities.eachLayer(function(layerCity){
 				layerCity.setStyle({
@@ -735,35 +729,52 @@
 				}
 				tasks.push(countryPopulationTask);
 			}
-			layerGroupStates.eachLayer(function(layerStates){
-				layerStates.eachLayer(function(layerState){
-					if(layerCountry.feature.properties.NAME_EN == layerState.feature.properties.geonunit){
-						if(quizQuestionTypes.includes("state-name")){
-							var stateNameTask = {
-								"type": "state-name",
-								"country": layerCountry,
-								"state": layerState
-							}
-							tasks.push(stateNameTask);
-						}
-						layerGroupCities.eachLayer(function(layerCities){
-							layerCities.eachLayer(function(layerCity){
-								if(layerCity.feature.properties.ADM1NAME == layerState.feature.properties.name){
-									if(quizQuestionTypes.includes("city-name")){
-										var cityNameTask = {
-											"type": "city-name",
-											"country": layerCountry,
-											"state": layerState,
-											"city": layerCity
-										}
-										tasks.push(cityNameTask);
-									}
+			if(quizQuestionTypes.includes("state-name")){
+				layerGroupStates.eachLayer(function(layerStates){
+					layerStates.eachLayer(function(layerState){
+						if(layerCountry.feature.properties.NAME_EN == layerState.feature.properties.geonunit){
+							if(quizQuestionTypes.includes("state-name")){
+								var stateNameTask = {
+									"type": "state-name",
+									"country": layerCountry,
+									"state": layerState
 								}
+								tasks.push(stateNameTask);
+							}
+							layerGroupCities.eachLayer(function(layerCities){
+								layerCities.eachLayer(function(layerCity){
+									if(layerCity.feature.properties.ADM1NAME == layerState.feature.properties.name){
+										if(quizQuestionTypes.includes("city-name")){
+											var cityNameTask = {
+												"type": "city-name",
+												"country": layerCountry,
+												"state": layerState,
+												"city": layerCity
+											}
+											tasks.push(cityNameTask);
+										}
+									}
+								});
 							});
-						});
-					}
+						}
+					});
 				});
-			});
+			}else if(quizQuestionTypes.includes("city-name")){
+				layerGroupCities.eachLayer(function(layerCities){
+					layerCities.eachLayer(function(layerCity){
+						if(layerCity.feature.properties.ADM0NAME === layerCountry.feature.properties.NAME_EN){
+							if(quizQuestionTypes.includes("city-name")){
+								var cityNameTask = {
+									"type": "city-name",
+									"country": layerCountry,
+									"city": layerCity
+								}
+								tasks.push(cityNameTask);
+							}
+						}
+					});
+				});
+			}
 		});
 	}
 
@@ -825,6 +836,7 @@
 				if(document.getElementById("quiz-panel-input").value == currentTask.country.feature.properties.NAME_EN){
 					showAnswerRightWrong(true, null);
 				}else{
+					answerWrong(currentTask);
 					showAnswerRightWrong(false, "The correct answer is: " + currentTask.country.feature.properties.NAME_EN);
 				}
 				break;
@@ -832,6 +844,7 @@
 				if(Math.abs(document.getElementById("quiz-panel-input").value.replace(/,/g, '') - currentTask.country.feature.properties.POP_EST) <= 1000000){
 					showAnswerRightWrong(true, "the exact answer is: " + numberWithCommas(currentTask.country.feature.properties.POP_EST));
 				}else{
+					answerWrong(currentTask);
 					showAnswerRightWrong(false, "the correct answer is: " + numberWithCommas(currentTask.country.feature.properties.POP_EST));
 				}
 				break;
@@ -839,6 +852,7 @@
 				if(document.getElementById("quiz-panel-input").value == currentTask.state.feature.properties.name){
 					showAnswerRightWrong(true, null);
 				}else{
+					answerWrong(currentTask);
 					showAnswerRightWrong(false, "The correct answer is: " + currentTask.state.feature.properties.name);
 				}
 				break;
@@ -846,11 +860,17 @@
 				if(document.getElementById("quiz-panel-input").value == currentTask.city.feature.properties.name_en){
 					showAnswerRightWrong(true, null);
 				}else{
+					answerWrong(currentTask);
 					showAnswerRightWrong(false, "The correct answer is: " + currentTask.city.feature.properties.name_en);
 				}
 				//resetHighlightCity(currentTask.city);
 				break;
 		}
+	}
+
+	function answerWrong(task){
+		tasks.splice(0, 0, task);
+		tasks.splice(2, 0, task);
 	}
 
 	function numberWithCommas(x) {
