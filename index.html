@@ -318,11 +318,11 @@
 		}
 	}
 
-	function zoomToCountry(layerCountry, padding = 2){
+	function zoomToCountry(layerCountry, padding = 0.2){
 		var bounds = layerCountry.getBounds().pad(padding);
-		bounds._northEast.lat = bounds._northEast.lat-12;
-		bounds._southWest.lat = bounds._southWest.lat-12;
-		map.fitBounds(bounds);
+		//bounds._northEast.lat = bounds._northEast.lat-5;
+		//bounds._southWest.lat = bounds._southWest.lat-5;
+		map.flyToBounds(bounds);
 	}
 
 	function highlightCountry(layer) {
@@ -789,8 +789,8 @@
 
 	function generateQuestions(){
 		tasks = [];
-		var tasksCountries = [];
 
+		var tasksCountries = [];
 		layerGroupCountriesSelected.eachLayer(function(layerCountrySelected){
 			tasksCountry = [];
 
@@ -810,40 +810,52 @@
 				tasksCountry.push(taskCountryPopulation);
 			}
 
-			if(quizQuestionTypes.includes("state-name")){
-				var tasksStates = [];
-				layerGroupStates.eachLayer(function(layerStates){
-					layerStates.eachLayer(function(layerState){
-						var task = {
-							"type": "state-name",
-							"country": layerCountrySelected,
-							"state": layerState
-						}
-						tasksStates.push(task);
-					});
-				});
-				tasksCountry.push.apply(tasksCountry, shuffle(tasksStates));
-			}
-
-			if(quizQuestionTypes.includes("city-name")){
-				var tasksCities = [];
-				layerGroupCities.eachLayer(function(layerCities){
-					layerCities.eachLayer(function(layerCity){
-						var task = {
-							"type": "city-name",
-							"country": layerCountrySelected,
-							"city": layerCity
-						}
-						tasksCities.push(task);
-					});
-				});
-				tasksCountry.push.apply(tasksCountry, shuffle(tasksCities));
-			}
-
-			tasksCountries.push.apply(tasksCountries, tasksCountry);
+			tasksCountries.push.apply(tasksCountries, shuffle(tasksCountry));
 		});
+		
+		var tasksStates = [];
+		if(quizQuestionTypes.includes("state-name")){
 
-		tasks.push.apply(tasks, tasksCountries);
+			layerGroupStates.eachLayer(function(layerStates){
+				layerStates.eachLayer(function(layerState){
+					tasksState = [];
+
+					var task = {
+						"type": "state-name",
+						"country": layerState.feature.properties.layerCountry,
+						"state": layerState
+					}
+					tasksState.push(task);
+
+					tasksStates.push.apply(tasksStates, shuffle(tasksState));
+				});
+			});
+		}
+
+		var tasksCities = [];
+		if(quizQuestionTypes.includes("city-name")){
+
+			layerGroupCities.eachLayer(function(layerCities){
+				layerCities.eachLayer(function(layerCity){
+					var tasksCity = [];
+
+					var task = {
+						"type": "city-name",
+						"country": layerCity.feature.properties.layerCountry,
+						"city": layerCity
+					}
+					tasksCity.push(task);
+
+					tasksCities.push.apply(tasksCities, shuffle(tasksCity));
+				});
+			});
+		}
+
+		tasks.push.apply(tasks, shuffle(tasksCountries));
+		tasks.push.apply(tasks, shuffle(tasksStates));
+		tasks.push.apply(tasks, shuffle(tasksCities));
+
+		tasks = shuffle(tasks);
 	}
 
 	function shuffle(a) {
@@ -856,8 +868,6 @@
 		}
 		return a;
 	}
-
-	var savedBounds;
 
 	var currentIndex = 0;
 	var repeat = false;
@@ -876,31 +886,33 @@
 		document.getElementById("quiz-panel-input-container").style.height = "auto";
 		currentTask = tasks[currentIndex];
 
-		if(savedBounds != undefined && currentTask.type != "city-name"){
+		/*if(savedBounds != undefined && currentTask.type != "city-name"){
 			map.fitBounds(savedBounds);
 			savedBounds = undefined;
-		}
+		}*/
 		switch(currentTask.type){
 			case "country-name":
 				selectCountry(currentTask.country);
-				zoomToCountry(currentCountry);
+				zoomToCountry(currentTask.country);
 				document.getElementById("quiz-panel-question").innerHTML = "What is the name of the selected country?";
 				break;
 			case "country-population":
 				selectCountry(currentTask.country);
+				zoomToCountry(currentTask.country);
 				document.getElementById("quiz-panel-question").innerHTML = "What is the population of the selected country in " + currentTask.country.feature.properties.POP_YEAR + "?";
 				break;
 			case "state-name":
 				selectCountry(currentTask.country);
 				selectState(currentTask.state);
+				zoomToCountry(currentTask.country);
 				document.getElementById("quiz-panel-question").innerHTML = "What is the name of the selected state?";
 				break;
 			case "city-name":
 				selectCountry(currentTask.country);
 				selectCity(currentTask.city);
-				if(savedBounds == undefined){
+				/*if(savedBounds == undefined){
 					savedBounds = map.getBounds();
-				}
+				}*/
 				/*var bounds = currentState.getBounds().pad(0.5);
 				bounds._southWest.lat = bounds._southWest.lat-2;
 				bounds._northEast.lat = bounds._northEast.lat-2;
