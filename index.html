@@ -502,9 +502,11 @@
 	}
 
 	function highlightState(layer) {
+		layer.bringToFront();
 		layer.setStyle({
-			weight: 2,
-			color: '#e0f2f1',
+			weight: 2.5,
+			//color: '#e0f2f1',
+			color: '#fff',
 			dashArray: '',
 			fillOpacity: 0.0
 		});
@@ -515,6 +517,7 @@
 		layerGroupStates.eachLayer(function (l) {
     		l.resetStyle(layer);
 		});
+		//layer.bringToBack();
 	  }
 	}
 
@@ -938,15 +941,18 @@
 				document.getElementById("quiz-panel-question").innerHTML = "What is the population of this country in " + currentTask.country.feature.properties.POP_YEAR + "?";
 				break;
 			case "state-name":
-				selectCountry(currentTask.country);
-				selectState(currentTask.state);
-				zoomToCountry(currentTask.country);
 				if(!map.hasLayer(layerGroupStates)){
 					layerGroupStates.addTo(map);
 				}
+				selectCountry(currentTask.country);
+				selectState(currentTask.state);
+				zoomToCountry(currentTask.country);
 				document.getElementById("quiz-panel-question").innerHTML = "What is the name of this state?";
 				break;
 			case "city-name":
+				if(!map.hasLayer(layerGroupCities)){
+					layerGroupCities.addTo(map);
+				}
 				selectCountry(currentTask.country);
 				selectCity(currentTask.city);
 				/*if(savedBounds == undefined){
@@ -958,9 +964,6 @@
 				map.fitBounds(bounds);*/
 				var point = currentTask.city.getLatLng();
 				map.flyTo([point.lat-1, point.lng], 5);
-				if(!map.hasLayer(layerGroupCities)){
-					layerGroupCities.addTo(map);
-				}
 				document.getElementById("quiz-panel-question").innerHTML = "What is the name of this city?";
 				break;
 		}
