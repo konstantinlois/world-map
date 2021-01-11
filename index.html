@@ -44,6 +44,8 @@
 				<div id="controls-countries">
 				</div>
 				<br>
+				<button onclick="selectCountries(function(layerCountry){return true;})">Select All</button>
+				<button onclick="unselectCountries(function(layerCountry){return true;})">Unselect All</button>
 			</div>
 		</div>
 
@@ -229,7 +231,7 @@
 			pane: 'countries',
 			style: function(){
 				return {
-					weight: 2,
+					weight: 2.5,
 					opacity: 1,
 					color: '#003839',
 					//dashArray: '3',
@@ -310,6 +312,24 @@
 		updateDetails();
 	}
 
+	function selectCountries(filter){
+		layerGroupCountries.eachLayer(function(layerCountries){
+			layerCountries.eachLayer(function(layerCountry){
+				if(filter(layerCountry)){
+					addCountryToCurrentCountries(layerCountry);
+				}
+			});
+		});
+	}
+
+	function unselectCountries(filter){
+		layerGroupCountriesSelected.eachLayer(function(layerCountry){
+			if(filter(layerCountry)){
+				removeCountryFromCurrentCountries(layerCountry);
+			}
+		});
+	}
+
 	function zoomToBiggestSelectedArea(){
 		if(layerGroupStates.getBounds().isValid()){
 			map.fitBounds(layerGroupStates.getBounds());
@@ -327,7 +347,7 @@
 
 	function highlightCountry(layer) {
 		layer.setStyle({
-			weight: 4,
+			weight: 3,
 			color: '#81d4fa',
 			dashArray: '',
 			fillOpacity: 0.0
@@ -357,9 +377,12 @@
 
 	function highlightCurrentCountry(layer) {
 		layer.setStyle({
-			weight: 4,
+			weight: 1,
 			color: '#66bb6a',
-			dashArray: '',
+			//dashArray: '7',
+			//dashOffset: '7',
+			//opacity: 0.5,
+			//fillColor: '#212121',
 			fillOpacity: 0.0
 		});
 	}
@@ -480,7 +503,7 @@
 
 	function highlightState(layer) {
 		layer.setStyle({
-			weight: 5,
+			weight: 2,
 			color: '#e0f2f1',
 			dashArray: '',
 			fillOpacity: 0.0
@@ -688,6 +711,8 @@
 
 	function setUpQuizVisuals(){
 		unselectCountry(currentCountry);
+		map.removeLayer(layerGroupStates);
+		map.removeLayer(layerGroupCities);
 		layerGroupCountriesSelected.eachLayer(function(layerCountrySelected){
 			if(document.getElementById('quiz-setup-question-type-states').checked){
 				showStatesOfCountry(layerCountrySelected);
@@ -715,6 +740,12 @@
 				removeCitiesOfCountry(layerCountrySelected);
 			}
 		});
+		if(!map.hasLayer(layerGroupStates)){
+			layerGroupStates.addTo(map);
+		}
+		if(!map.hasLayer(layerGroupCities)){
+			layerGroupCities.addTo(map);
+		}
 	}
 
 	function generateQuestionsOld(){
@@ -890,22 +921,30 @@
 			map.fitBounds(savedBounds);
 			savedBounds = undefined;
 		}*/
+
+		map.removeLayer(layerGroupStates);
+		map.removeLayer(layerGroupCities);
+
 		switch(currentTask.type){
 			case "country-name":
 				selectCountry(currentTask.country);
-				zoomToCountry(currentTask.country);
-				document.getElementById("quiz-panel-question").innerHTML = "What is the name of the selected country?";
+				//zoomToCountry(currentTask.country, 2);
+				map.flyTo(currentTask.country.getCenter(), 3);
+				document.getElementById("quiz-panel-question").innerHTML = "What is the name of this country?";
 				break;
 			case "country-population":
 				selectCountry(currentTask.country);
-				zoomToCountry(currentTask.country);
-				document.getElementById("quiz-panel-question").innerHTML = "What is the population of the selected country in " + currentTask.country.feature.properties.POP_YEAR + "?";
+				map.flyTo(currentTask.country.getCenter(), 3);
+				document.getElementById("quiz-panel-question").innerHTML = "What is the population of this country in " + currentTask.country.feature.properties.POP_YEAR + "?";
 				break;
 			case "state-name":
 				selectCountry(currentTask.country);
 				selectState(currentTask.state);
 				zoomToCountry(currentTask.country);
-				document.getElementById("quiz-panel-question").innerHTML = "What is the name of the selected state?";
+				if(!map.hasLayer(layerGroupStates)){
+					layerGroupStates.addTo(map);
+				}
+				document.getElementById("quiz-panel-question").innerHTML = "What is the name of this state?";
 				break;
 			case "city-name":
 				selectCountry(currentTask.country);
@@ -919,7 +958,10 @@
 				map.fitBounds(bounds);*/
 				var point = currentTask.city.getLatLng();
 				map.flyTo([point.lat-1, point.lng], 5);
-				document.getElementById("quiz-panel-question").innerHTML = "What is the name of the selected city?";
+				if(!map.hasLayer(layerGroupCities)){
+					layerGroupCities.addTo(map);
+				}
+				document.getElementById("quiz-panel-question").innerHTML = "What is the name of this city?";
 				break;
 		}
 	}
