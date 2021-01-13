@@ -65,7 +65,6 @@
 						<label><input type="checkbox" id="controls-info-cities" value="controls-info-cities"
 								onclick="toggleCities()" /> Cities</label>
 					</div>
-					<br>
 					<h4>Indicators</h4>
 					<div id="controls-info-country-indicators">
 
@@ -94,6 +93,10 @@
 								name="quiz-setup-question-type" value="state-name" /> State Name</label>
 						<label><input type="checkbox" id="quiz-setup-question-type-cities"
 								name="quiz-setup-question-type" value="city-name" /> City Name</label>
+					</div>
+					<h4>Indicators</h4>
+					<div id="quiz-setup-country-indicators">
+
 					</div>
 					<br>
 					<button onclick="startQuiz()">Start</button>
@@ -167,6 +170,8 @@
 		var layerGroupStates = L.featureGroup([], { pane: map.getPane('states') }).addTo(map);
 		var layerGroupCities = L.featureGroup([], { pane: map.getPane('cities') }).addTo(map);
 
+		var availableIndicators = [];
+		var loadedIndicators = [];
 		var currentIndicators = [];
 
 		showCountries();
@@ -320,11 +325,11 @@
 			if (layerCountry.feature.properties.indicators == undefined) {
 				return styleObject;
 			}
-			var currentIndicatorIdOnMap = document.getElementById('controls-info-country-indicator-on-map').value;
-			var indicator = layerCountry.feature.properties.indicators[currentIndicatorIdOnMap];
+			var indicatorId = document.getElementById('controls-info-country-indicator-on-map').value;
+			var indicator = layerCountry.feature.properties.indicators[indicatorId];
 			if (indicator != undefined && layerGroupCountriesSelected.hasLayer(layerCountry)) {
-				var min = currentIndicators[currentIndicatorIdOnMap].min;
-				var max = currentIndicators[currentIndicatorIdOnMap].max;
+				var min = availableIndicators[indicatorId].min;
+				var max = availableIndicators[indicatorId].max;
 
 				styleObject.fillOpacity = 1.0;
 				styleObject.fillColor = getGreenToRed((indicator.value - min) / (max - min) * 100);
@@ -702,32 +707,62 @@
 
 		// World Bank Indicatiors
 
-		const userAction = async () => {
-			const response = await fetch('https://api.worldbank.org/v2/indicators?per_page=1000&source=2&format=json');
-			const myJson = await response.json();
+		loadIndicators();
 
+		function loadIndicators() {
+			fetch('https://api.worldbank.org/v2/indicators?per_page=1000&source=2&format=json')
+				.then(response => response.json())
+				.then(data => {
+					var indicators = data[1];
+					for (var i = 0; i < indicators.length; i++) {
+						var indicator = indicators[i];
+						indicator.countryDataLoaded = false;
+						indicator.active = false;
+						availableIndicators[indicator.id] = indicator;
+					}
+
+					createInfoIndicatorCheckboxes();
+					createQuizIndicatorCheckboxes();
+				});
+		}
+
+		function createInfoIndicatorCheckboxes() {
 			var controlsInfoCountryIndicators = document.getElementById('controls-info-country-indicators');
-			var indicators = myJson[1];
-			for (var i = 0; i < indicators.length; i++) {
-				var indicator = indicators[i];
-
+			for (const availableIndicator of Object.values(availableIndicators)) {
 				var checkbox = document.createElement('input');
 				checkbox.type = "checkbox";
 				checkbox.name = "controls-info-country-indicator";
-				checkbox.value = indicator.id;
-				checkbox.id = "checkbox-info-world-bank-" + indicator.id;
+				checkbox.value = availableIndicator.id;
+				checkbox.id = "checkbox-info-world-bank-" + availableIndicator.id;
 				checkbox.onclick = function () { toggleCheckboxInfoCountryIndicator(event); };
 
 				var label = document.createElement('label');
-				label.htmlFor = "checkbox-info-world-bank-" + indicator.id;
+				label.htmlFor = "checkbox-info-world-bank-" + availableIndicator.id;
 				label.appendChild(checkbox);
-				label.appendChild(document.createTextNode(" " + indicator.name));
+				label.appendChild(document.createTextNode(" " + availableIndicator.name));
 
 				controlsInfoCountryIndicators.appendChild(label);
 			}
 		}
 
-		userAction();
+		function createQuizIndicatorCheckboxes() {
+			var controlsInfoCountryIndicators = document.getElementById('quiz-setup-country-indicators');
+			for (const availableIndicator of Object.values(availableIndicators)) {
+				var checkbox = document.createElement('input');
+				checkbox.type = "checkbox";
+				checkbox.name = "quiz-setup-country-indicator";
+				checkbox.value = availableIndicator.id;
+				checkbox.id = "checkbox-quiz-setup-country-indicator-" + availableIndicator.id;
+				checkbox.onclick = function () { toggleCheckboxQuestionSetupCountryIndicator(event); };
+
+				var label = document.createElement('label');
+				label.htmlFor = "checkbox-quiz-setup-country-indicator-" + availableIndicator.id;
+				label.appendChild(checkbox);
+				label.appendChild(document.createTextNode(" " + availableIndicator.name));
+
+				controlsInfoCountryIndicators.appendChild(label);
+			}
+		}
 
 		function toggleCheckboxInfoCountryIndicator(event) {
 			if (event.target.checked) {
@@ -738,10 +773,31 @@
 		}
 
 		function checkIndicator(indicatorId) {
-			if (currentIndicators[indicatorId] != undefined) {
-				return;
+			if(availableIndicators[indicatorId].countryDataLoaded){
+				if(!availableIndicators[indicatorId].active){
+					activateIndicator(indicatorId);
+				}
+			}else{
+				loadCountryIndicatorData(indicatorId, function () {
+					activateIndicator(indicatorId);
+					updateDetails();
+				});
 			}
-			fetch('https://api.worldbank.org/v2/countries/all/indicator/' + event.target.value + '?mrnev=1&per_page=400&format=json&date=2012:2020', { mode: 'cors' })
+		}
+
+		function activateIndicator(indicatorId){
+			var indicator = availableIndicators[indicatorId];
+			var countryIndicatorOnMapSelect = document.getElementById('controls-info-country-indicator-on-map');
+			var indicatorOption = document.createElement("option");
+			indicatorOption.text = indicator.name;
+			indicatorOption.value = indicator.id;
+			countryIndicatorOnMapSelect.add(indicatorOption);
+
+			indicator.active = true;
+		}
+
+		function loadCountryIndicatorData(indicatorId, onSuccess = function(){}) {
+			fetch('https://api.worldbank.org/v2/countries/all/indicator/' + indicatorId + '?mrnev=1&per_page=400&format=json&date=2012:2020', { mode: 'cors' })
 				.then(response => response.json())
 				.then(data => {
 					var min = undefined;
@@ -751,7 +807,7 @@
 					layerGroupCountries.eachLayer(function (layerCountries) {
 						layerCountries.eachLayer(function (layerCountry) {
 							data[1].forEach(d => {
-								if (d.country.value == layerCountry.feature.properties.NAME_EN) {
+								if (d.countryiso3code == layerCountry.feature.properties.ISO_A3) {
 									if (min == undefined || d.value < min) {
 										min = d.value;
 									}
@@ -769,41 +825,30 @@
 							});
 						});
 					});
-					currentIndicators[indicatorId] = {
-						min: min,
-						max: max
-					}
-
-					var countryIndicatorOnMapSelect = document.getElementById('controls-info-country-indicator-on-map');
-					var indicatorOption = document.createElement("option");
-					indicatorOption.text = indicatorId;
-					indicatorOption.value = indicatorId;
-					countryIndicatorOnMapSelect.add(indicatorOption);
-
-					updateDetails();
-				});
+					availableIndicators[indicatorId].min = min;
+					availableIndicators[indicatorId].max = max;
+					availableIndicators[indicatorId].countryDataLoaded = true;
+				})
+				.then(onSuccess());
 		}
 
 		function uncheckIndicator(indicatorId) {
+			deactivateIndicator(indicatorId);
+			updateDetails();
+		}
+
+		function deactivateIndicator(indicatorId){
 			var countryIndicatorOnMapSelect = document.getElementById('controls-info-country-indicator-on-map');
 			var selectedIndex = countryIndicatorOnMapSelect.selectedIndex;
 			for (var i = 0; i < countryIndicatorOnMapSelect.length; i++) {
 				if (countryIndicatorOnMapSelect.options[i].value == indicatorId) {
 					countryIndicatorOnMapSelect.remove(i);
-					if(i == selectedIndex){
+					if (i == selectedIndex) {
 						indicatorOnMapChanged();
 					}
 				}
 			}
-			delete currentIndicators[indicatorId];
-			layerGroupCountries.eachLayer(function (layerCountries) {
-				layerCountries.eachLayer(function (layerCountry) {
-					if(layerCountry.feature.properties.indicators != undefined){
-						delete layerCountry.feature.properties.indicators[indicatorId];
-					}
-				});
-			});
-			updateDetails();
+			availableIndicators[indicatorId].active = false;
 		}
 
 		function indicatorOnMapChanged() {
@@ -813,10 +858,20 @@
 			updateDetails();
 		}
 
+		function toggleCheckboxQuestionSetupCountryIndicator(event){
+			if(event.target.checked){
+				var indicatorId = event.target.value;
+				if(!availableIndicators[indicatorId].countryDataLoaded){
+					loadCountryIndicatorData(indicatorId);
+				}
+			}
+		}
+
 		// Quiz
 
 		var quizMode = false;
 		var quizQuestionTypes;
+		var quizCountryIndicators;
 		var tasks;
 		var currentTask;
 
@@ -838,6 +893,12 @@
 			quizQuestionTypes = [];
 			for (var i = 0; i < checkedQuestionTypeCheckBoxes.length; i++) {
 				quizQuestionTypes.push(checkedQuestionTypeCheckBoxes[i].value);
+			}
+
+			var checkedCountryIndicatorCheckBoxes = document.querySelectorAll('input[name=quiz-setup-country-indicator]:checked');
+			quizCountryIndicators = [];
+			for (var i = 0; i < checkedCountryIndicatorCheckBoxes.length; i++) {
+				quizCountryIndicators.push(checkedCountryIndicatorCheckBoxes[i].value);
 			}
 
 			savedBounds = undefined;
@@ -907,6 +968,17 @@
 						"country": layerCountrySelected
 					}
 					tasksCountry.push(taskCountryPopulation);
+				}
+
+				for (const indicator of Object.values(layerCountrySelected.feature.properties.indicators)) {
+					if(quizCountryIndicators.includes(indicator.indicator.id)){
+						var taskCountryIndicator = {
+							"type": "country-indicator",
+							"country": layerCountrySelected,
+							"indicator": indicator
+						}
+						tasksCountry.push(taskCountryIndicator);
+					}
 				}
 
 				tasksCountries.push.apply(tasksCountries, shuffle(tasksCountry));
@@ -985,11 +1057,6 @@
 			document.getElementById("quiz-panel-input-container").style.height = "auto";
 			currentTask = tasks[currentIndex];
 
-			/*if(savedBounds != undefined && currentTask.type != "city-name"){
-				map.fitBounds(savedBounds);
-				savedBounds = undefined;
-			}*/
-
 			map.removeLayer(layerGroupStates);
 			map.removeLayer(layerGroupCities);
 
@@ -1004,6 +1071,11 @@
 					selectCountry(currentTask.country);
 					map.flyTo(currentTask.country.getCenter(), 3);
 					document.getElementById("quiz-panel-question").innerHTML = "What is the population of this country in " + currentTask.country.feature.properties.POP_YEAR + "?";
+					break;
+				case "country-indicator":
+					selectCountry(currentTask.country);
+					map.flyTo(currentTask.country.getCenter(), 3);
+					document.getElementById("quiz-panel-question").innerHTML = "What is the " + currentTask.indicator.indicator.value + " of this country in " + currentTask.indicator.date + "?";
 					break;
 				case "state-name":
 					if (!map.hasLayer(layerGroupStates)) {
@@ -1053,6 +1125,15 @@
 					} else {
 						answerWrong(currentTask);
 						showAnswerRightWrong(false, "the correct answer is: " + numberWithCommas(currentTask.country.feature.properties.POP_EST));
+					}
+					break;
+				case "country-indicator":
+					if (Math.abs(document.getElementById("quiz-panel-input").value.replace(/,/g, '') - currentTask.indicator.value) <= 0.10 * currentTask.indicator.value) {
+						answerRight(currentTask);
+						showAnswerRightWrong(true, "the exact answer is: " + numberWithCommas(currentTask.indicator.value));
+					} else {
+						answerWrong(currentTask);
+						showAnswerRightWrong(false, "the correct answer is: " + numberWithCommas(currentTask.indicator.value));
 					}
 					break;
 				case "state-name":
