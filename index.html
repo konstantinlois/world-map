@@ -52,9 +52,15 @@
 		<div id="controls">
 			<h2 class="collapsible-button">Controls</h2>
 			<div id="controls-content" class="collapsible-content">
+				<h4>Geographical Infos</h4>
 				<div id="controls-info-types">
 					<label><input type="checkbox" id="controls-info-states" value="controls-info-states" onclick="toggleStates()"/> States</label>
 					<label><input type="checkbox" id="controls-info-cities" value="controls-info-cities" onclick="toggleCities()"/> Cities</label>
+				</div>
+				<br>
+				<h4>Indicators</h4>
+				<div id="controls-info-country-indicators">
+
 				</div>
 				<br>
 			</div>
@@ -168,6 +174,86 @@
 		content.style.maxHeight = content.scrollHeight + "px";
 		} 
 	});
+	}
+
+	// World Bank Indicatiors
+
+	const userAction = async () => {
+  		const response = await fetch('http://api.worldbank.org/v2/indicators?per_page=400&format=json');
+		const myJson = await response.json();
+			
+		var controlsInfoCountryIndicators = document.getElementById('controls-info-country-indicators');
+		var indicators = myJson[1];
+		for(var i = 0; i < indicators.length; i++){
+			var indicator = indicators[i];
+
+			var checkbox = document.createElement('input');
+			checkbox.type = "checkbox";
+			checkbox.name = "controls-info-country-indicator";
+			checkbox.value = indicator.id;
+			checkbox.id = "checkbox-info-world-bank-" + indicator.id;
+			checkbox.onclick = function() { toggleCheckboxInfoCountryIndicator(event); };
+
+			var label = document.createElement('label');
+			label.htmlFor = "checkbox-info-world-bank-" + indicator.id;
+			label.appendChild(checkbox);
+			label.appendChild(document.createTextNode(" " + indicator.name));
+
+			controlsInfoCountryIndicators.appendChild(label);
+		}
+	}
+
+	userAction();
+
+	function toggleCheckboxInfoCountryIndicator(event){
+		if(event.target.checked){
+			//layerCountrySelected.feature.properties.ADM0_A3
+			fetch('http://api.worldbank.org/v2/countries/all/indicator/' + event.target.value +  '?mrnev=2&per_page=400&format=json', {mode: 'cors'})
+  					.then(response => response.json())
+  					.then(data => {
+						var min = undefined;
+						var max = undefined;
+						var dataMappedToCountryKeys = [];
+						
+						layerGroupCountries.eachLayer(function(layerCountries){
+							layerCountries.eachLayer(function(layerCountry){
+								data[1].forEach(d => {
+									if(d.country.value == layerCountry.feature.properties.NAME_EN){
+										if(min == undefined || d.value < min){
+											min = d.value;
+										}
+										if(max == undefined || d.value > max){
+											max = d.value;
+										}
+										//dataMappedToCountryKeys[layerCountry] = d;
+										layerCountry.feature.properties.indicator = d;
+									}
+								});
+							});
+						});
+						layerGroupCountriesSelected.eachLayer(function(layerCountrySelected){
+							showCountryIndicator(layerCountrySelected, min, max);
+						});
+					});
+		}else{
+			layerGroupCountriesSelected.eachLayer(function(layerCountrySelected){
+				removeStatesOfCountry(layerCountrySelected);
+			});
+		}
+	}
+
+	function showIndicatorOfCountry(layerCountry, indicator, min, max){
+		if(layerCountry.feature.properties.indicators == undefined){
+			layerCountry.feature.properties.indicators = [];
+		}
+		layerCountry.feature.properties.indicators.push(indicator);
+		if(layerGroupCountriesSelected.hasLayer(layerCountry)){
+			showCountryIndicator(layerCountry, min, max);
+		}
+	}
+
+	function removeIndicatorOfCountry(){
+
 	}
 
 	// Details
@@ -428,6 +514,82 @@
 				}
 			});
 		});
+	}
+
+	function showCountryIndicator(layerCountry, min, max){
+		var indicator = layerCountry.feature.properties.indicator;
+		if(indicator != undefined && indicator.value != ""){
+			console.log((indicator.value - min)/(max - min));
+			layerCountry.setStyle({
+				fillOpacity: 7.0,
+				fillColor: getGreenToRed((indicator.value - min)/(max - min)*100)
+			});
+		}
+	}
+
+	function getGreenToRed(percent){
+		r = percent<50 ? 255 : Math.floor(255-(percent*2-100)*255/100);
+		g = percent>50 ? 255 : Math.floor((percent*2)*255/100);
+		return 'rgb('+r+','+g+',0)';
+    }
+
+		/**
+	 * Convert a number to a color using hsl, with range definition.
+	 * Example: if min/max are 0/1, and i is 0.75, the color is closer to green.
+	 * Example: if min/max are 0.5/1, and i is 0.75, the color is in the middle between red and green.
+	 * @param i (floating point, range 0 to 1)
+	 * param min (floating point, range 0 to 1, all i at and below this is red)
+	 * param max (floating point, range 0 to 1, all i at and above this is green)
+	 */
+	function numberToColorHsl(i, min, max) {
+		var ratio = (i - min) / (max - min);
+
+		// as the function expects a value between 0 and 1, and red = 0° and green = 120°
+		// we convert the input to the appropriate hue value
+		var hue = ratio * 1.2 / 3.60;
+		//if (minMaxFactor!=1) hue /= minMaxFactor;
+		//console.log(hue);
+
+		// we convert hsl to rgb (saturation 100%, lightness 50%)
+		var rgb = hslToRgb(hue, 1, .5);
+		// we format to css value and return
+		return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')'; 
+	}
+
+		/**
+	 * Converts an HSL color value to RGB. Conversion formula
+	 * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
+	 * Assumes h, s, and l are contained in the set [0, 1] and
+	 * returns r, g, and b in the set [0, 255].
+	 *
+	 * @param   {number}  h       The hue
+	 * @param   {number}  s       The saturation
+	 * @param   {number}  l       The lightness
+	 * @return  {Array}           The RGB representation
+	 */
+	function hslToRgb(h, s, l){
+		var r, g, b;
+
+		if(s == 0){
+			r = g = b = l; // achromatic
+		}else{
+			var hue2rgb = function hue2rgb(p, q, t){
+				if(t < 0) t += 1;
+				if(t > 1) t -= 1;
+				if(t < 1/6) return p + (q - p) * 6 * t;
+				if(t < 1/2) return q;
+				if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+				return p;
+			}
+
+			var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+			var p = 2 * l - q;
+			r = hue2rgb(p, q, h + 1/3);
+			g = hue2rgb(p, q, h);
+			b = hue2rgb(p, q, h - 1/3);
+		}
+
+		return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 	}
 
 	// States and Provinces
