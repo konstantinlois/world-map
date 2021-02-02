@@ -242,7 +242,7 @@
                         var heading = document.createElement('h4');
                         var info = document.createElement('p');
                         heading.innerHTML = countryIndicator.indicator.value;
-                        info.innerHTML = countryIndicator.value;
+                        info.innerHTML = countryIndicator.value + " [in " + countryIndicator.date + "]";
                         detailsCountryIndicators.appendChild(heading);
                         detailsCountryIndicators.appendChild(info);
                     }
@@ -712,7 +712,7 @@
         loadIndicators();
 
         function loadIndicators() {
-            fetch('https://api.worldbank.org/v2/indicators?per_page=1000&source=2&format=json')
+            fetch('https://api.worldbank.org/v2/indicators?per_page=2000&source=2&format=json')
                 .then(response => response.json())
                 .then(data => {
                     var indicators = data[1];
@@ -802,12 +802,6 @@
             indicator.active = true;
         }
 
-        let headers = new Headers({
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36"
-        });
-
         function loadCountryIndicatorData(indicatorId, onSuccess = function() {}) {
             /*fetch('https://api.worldbank.org/v2/countries/all/indicator/' + indicatorId + '?mrnev=1&per_page=400&format=json&date=2012:2020', {
 
@@ -894,7 +888,7 @@
                     onSuccess();
                 }
             };
-            xhttp.open("GET", "https://api.worldbank.org/v2/countries/all/indicator/" + indicatorId + "?per_page=2000&format=json&date=2012:2020", true);
+            xhttp.open("GET", "https://api.worldbank.org/v2/countries/all/indicator/" + indicatorId + "?per_page=5000&format=json&date=2014:2020", true);
             xhttp.send();
         }
 
