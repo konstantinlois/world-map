@@ -32,43 +32,52 @@
 
     <div id="menu">
 
+        <div class="test">
+
+        </div>
+
+        <div id="menu-button-close" onclick="toggleMenu()">✕</div>
+
         <div id="menu-content">
-
-            <div id="menu-button-close" onclick="toggleMenu()">✕</div>
-
             <br></br>
             <br>
 
             <div id="regions">
-                <h2 class="collapsible-button">Selected Regions</h2>
+                <h2 class="collapsible-button menu-section-heading">Selected Regions</h2>
                 <div class="collapsible-content">
-                    <h4>Countries</h4>
-                    <div id="controls-countries">
+                    <div class="menu-section-content">
+                        <h4 class="menu-sub-section-heading">Countries</h4>
+                        <div id="controls-countries">
+                        </div>
+                        <br>
+                        <button onclick="selectCountries(function(layerCountry){return true;})">Select All</button>
+                        <button onclick="unselectCountries(function(layerCountry){return true;})">Unselect All</button>
                     </div>
-                    <br>
-                    <button onclick="selectCountries(function(layerCountry){return true;})">Select All</button>
-                    <button onclick="unselectCountries(function(layerCountry){return true;})">Unselect All</button>
                 </div>
             </div>
 
             <div id="controls">
-                <h2 class="collapsible-button">Controls</h2>
+                <h2 class="collapsible-button menu-section-heading">Controls</h2>
                 <div id="controls-content" class="collapsible-content">
-                    <h4>Geographical Infos</h4>
-                    <div id="controls-info-types">
-                        <label><input type="checkbox" id="controls-info-states" value="controls-info-states"
-								onclick="toggleStates()" /> States</label>
-                        <label><input type="checkbox" id="controls-info-cities" value="controls-info-cities"
-								onclick="toggleCities()" /> Cities</label>
-                    </div>
-                    <h4>Indicators</h4>
-                    <div id="controls-info-country-indicators">
+                    <div class="menu-section-content">
+                        <h4 class="menu-sub-section-heading">Geographical Infos</h4>
+                        <div id="controls-info-types">
+                            <label><input type="checkbox" id="controls-info-states" value="controls-info-states"
+                                    onclick="toggleStates()" /> States</label>
+                            <label><input type="checkbox" id="controls-info-cities" value="controls-info-cities"
+                                    onclick="toggleCities()" /> Cities</label>
+                        </div>
+                        <br>
+                        <h4 class="menu-sub-section-heading">Indicators</h4>
+                        <div id="controls-info-country-indicators">
 
+                        </div>
+                        <select id="controls-info-country-indicator-on-map" onchange="indicatorOnMapChanged()">
+                            <option value="">None</option>
+                        </select>
+                        <br></br>
+                        <button onclick="toggleIndicatorColors()">Toggle colors</button>
                     </div>
-                    <select id="controls-info-country-indicator-on-map" onchange="indicatorOnMapChanged()">
-						<option value="">None</option>
-					</select>
-                    <br>
                 </div>
             </div>
 
@@ -77,26 +86,29 @@
 			<span class="slider round"></span>
 		</label>-->
             <div class="quiz-setup">
-                <h2 class="collapsible-button">Quiz</h2>
+                <h2 class="collapsible-button menu-section-heading">Quiz</h2>
                 <div id="quiz-setup-content" class="collapsible-content">
-                    <h4>Question Types</h4>
-                    <div id="quiz-setup-question-types">
-                        <label><input type="checkbox" name="quiz-setup-question-type" value="country-name" /> Country
-							Name</label>
-                        <label><input type="checkbox" name="quiz-setup-question-type" value="country-population" />
-							Country Population</label>
-                        <label><input type="checkbox" id="quiz-setup-question-type-states"
-								name="quiz-setup-question-type" value="state-name" /> State Name</label>
-                        <label><input type="checkbox" id="quiz-setup-question-type-cities"
-								name="quiz-setup-question-type" value="city-name" /> City Name</label>
-                    </div>
-                    <h4>Indicators</h4>
-                    <div id="quiz-setup-country-indicators">
+                    <div class="menu-section-content">
+                        <h4 class="menu-sub-section-heading">Question Types</h4>
+                        <div id="quiz-setup-question-types">
+                            <label><input type="checkbox" name="quiz-setup-question-type" value="country-name" /> Country
+                                Name</label>
+                            <label><input type="checkbox" name="quiz-setup-question-type" value="country-population" />
+                                Country Population</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states"
+                                    name="quiz-setup-question-type" value="state-name" /> State Name</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-cities"
+                                    name="quiz-setup-question-type" value="city-name" /> City Name</label>
+                        </div>
+                        <br>
+                        <h4 class="menu-sub-section-heading">Indicators</h4>
+                        <div id="quiz-setup-country-indicators">
 
+                        </div>
+                        <br>
+                        <button onclick="startQuiz()">Start</button>
+                        <br></br>
                     </div>
-                    <br>
-                    <button onclick="startQuiz()">Start</button>
-                    <br></br>
                 </div>
             </div>
 
@@ -176,14 +188,56 @@
         showCountries();
 
         var menuOpen = false;
+        var first = true;
+
+        function getScrollbarWidth() {
+
+            // Creating invisible container
+            const outer = document.createElement('div');
+            outer.style.visibility = 'hidden';
+            outer.style.overflow = 'scroll'; // forcing scrollbar to appear
+            outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+            document.body.appendChild(outer);
+
+            // Creating inner element and placing it in the container
+            const inner = document.createElement('div');
+            outer.appendChild(inner);
+
+            // Calculating difference between container's full width and the child width
+            const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
+
+            // Removing temporary elements from the DOM
+            outer.parentNode.removeChild(outer);
+
+            return scrollbarWidth;
+
+        }
+
+        /*var slides = document.getElementsByClassName("menu-content");
+        for (var i = 0; i < slides.length; i++) {
+            Distribute(slides.item(i));
+        }*/
+
+        var menu = document.getElementById('menu');
+        if (screen.width < 700) {
+            menu.style.maxWidth = "100%";
+            document.getElementById("menu-content").style.maxWidth = screen.width - 60 + "px";
+        } else {
+            menu.style.maxWidth = 450 + "px";
+            document.getElementById("menu-content").style.maxWidth = 450 - 80 + "px";
+        }
+
 
         function toggleMenu() {
             var menu = document.getElementById('menu');
             if (menuOpen) {
-                menu.style.maxWidth = null;
+                //menu.style.display = "none";
+                menu.style.width = 0 + "px";
+                //menu.style.marginLeft = -500 + "px";
                 menuOpen = false;
             } else {
-                menu.style.maxWidth = menu.scrollWidth + "px";
+                menu.style.width = menu.style.maxWidth;
+                //menu.style.marginLeft = 0;
                 menuOpen = true;
             }
         }
@@ -341,10 +395,24 @@
             return styleObject;
         }
 
+        colorsToggled = false;
+
         function getGreenToRed(percent) {
             r = percent < 50 ? 255 : Math.floor(255 - (percent * 2 - 100) * 255 / 100);
             g = percent > 50 ? 255 : Math.floor((percent * 2) * 255 / 100);
+            if (colorsToggled) {
+                var tempColor = r;
+                r = g;
+                g = tempColor;
+            }
             return 'rgb(' + r + ',' + g + ',0)';
+        }
+
+        function toggleIndicatorColors() {
+            colorsToggled = !colorsToggled;
+            layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
+                updateCountryStyle(layerCountrySelected);
+            });
         }
 
         function onEachCountry(feature, layer) {
