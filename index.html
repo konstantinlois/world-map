@@ -12,6 +12,8 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <script src="./leaflet-event-forwarder.js"></script>
 
+    <script src="https://tyrasd.github.io/osmtogeojson/osmtogeojson.js"></script>
+
     <link rel="stylesheet" href="style.css">
 
     <script src="countries.json"></script>
@@ -180,6 +182,44 @@
         var layerGroupCities = L.featureGroup([], {
             pane: map.getPane('cities')
         }).addTo(map);
+
+        /*fetch('nigeria-roads-query.txt')
+            .then(response => response.text())
+            .then((data) => {
+                console.log(data);
+                var url = 'https://overpass-api.de/api/interpreter?data=' + encodeURI(data);
+
+                console.log(url);
+
+                fetch(url).then(function(response) {
+                    return response.json().then(function(json) {
+                        var geojsonCollection = osmtogeojson(json);
+                        console.log('Copy the string after in a static file and you have your geojson: ', JSON.stringify(geojsonCollection));
+                        L.geoJSON(geojsonCollection, {
+                            pane: 'cities',
+                            onEachFeature: onEachRoad
+                        }).addTo(map);
+                    });
+                });
+            })*/
+
+        fetch('export.json').then(function(response) {
+            return response.json().then(function(json) {
+                //var geojsonCollection = osmtogeojson(json);
+                //console.log('Copy the string after in a static file and you have your geojson: ', JSON.stringify(geojsonCollection));
+                L.geoJSON(json, {
+                    pane: 'cities',
+                    onEachFeature: onEachRoad
+                }).addTo(map);
+            });
+        });
+
+        function onEachRoad(feature, layer) {
+            layer.on('click', function(event) {
+                console.log(event.target.feature.properties);
+                console.log(event.target.feature.properties.name);
+            });
+        }
 
         var availableIndicators = [];
         var loadedIndicators = [];
