@@ -68,6 +68,8 @@
                                     onclick="toggleStates()" /> States</label>
                             <label><input type="checkbox" id="controls-info-cities" value="controls-info-cities"
                                     onclick="toggleCities()" /> Cities</label>
+                            <label><input type="checkbox" id="controls-info-roads" value="controls-info-roads"
+                                        onclick="toggleRoads()" /> Roads</label>
                         </div>
                         <br>
                         <h4 class="menu-sub-section-heading">Indicators</h4>
@@ -168,10 +170,12 @@
         map.createPane('countries');
         map.createPane('states');
         map.createPane('cities');
+        map.createPane('roads');
 
         map.getPane('countries').style.zIndex = 1001;
         map.getPane('states').style.zIndex = 1002;
         map.getPane('cities').style.zIndex = 1003;
+        map.getPane('roads').style.zIndex = 1004;
 
         var layerGroupCountries = L.featureGroup([], {
             pane: map.getPane('countries')
@@ -182,44 +186,9 @@
         var layerGroupCities = L.featureGroup([], {
             pane: map.getPane('cities')
         }).addTo(map);
-
-        /*fetch('nigeria-roads-query.txt')
-            .then(response => response.text())
-            .then((data) => {
-                console.log(data);
-                var url = 'https://overpass-api.de/api/interpreter?data=' + encodeURI(data);
-
-                console.log(url);
-
-                fetch(url).then(function(response) {
-                    return response.json().then(function(json) {
-                        var geojsonCollection = osmtogeojson(json);
-                        console.log('Copy the string after in a static file and you have your geojson: ', JSON.stringify(geojsonCollection));
-                        L.geoJSON(geojsonCollection, {
-                            pane: 'cities',
-                            onEachFeature: onEachRoad
-                        }).addTo(map);
-                    });
-                });
-            })*/
-
-        fetch('export.json').then(function(response) {
-            return response.json().then(function(json) {
-                //var geojsonCollection = osmtogeojson(json);
-                //console.log('Copy the string after in a static file and you have your geojson: ', JSON.stringify(geojsonCollection));
-                L.geoJSON(json, {
-                    pane: 'cities',
-                    onEachFeature: onEachRoad
-                }).addTo(map);
-            });
-        });
-
-        function onEachRoad(feature, layer) {
-            layer.on('click', function(event) {
-                console.log(event.target.feature.properties);
-                console.log(event.target.feature.properties.name);
-            });
-        }
+        var layerGroupRoads = L.featureGroup([], {
+            pane: map.getPane('roads')
+        }).addTo(map);
 
         var availableIndicators = [];
         var loadedIndicators = [];
@@ -228,30 +197,6 @@
         showCountries();
 
         var menuOpen = false;
-        var first = true;
-
-        function getScrollbarWidth() {
-
-            // Creating invisible container
-            const outer = document.createElement('div');
-            outer.style.visibility = 'hidden';
-            outer.style.overflow = 'scroll'; // forcing scrollbar to appear
-            outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
-            document.body.appendChild(outer);
-
-            // Creating inner element and placing it in the container
-            const inner = document.createElement('div');
-            outer.appendChild(inner);
-
-            // Calculating difference between container's full width and the child width
-            const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
-
-            // Removing temporary elements from the DOM
-            outer.parentNode.removeChild(outer);
-
-            return scrollbarWidth;
-
-        }
 
         /*var slides = document.getElementsByClassName("menu-content");
         for (var i = 0; i < slides.length; i++) {
@@ -478,6 +423,9 @@
                 if (document.getElementById('controls-info-cities').checked) {
                     showCitiesOfCountry(layerCountry);
                 }
+                if (document.getElementById('controls-info-roads').checked) {
+                    showRoadsOfCountry(layerCountry);
+                }
                 updateCountryStyle(layerCountry);
             }
         }
@@ -490,6 +438,9 @@
             }
             if (document.getElementById('controls-info-cities').checked) {
                 removeCitiesOfCountry(layerCountry);
+            }
+            if (document.getElementById('controls-info-roads').checked) {
+                removeRoadsOfCountry(layerCountry);
             }
             updateCountryStyle(currentCountry);
         }
@@ -812,6 +763,165 @@
                 });
             });
         });
+
+        // Roads
+
+        currentRoad = undefined;
+
+        /*fetch('nigeria-roads-query.txt')
+            .then(response => response.text())
+            .then((data) => {
+                console.log(data);
+                var url = 'https://overpass-api.de/api/interpreter?data=' + encodeURI(data);
+
+                console.log(url);
+
+                fetch(url).then(function(response) {
+                    return response.json().then(function(json) {
+                        var geojsonCollection = osmtogeojson(json);
+                        console.log('Copy the string after in a static file and you have your geojson: ', JSON.stringify(geojsonCollection));
+                        L.geoJSON(geojsonCollection, {
+                            pane: 'cities',
+                            onEachFeature: onEachRoad
+                        }).addTo(map);
+                    });
+                });
+            })*/
+
+        /*fetch('data/roads/NGA2.json').then(function(response) {
+            return response.json().then(function(json) {
+                //var geojsonCollection = osmtogeojson(json);
+                //console.log('Copy the string after in a static file and you have your geojson: ', JSON.stringify(geojsonCollection));
+                L.geoJSON(json, {
+                    pane: 'roads',
+                    onEachFeature: onEachRoad
+                }).addTo(map);
+            });
+        });*/
+
+        /*function onEachRoad(feature, layer) {
+            layer.on('click', function(event) {
+                selectRoad();
+
+                console.log(event.target.feature.properties);
+                console.log(event.target.feature.properties.name);
+                event.target.setStyle({
+                    color: "#000000"
+                });
+            });
+        }*/
+
+        function showRoadsOfCountry(country) {
+            var alreadyShown = false;
+            layerGroupRoads.eachLayer(function(layerRoads) {
+                if (layerRoads.country == country) {
+                    alreadyShown = true;
+                }
+            });
+            if (alreadyShown) {
+                return;
+            }
+
+            fetch('data/roads/' + country.feature.properties.ISO_A3 + '.json').then(function(response) {
+                return response.json().then(function(json) {
+                    var layerRoads = L.geoJSON(json, {
+                        pane: 'roads',
+                        style: function() {
+                            return getRoadStyle();
+                        },
+                        /*filter: function(f) {
+                            return f.properties.geonunit === country.feature.properties.NAME_EN;
+                        },*/
+                        onEachFeature: function(feature, layer) {
+                            layer.feature.properties.layerCountry = country;
+                            layer.on('click', function(event) {
+                                if (!quizMode) {
+                                    selectCountry(event.target.feature.properties.layerCountry)
+                                    selectRoad(event.target);
+                                }
+                            });
+                        }
+                    });
+                    layerRoads.country = country;
+                    layerGroupRoads.addLayer(layerRoads);
+                });
+            });
+        }
+
+        function updateRoadStyle(layerRoad) {
+            if (layerRoad != undefined) {
+                layerRoad.setStyle(getRoadStyle(layerRoad));
+            }
+        }
+
+        function getRoadStyle(layerRoad = undefined) {
+            styleObject = {
+                weight: 2,
+                color: '#c5e1a5',
+                //dashArray: '3',
+                fillOpacity: 0.0
+            };
+            if (layerRoad != undefined) {
+                stlyeObject = applyRoadSelectedStyle(layerRoad, styleObject);
+            }
+            return styleObject;
+        }
+
+        function applyRoadSelectedStyle(layerRoad, styleObject) {
+            if (layerRoad == currentRoad) {
+                styleObject.weight = 2.5;
+                //color: '#e0f2f1',
+                styleObject.color = '#fff';
+                styleObject.dashArray = '';
+            }
+            return styleObject;
+        }
+
+        function removeRoadsOfCountry(country) {
+            layerGroupRoads.eachLayer(function(layerRoads) {
+                if (layerRoads.country === country) {
+                    layerGroupRoads.removeLayer(layerRoads);
+                }
+            });
+        }
+
+        function selectRoad(layer) {
+            if (layer == undefined) {
+                return;
+            }
+
+            unselectRoad(currentRoad);
+
+            currentRoad = layer;
+            updateRoadStyle(layer);
+            updateDetails();
+        }
+
+        function unselectRoad(road) {
+            if (currentCity != undefined && road != undefined && currentCity.feature.properties.ADM1NAME == road.feature.properties.name) {
+                unselectCity(currentCity);
+            }
+
+            currentRoad = undefined;
+            updateRoadStyle(road);
+            updateDetails();
+        }
+
+        function zoomToRoad(roadLayer) {
+            map.fitBounds(roadLayer.getBounds().pad(0.5));
+        }
+
+        function toggleRoads() {
+            if (document.getElementById('controls-info-roads').checked) {
+                layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
+                    showRoadsOfCountry(layerCountrySelected);
+                });
+            } else {
+                layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
+                    removeRoadsOfCountry(layerCountrySelected);
+                });
+            }
+        }
 
         // Indicators
 
