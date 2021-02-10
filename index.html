@@ -183,27 +183,80 @@
             maxZoom: 16
         }).addTo(map);
 
+        var statePanes = [];
         map.createPane('countries');
-        map.createPane('states');
+        statePanes.push(map.createPane('states-1'));
+        statePanes.push(map.createPane('states-2'));
+        statePanes.push(map.createPane('states-3'));
+        statePanes.push(map.createPane('states-4'));
+        statePanes.push(map.createPane('states-5'));
+        statePanes.push(map.createPane('states-6'));
+        statePanes.push(map.createPane('states-7'));
+        statePanes.push(map.createPane('states-top'));
         map.createPane('cities');
         map.createPane('roads');
 
         map.getPane('countries').style.zIndex = 1001;
-        map.getPane('states').style.zIndex = 1002;
-        map.getPane('cities').style.zIndex = 1003;
-        map.getPane('roads').style.zIndex = 1004;
+        map.getPane('states-1').style.zIndex = 1008;
+        map.getPane('states-2').style.zIndex = 1007;
+        map.getPane('states-3').style.zIndex = 1006;
+        map.getPane('states-4').style.zIndex = 1005;
+        map.getPane('states-5').style.zIndex = 1004;
+        map.getPane('states-6').style.zIndex = 1003;
+        map.getPane('states-7').style.zIndex = 1002;
+        map.getPane('states-top').style.zIndex = 1009;
+        map.getPane('cities').style.zIndex = 10010;
+        map.getPane('roads').style.zIndex = 1011;
+
+        statePanes.forEach(statePane => {
+            enableForwardingOnPane(statePane);
+        });
+
+        var lastLevel = 0;
+
+        function enableForwardingOnPane(pane) {
+            L.DomEvent.on(pane, 'click', function(e) {
+                if (e._stopped) {
+                    return;
+                }
+
+                var target = e.target;
+                var stopped;
+                var removed;
+                var ev = new MouseEvent(e.type, e)
+
+                removed = {
+                    node: target,
+                    display: target.style.display
+                };
+                target.style.display = 'none';
+                target = document.elementFromPoint(e.clientX, e.clientY);
+
+                if (target && target !== pane) {
+                    stopped = !target.dispatchEvent(ev);
+                    if (stopped || ev._stopped) {
+                        L.DomEvent.stop(e);
+                    }
+                }
+
+                removed.node.style.display = removed.display;
+            });
+        }
 
         var layerGroupCountries = L.featureGroup([], {
             pane: map.getPane('countries')
         }).addTo(map);
         var layerGroupStates = L.featureGroup([], {
-            pane: map.getPane('states')
+            //pane: map.getPane('states')
         }).addTo(map);
         var layerGroupCities = L.featureGroup([], {
             pane: map.getPane('cities')
         }).addTo(map);
         var layerGroupRoads = L.featureGroup([], {
             pane: map.getPane('roads')
+        }).addTo(map);
+        var layerGroupStatesTop = L.featureGroup([], {
+            pane: map.getPane('states-top')
         }).addTo(map);
 
         var availableIndicators = [];
@@ -263,7 +316,8 @@
         var layerGroupCountriesSelected = L.featureGroup([]);
 
         var currentCountry;
-        var currentState;
+        var currentStates = [];
+        var currentStateCopy;
         var currentCity;
 
         function updateDetails() {
@@ -283,7 +337,7 @@
                 }
 
                 var detailsState = document.getElementById('details-state');
-                detailsState.innerHTML = currentState != undefined ? currentState.feature.properties.name + " (" + currentState.feature.properties.all_tags.population + ")" : 'none';
+                //detailsState.innerHTML = currentState != undefined ? currentState.feature.properties.name + " (" + currentState.feature.properties.all_tags.population + ")" : 'none';
 
                 var detailsCity = document.getElementById('details-city');
                 detailsCity.innerHTML = currentCity != undefined ? currentCity.feature.properties.name_en + " (" + numberWithCommas(currentCity.feature.properties.POP_MIN) + ")" : 'none';
@@ -476,9 +530,15 @@
         }
 
         function unselectCountry(country) {
-            if (currentState != undefined && country != undefined && currentState.feature.properties.layerCountry == country) {
+            /*currentStates.forEach(currentState => {
+                if (currentState != undefined && country != undefined && currentState.feature.properties.layerCountry == country) {
+                    unselectState(currentState);
+                }
+            });*/
+
+            /*if (currentState != undefined && country != undefined && currentState.feature.properties.layerCountry == country) {
                 unselectState(currentState);
-            }
+            }*/
             if (currentCity != undefined && country != undefined && currentCity.feature.properties.layerCountry == country) {
                 unselectCity(currentCity);
             }
@@ -593,9 +653,9 @@
                 .then(response => response.json())
                 .then(json => {
                     var layerStates = L.geoJSON(json, {
-                        pane: 'states',
+                        pane: 'states-' + adminLevel,
                         style: function() {
-                            return getStateStyle();
+                            return getStateStyle(adminLevel);
                         },
                         filter: function(f) {
                             return f.properties.admin_level == adminLevel;
@@ -618,29 +678,112 @@
 
         function updateStateStyle(layerState) {
             if (layerState != undefined) {
-                layerState.setStyle(getStateStyle(layerState));
+                layerState.setStyle(getStateStyle(layerState.feature.properties.admin_level, layerState));
             }
         }
 
-        function getStateStyle(layerState = undefined) {
+        function getStateStyle(adminLevel, layerState = undefined) {
+            var color = "#000000";
+            var weight = 1;
+            if (adminLevel == undefined) {
+                color = "#fff";
+                weight = 4;
+            } else {
+                switch (adminLevel.toString()) {
+                    case "1":
+                        color = "#d32f2f";
+                        break;
+                    case "2":
+                        color = "#c2185b";
+                        break;
+                    case "3":
+                        color = "#7b1fa2";
+                        break;
+                    case "4":
+                        color = "#fbc02d";
+                        weight = 4.5;
+                        break;
+                    case "5":
+                        color = "#512da8";
+                        weight = 2.5;
+                        break;
+                    case "6":
+                        color = "#26c6da";
+                        weight = 1.5;
+                        break;
+                    case "7":
+                        color = "#00796b";
+                        break;
+                }
+            }
             styleObject = {
-                weight: 1,
-                color: '#c5e1a5',
-                dashArray: '3',
-                fillOpacity: 0.0
+                weight: weight,
+                //color: '#c5e1a5',
+                color: color,
+                dashArray: '6',
+                fillOpacity: 0.0,
+                opacity: 1
             };
             if (layerState != undefined) {
-                stlyeObject = applyStateSelectedStyle(layerState, styleObject);
+                styleObject = applyStateSelectedStyle(layerState, styleObject);
             }
             return styleObject;
         }
 
+        function getStateColor(adminLevel) {
+            var color = "#000000";
+            switch (adminLevel.toString()) {
+                case "1":
+                    color = "#d32f2f";
+                    break;
+                case "2":
+                    color = "#c2185b";
+                    break;
+                case "3":
+                    color = "#7b1fa2";
+                    break;
+                case "4":
+                    color = "#fbc02d";
+                    break;
+                case "5":
+                    color = "#512da8";
+                    break;
+                case "6":
+                    color = "#1976d2";
+                    break;
+                case "7":
+                    color = "#00796b";
+                    break;
+            }
+            return color;
+        }
+
         function applyStateSelectedStyle(layerState, styleObject) {
-            if (layerState == currentState) {
-                styleObject.weight = 2.5;
+            if (layerState == currentStates[layerState.feature.properties.admin_level]) {
+                /*var weight = 1;
+                switch (layerState.feature.properties.admin_level.toString()) {
+                    case "1":
+                        break;
+                    case "2":
+                        break;
+                    case "3":
+                        break;
+                    case "4":
+                        weight = 4;
+                        break;
+                    case "5":
+                        weight = 1;
+                        break;
+                    case "6":
+                        break;
+                    case "7":
+                        break;
+                }*/
+                //styleObject.weight = 2.5;
                 //color: '#e0f2f1',
-                styleObject.color = '#fff';
+                //styleObject.color = '#fff';
                 styleObject.dashArray = '';
+                styleObject.opacity = 1;
             }
             return styleObject;
         }
@@ -658,10 +801,27 @@
                 return;
             }
 
-            unselectState(currentState);
+            unselectState(currentStates[layer.feature.properties.admin_level]);
 
-            currentState = layer;
+            currentStates[layer.feature.properties.admin_level] = layer;
             updateStateStyle(layer);
+
+            var last = undefined;
+            currentStates.forEach(state => {
+                if (state != undefined) {
+                    last = state;
+                }
+            });
+            currentStateCopy = L.geoJSON(last.toGeoJSON(), {
+                pane: 'states-top',
+                style: function() {
+                    return getStateStyle(undefined);
+                }
+            });
+            currentStateCopy.addTo(map);
+            //state.bringToFront();
+            lastLevel = layer.feature.properties.admin_level;
+
             updateDetails();
         }
 
@@ -670,7 +830,21 @@
                 unselectCity(currentCity);
             }
 
-            currentState = undefined;
+            if (state != undefined) {
+                if (lastLevel < state.feature.properties.admin_level) {
+                    for (var i = state.feature.properties.admin_level; i < currentStates.length; i++) {
+                        currentStates[i] = undefined;
+                    }
+                } else {
+                    currentStates[state.feature.properties.admin_level] = undefined;
+                }
+            }
+
+            if (currentStateCopy != undefined) {
+                map.removeLayer(currentStateCopy);
+                currentStateCopy = undefined;
+            }
+
             updateStateStyle(state);
             updateDetails();
         }
@@ -1678,7 +1852,9 @@
 
         function finishQuiz() {
             unselectCountry(currentCountry);
-            unselectState(currentState);
+            for (var i = 0; i < currentStates.length; i++) {
+                unselectState(currentStates[i]);
+            }
             unselectCity(currentCity);
 
             tearDownQuizVisuals();
