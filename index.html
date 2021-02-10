@@ -101,6 +101,8 @@
                                 Country Population</label>
                             <label><input type="checkbox" id="quiz-setup-question-type-states"
                                     name="quiz-setup-question-type" value="state-name" /> State Name</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states-population"
+                                        name="quiz-setup-question-type" value="state-population" /> State Population</label>
                             <label><input type="checkbox" id="quiz-setup-question-type-cities"
                                     name="quiz-setup-question-type" value="city-name" /> City Name</label>
                             <label><input type="checkbox" id="quiz-setup-question-type-roads"
@@ -269,7 +271,7 @@
                 }
 
                 var detailsState = document.getElementById('details-state');
-                detailsState.innerHTML = currentState != undefined ? currentState.feature.properties.name : 'none';
+                detailsState.innerHTML = currentState != undefined ? currentState.feature.properties.name + " (" + currentState.feature.properties.all_tags.population + ")" : 'none';
 
                 var detailsCity = document.getElementById('details-city');
                 detailsCity.innerHTML = currentCity != undefined ? currentCity.feature.properties.name_en + " (" + numberWithCommas(currentCity.feature.properties.POP_MIN) + ")" : 'none';
@@ -550,7 +552,7 @@
             if (alreadyShown) {
                 return;
             }
-            var layerStates = L.geoJSON(states[0].features, {
+            /*var layerStates = L.geoJSON(states[0].features, {
                 pane: 'states',
                 style: function() {
                     return getStateStyle();
@@ -567,9 +569,32 @@
                         }
                     });
                 }
-            });
-            layerStates.country = country;
-            layerGroupStates.addLayer(layerStates);
+            });*/
+
+            fetch('data/boundaries/' + country.feature.properties.ISO_A3 + '.json')
+                .then(response => response.json())
+                .then(json => {
+                    var layerStates = L.geoJSON(json, {
+                        pane: 'states',
+                        style: function() {
+                            return getStateStyle();
+                        },
+                        filter: function(f) {
+                            return f.properties.admin_level === 5;
+                        },
+                        onEachFeature: function(feature, layer) {
+                            layer.feature.properties.layerCountry = country;
+                            layer.on('click', function(event) {
+                                if (!quizMode) {
+                                    selectCountry(event.target.feature.properties.layerCountry)
+                                    selectState(event.target);
+                                }
+                            });
+                        }
+                    });
+                    layerStates.country = country;
+                    layerGroupStates.addLayer(layerStates);
+                });
         }
 
         function updateStateStyle(layerState) {
@@ -1211,6 +1236,7 @@
                     });
                 } else {
                     removeRoadsOfCountry(layerCountrySelected);
+                    dispatcher.decrease();
                 }
             });
         }
@@ -1316,6 +1342,25 @@
                 });
             }
 
+            var tasksStatesPopulation = [];
+            if (quizQuestionTypes.includes("state-population")) {
+
+                layerGroupStates.eachLayer(function(layerStates) {
+                    layerStates.eachLayer(function(layerState) {
+                        tasksStatePopulation = [];
+
+                        var task = {
+                            "type": "state-population",
+                            "country": layerState.feature.properties.layerCountry,
+                            "state": layerState
+                        }
+                        tasksStatePopulation.push(task);
+
+                        tasksStatesPopulation.push.apply(tasksStatesPopulation, shuffle(tasksStatePopulation));
+                    });
+                });
+            }
+
             var tasksCities = [];
             if (quizQuestionTypes.includes("city-name")) {
 
@@ -1356,6 +1401,7 @@
 
             tasks.push.apply(tasks, shuffle(tasksCountries));
             tasks.push.apply(tasks, shuffle(tasksStates));
+            tasks.push.apply(tasks, shuffle(tasksStatesPopulation));
             tasks.push.apply(tasks, shuffle(tasksCities));
             tasks.push.apply(tasks, shuffle(tasksRoads));
 
@@ -1418,6 +1464,15 @@
                     selectState(currentTask.state);
                     zoomToCountry(currentTask.country);
                     document.getElementById("quiz-panel-question").innerHTML = "What is the name of this state?";
+                    break;
+                case "state-population":
+                    if (!map.hasLayer(layerGroupStates)) {
+                        layerGroupStates.addTo(map);
+                    }
+                    selectCountry(currentTask.country);
+                    selectState(currentTask.state);
+                    zoomToCountry(currentTask.country);
+                    document.getElementById("quiz-panel-question").innerHTML = "What was the population of this state in " + currentTask.state.feature.properties.all_tags["population:date"] + "?";
                     break;
                 case "city-name":
                     if (!map.hasLayer(layerGroupCities)) {
@@ -1485,6 +1540,15 @@
                     } else {
                         answerWrong(currentTask);
                         showAnswerRightWrong(false, "The correct answer is: " + currentTask.state.feature.properties.name);
+                    }
+                    break;
+                case "state-population":
+                    if (Math.abs(document.getElementById("quiz-panel-input").value.replace(/,/g, '') - currentTask.state.feature.properties.all_tags.population) <= 10000) {
+                        answerRight(currentTask);
+                        showAnswerRightWrong(true, "the exact answer is: " + numberWithCommas(currentTask.state.feature.properties.all_tags.population));
+                    } else {
+                        answerWrong(currentTask);
+                        showAnswerRightWrong(false, "the correct answer is: " + numberWithCommas(currentTask.state.feature.properties.all_tags.population));
                     }
                     break;
                 case "city-name":
