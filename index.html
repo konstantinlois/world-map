@@ -542,7 +542,7 @@
 
         // States and Provinces
 
-        function showStatesOfCountry(country) {
+        async function showStatesOfCountry(country) {
             var alreadyShown = false;
             layerGroupStates.eachLayer(function(layerStates) {
                 if (layerStates.country == country) {
@@ -571,7 +571,7 @@
                 }
             });*/
 
-            fetch('data/boundaries/' + country.feature.properties.ISO_A3 + '.json')
+            await fetch('data/boundaries/' + country.feature.properties.ISO_A3 + '.json')
                 .then(response => response.json())
                 .then(json => {
                     var layerStates = L.geoJSON(json, {
@@ -1215,13 +1215,15 @@
             map.removeLayer(layerGroupStates);
             map.removeLayer(layerGroupCities);
             map.removeLayer(layerGroupRoads);
-            var length = layerGroupCountriesSelected.getLayers().length;
 
-            var dispatcher = new Dispatcher(length, callback);
+            var dispatcher = new Dispatcher(1, callback);
 
             await layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
-                if (document.getElementById('quiz-setup-question-type-states').checked) {
-                    showStatesOfCountry(layerCountrySelected);
+                if (document.getElementById('quiz-setup-question-type-states').checked || document.getElementById('quiz-setup-question-type-states-population').checked) {
+                    dispatcher.increase();
+                    showStatesOfCountry(layerCountrySelected).then(() => {
+                        dispatcher.decrease();
+                    });
                 } else {
                     removeStatesOfCountry(layerCountrySelected);
                 }
@@ -1231,20 +1233,26 @@
                     removeCitiesOfCountry(layerCountrySelected);
                 }
                 if (document.getElementById('quiz-setup-question-type-roads').checked) {
+                    dispatcher.increase();
                     showRoadsOfCountry(layerCountrySelected).then(() => {
                         dispatcher.decrease();
                     });
                 } else {
                     removeRoadsOfCountry(layerCountrySelected);
-                    dispatcher.decrease();
                 }
             });
+
+            dispatcher.decrease();
         }
 
         class Dispatcher {
             constructor(pCount, pCallback) {
                 this.count = pCount;
                 this.callback = pCallback;
+            }
+
+            increase() {
+                this.count++;
             }
 
             decrease() {
@@ -1543,7 +1551,31 @@
                     }
                     break;
                 case "state-population":
-                    if (Math.abs(document.getElementById("quiz-panel-input").value.replace(/,/g, '') - currentTask.state.feature.properties.all_tags.population) <= 10000) {
+                    var tolerance = 0;
+                    switch (currentTask.state.feature.properties.all_tags.admin_level) {
+                        case "1":
+                            tolerance = 1000000;
+                            break;
+                        case "2":
+                            tolerance = 1000000;
+                            break;
+                        case "3":
+                            tolerance = 1000000;
+                            break;
+                        case "4":
+                            tolerance = 100000;
+                            break;
+                        case "5":
+                            tolerance = 100000;
+                            break;
+                        case "6":
+                            tolerance = 10000;
+                            break;
+                        case "7":
+                            tolerance = 10000;
+                            break;
+                    }
+                    if (Math.abs(document.getElementById("quiz-panel-input").value.replace(/,/g, '') - currentTask.state.feature.properties.all_tags.population) <= tolerance) {
                         answerRight(currentTask);
                         showAnswerRightWrong(true, "the exact answer is: " + numberWithCommas(currentTask.state.feature.properties.all_tags.population));
                     } else {
@@ -1577,8 +1609,8 @@
             currentIndex++;
             if (repeat) {
                 repeat = false;
-                tasks.splice(currentIndex + 1, 0, task);
-                tasks.splice(currentIndex + 3, 0, task);
+                tasks.splice(currentIndex + 2, 0, task);
+                tasks.splice(currentIndex + 4, 0, task);
                 tasks.splice(currentIndex + 7, 0, task);
                 tasks.splice(currentIndex + 13, 0, task);
             }
