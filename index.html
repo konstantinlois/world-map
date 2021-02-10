@@ -685,10 +685,13 @@
         function getStateStyle(adminLevel, layerState = undefined) {
             var color = "#000000";
             var weight = 1;
+            var dashArray = '';
             if (adminLevel == undefined) {
                 color = "#fff";
                 weight = 4;
+                dashArray = '';
             } else {
+                dashArray = '';
                 switch (adminLevel.toString()) {
                     case "1":
                         color = "#d32f2f";
@@ -720,7 +723,7 @@
                 weight: weight,
                 //color: '#c5e1a5',
                 color: color,
-                dashArray: '6',
+                dashArray: dashArray,
                 fillOpacity: 0.0,
                 opacity: 1
             };
