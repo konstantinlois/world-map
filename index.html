@@ -64,8 +64,20 @@
                     <div class="menu-section-content">
                         <h4 class="menu-sub-section-heading">Geographical Infos</h4>
                         <div id="controls-info-types">
-                            <label><input type="checkbox" id="controls-info-states" value="controls-info-states"
-                                    onclick="toggleStates()" /> States</label>
+                            <label><input type="checkbox" id="controls-info-states-admin-level-1" name="controls-info-states" value="1"
+                                    onclick="toggleStates(this)" /> Admin Level 1</label>
+                            <label><input type="checkbox" id="controls-info-states-admin-level-2" name="controls-info-states" value="2"
+                                    onclick="toggleStates(this)" /> Admin Level 2</label>
+                            <label><input type="checkbox" id="controls-info-states-admin-level-3" name="controls-info-states" value="3"
+                                    onclick="toggleStates(this)" /> Admin Level 3</label>
+                            <label><input type="checkbox" id="controls-info-states-admin-level-4" name="controls-info-states" value="4"
+                                    onclick="toggleStates(this)" /> Admin Level 4</label>
+                            <label><input type="checkbox" id="controls-info-states-admin-level-5" name="controls-info-states" value="5"
+                                    onclick="toggleStates(this)" /> Admin Level 5</label>
+                            <label><input type="checkbox" id="controls-info-states-admin-level-6" name="controls-info-states" value="6"
+                                    onclick="toggleStates(this)" /> Admin Level 6</label>
+                            <label><input type="checkbox" id="controls-info-states-admin-level-7" name="controls-info-states" value="7"
+                                    onclick="toggleStates(this)" /> Admin Level 7</label>
                             <label><input type="checkbox" id="controls-info-cities" value="controls-info-cities"
                                     onclick="toggleCities()" /> Cities</label>
                             <label><input type="checkbox" id="controls-info-roads" value="controls-info-roads"
@@ -421,9 +433,12 @@
             if (!layerGroupCountriesSelected.hasLayer(layerCountry)) {
                 layerGroupCountriesSelected.addLayer(layerCountry);
                 document.getElementById('checkbox-' + layerCountry.feature.properties.NAME_EN).checked = true;
-                if (document.getElementById('controls-info-states').checked) {
-                    showStatesOfCountry(layerCountry);
+
+                var checkedStatesCheckBoxes = document.querySelectorAll('input[name=controls-info-states]:checked');
+                for (var i = 0; i < checkedStatesCheckBoxes.length; i++) {
+                    showStatesOfCountry(layerCountry, checkedStatesCheckBoxes[i].value);
                 }
+
                 if (document.getElementById('controls-info-cities').checked) {
                     showCitiesOfCountry(layerCountry);
                 }
@@ -437,9 +452,12 @@
         function removeCountryFromCurrentCountries(layerCountry) {
             layerGroupCountriesSelected.removeLayer(layerCountry);
             document.getElementById('checkbox-' + layerCountry.feature.properties.NAME_EN).checked = false;
-            if (document.getElementById('controls-info-states').checked) {
-                removeStatesOfCountry(layerCountry);
+
+            var checkedStatesCheckBoxes = document.querySelectorAll('input[name=controls-info-states]:checked');
+            for (var i = 0; i < checkedStatesCheckBoxes.length; i++) {
+                removeStatesOfCountry(layerCountry, checkedStatesCheckBoxes[i].value);
             }
+
             if (document.getElementById('controls-info-cities').checked) {
                 removeCitiesOfCountry(layerCountry);
             }
@@ -542,10 +560,10 @@
 
         // States and Provinces
 
-        async function showStatesOfCountry(country) {
+        async function showStatesOfCountry(country, adminLevel) {
             var alreadyShown = false;
             layerGroupStates.eachLayer(function(layerStates) {
-                if (layerStates.country == country) {
+                if (layerStates.country == country && layerStates.adminLevel == adminLevel) {
                     alreadyShown = true;
                 }
             });
@@ -580,7 +598,7 @@
                             return getStateStyle();
                         },
                         filter: function(f) {
-                            return f.properties.admin_level === 5;
+                            return f.properties.admin_level == adminLevel;
                         },
                         onEachFeature: function(feature, layer) {
                             layer.feature.properties.layerCountry = country;
@@ -593,6 +611,7 @@
                         }
                     });
                     layerStates.country = country;
+                    layerStates.adminLevel = adminLevel;
                     layerGroupStates.addLayer(layerStates);
                 });
         }
@@ -626,9 +645,9 @@
             return styleObject;
         }
 
-        function removeStatesOfCountry(country) {
+        function removeStatesOfCountry(country, adminLevel) {
             layerGroupStates.eachLayer(function(layerStates) {
-                if (layerStates.country === country) {
+                if (layerStates.country === country && layerStates.adminLevel == adminLevel) {
                     layerGroupStates.removeLayer(layerStates);
                 }
             });
@@ -660,14 +679,14 @@
             map.fitBounds(stateLayer.getBounds().pad(0.5));
         }
 
-        function toggleStates() {
-            if (document.getElementById('controls-info-states').checked) {
+        function toggleStates(target) {
+            if (target.checked) {
                 layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
-                    showStatesOfCountry(layerCountrySelected);
+                    showStatesOfCountry(layerCountrySelected, target.value);
                 });
             } else {
                 layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
-                    removeStatesOfCountry(layerCountrySelected);
+                    removeStatesOfCountry(layerCountrySelected, target.value);
                 });
             }
         }
