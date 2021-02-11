@@ -692,7 +692,7 @@
                             layer.on('click', function(event) {
                                 if (!quizMode) {
                                     selectCountry(event.target.feature.properties.layerCountry)
-                                    selectState(event.target);
+                                    selectState(event.target, true);
                                 }
                             });
                         }
@@ -826,31 +826,42 @@
             });
         }
 
-        function selectState(layer) {
+        function selectState(layer, propagateUp = false) {
             if (layer == undefined) {
                 return;
             }
 
-            unselectState(currentStates[layer.feature.properties.admin_level]);
+            if (propagateUp == false || layer.feature.properties.admin_level > lastLevel) {
+                if (currentStateCopy != undefined) {
+                    map.removeLayer(currentStateCopy);
+                    currentStateCopy = undefined;
+                }
+                currentStateCopy = L.geoJSON(layer.toGeoJSON(), {
+                    pane: 'states-top',
+                    style: function() {
+                        return getStateStyle(undefined);
+                    }
+                });
+                currentStateCopy.addTo(map);
+                currentStates.forEach(cs => {
+                    unselectState(cs);
+                });
+            }
+
+            lastLevel = layer.feature.properties.admin_level;
 
             currentStates[layer.feature.properties.admin_level] = layer;
             updateStateStyle(layer);
 
-            var last = undefined;
+            /*var last = undefined;
             currentStates.forEach(state => {
                 if (state != undefined) {
                     last = state;
                 }
-            });
-            currentStateCopy = L.geoJSON(last.toGeoJSON(), {
-                pane: 'states-top',
-                style: function() {
-                    return getStateStyle(undefined);
-                }
-            });
-            currentStateCopy.addTo(map);
+            });*/
+
             //state.bringToFront();
-            lastLevel = layer.feature.properties.admin_level;
+            //lastLevel = layer.feature.properties.admin_level;
 
             updateDetails();
         }
@@ -861,19 +872,23 @@
             }
 
             if (state != undefined) {
-                if (lastLevel < state.feature.properties.admin_level) {
-                    for (var i = state.feature.properties.admin_level; i < currentStates.length; i++) {
+                /*if (lastLevel < state.feature.properties.admin_level) {
+                    for (var i = state.feature.properties.admin_level; i >= 0; i--) {
                         currentStates[i] = undefined;
                     }
                 } else {
                     currentStates[state.feature.properties.admin_level] = undefined;
-                }
+                }*/
+
+                //currentStates[i] = undefined;
+
+                delete currentStates[state.feature.properties.admin_level];
             }
 
-            if (currentStateCopy != undefined) {
+            /*if (currentStateCopy != undefined) {
                 map.removeLayer(currentStateCopy);
                 currentStateCopy = undefined;
-            }
+            }*/
 
             updateStateStyle(state);
             updateDetails();
