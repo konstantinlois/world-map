@@ -111,10 +111,34 @@
                                 Name</label>
                             <label><input type="checkbox" name="quiz-setup-question-type" value="country-population" />
                                 Country Population</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states"
-                                    name="quiz-setup-question-type" value="state-name" /> State Name</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states-population"
-                                        name="quiz-setup-question-type" value="state-population" /> State Population</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states-1"
+                                    name="quiz-setup-question-type" value="state-name-1" /> Admin Level 1 Name</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states-2"
+                                    name="quiz-setup-question-type" value="state-name-2" /> Admin Level 2 Name</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states-3"
+                                    name="quiz-setup-question-type" value="state-name-3" /> Admin Level 3 Name</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states-4"
+                                    name="quiz-setup-question-type" value="state-name-4" /> Admin Level 4 Name</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states-5"
+                                    name="quiz-setup-question-type" value="state-name-5" /> Admin Level 5 Name</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states-6"
+                                    name="quiz-setup-question-type" value="state-name-6" /> Admin Level 6 Name</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states-7"
+                                    name="quiz-setup-question-type" value="state-name-7" /> Admin Level 7 Name</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states-1-population"
+                                    name="quiz-setup-question-type" value="state-population-1" /> Admin Level 1 Population</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states-2-population"
+                                    name="quiz-setup-question-type" value="state-population-2" /> Admin Level 2 Population</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states-3-population"
+                                    name="quiz-setup-question-type" value="state-population-3" /> Admin Level 3 Population</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states-4-population"
+                                    name="quiz-setup-question-type" value="state-population-4" /> Admin Level 4 Population</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states-5-population"
+                                    name="quiz-setup-question-type" value="state-population-5" /> Admin Level 5 Population</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states-6-population"
+                                    name="quiz-setup-question-type" value="state-population-6" /> Admin Level 6 Population</label>
+                            <label><input type="checkbox" id="quiz-setup-question-type-states-7-population"
+                                    name="quiz-setup-question-type" value="state-population-7" /> Admin Level 7 Population</label>
                             <label><input type="checkbox" id="quiz-setup-question-type-cities"
                                     name="quiz-setup-question-type" value="city-name" /> City Name</label>
                             <label><input type="checkbox" id="quiz-setup-question-type-roads"
@@ -337,7 +361,10 @@
                 }
 
                 var detailsState = document.getElementById('details-state');
-                //detailsState.innerHTML = currentState != undefined ? currentState.feature.properties.name + " (" + currentState.feature.properties.all_tags.population + ")" : 'none';
+                detailsState.innerHTML = "";
+                currentStates.forEach(state => {
+                    detailsState.innerHTML = detailsState.innerHTML + "<br>" + (state != undefined ? state.feature.properties.name + " (" + state.feature.properties.all_tags.population + ")" : 'none');
+                });
 
                 var detailsCity = document.getElementById('details-city');
                 detailsCity.innerHTML = currentCity != undefined ? currentCity.feature.properties.name_en + " (" + numberWithCommas(currentCity.feature.properties.POP_MIN) + ")" : 'none';
@@ -1380,23 +1407,23 @@
             }
             quizMode = true;
 
+            var checkedQuestionTypeCheckBoxes = document.querySelectorAll('input[name=quiz-setup-question-type]:checked');
+            quizQuestionTypes = [];
+            for (var i = 0; i < checkedQuestionTypeCheckBoxes.length; i++) {
+                quizQuestionTypes.push(checkedQuestionTypeCheckBoxes[i].value);
+            }
+
+            var checkedCountryIndicatorCheckBoxes = document.querySelectorAll('input[name=quiz-setup-country-indicator]:checked');
+            quizCountryIndicators = [];
+            for (var i = 0; i < checkedCountryIndicatorCheckBoxes.length; i++) {
+                quizCountryIndicators.push(checkedCountryIndicatorCheckBoxes[i].value);
+            }
+
             setUpQuizVisuals(() => {
                 document.getElementById('menu-button-open').style.display = "none";
                 toggleMenu();
                 toggleDetails(false);
                 document.getElementById('quiz-panel').style.display = "block";
-
-                var checkedQuestionTypeCheckBoxes = document.querySelectorAll('input[name=quiz-setup-question-type]:checked');
-                quizQuestionTypes = [];
-                for (var i = 0; i < checkedQuestionTypeCheckBoxes.length; i++) {
-                    quizQuestionTypes.push(checkedQuestionTypeCheckBoxes[i].value);
-                }
-
-                var checkedCountryIndicatorCheckBoxes = document.querySelectorAll('input[name=quiz-setup-country-indicator]:checked');
-                quizCountryIndicators = [];
-                for (var i = 0; i < checkedCountryIndicatorCheckBoxes.length; i++) {
-                    quizCountryIndicators.push(checkedCountryIndicatorCheckBoxes[i].value);
-                }
 
                 savedBounds = undefined;
 
@@ -1415,13 +1442,15 @@
             var dispatcher = new Dispatcher(1, callback);
 
             await layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
-                if (document.getElementById('quiz-setup-question-type-states').checked || document.getElementById('quiz-setup-question-type-states-population').checked) {
-                    dispatcher.increase();
-                    showStatesOfCountry(layerCountrySelected).then(() => {
-                        dispatcher.decrease();
-                    });
-                } else {
-                    removeStatesOfCountry(layerCountrySelected);
+                for (var i = 1; i <= 7; i++) {
+                    if (document.getElementById('quiz-setup-question-type-states-' + i).checked || document.getElementById('quiz-setup-question-type-states-' + i + '-population').checked) {
+                        dispatcher.increase();
+                        showStatesOfCountry(layerCountrySelected, i).then(() => {
+                            dispatcher.decrease();
+                        });
+                    } else {
+                        removeStatesOfCountry(layerCountrySelected, i);
+                    }
                 }
                 if (document.getElementById('quiz-setup-question-type-cities').checked) {
                     showCitiesOfCountry(layerCountrySelected);
@@ -1461,11 +1490,15 @@
 
         async function tearDownQuizVisuals() {
             layerGroupCountriesSelected.eachLayer(await async function(layerCountrySelected) {
-                if (document.getElementById('controls-info-states').checked) {
-                    showStatesOfCountry(layerCountrySelected);
-                } else {
-                    removeStatesOfCountry(layerCountrySelected);
+
+                for (var i = 1; i < 7; i++) {
+                    if (document.getElementById('controls-info-states-admin-level-' + i).checked) {
+                        showStatesOfCountry(layerCountrySelected, i);
+                    } else {
+                        removeStatesOfCountry(layerCountrySelected, i);
+                    }
                 }
+
                 if (document.getElementById('controls-info-cities').checked) {
                     showCitiesOfCountry(layerCountrySelected);
                 } else {
@@ -1528,41 +1561,43 @@
             });
 
             var tasksStates = [];
-            if (quizQuestionTypes.includes("state-name")) {
-
-                layerGroupStates.eachLayer(function(layerStates) {
-                    layerStates.eachLayer(function(layerState) {
-                        tasksState = [];
-
-                        var task = {
-                            "type": "state-name",
-                            "country": layerState.feature.properties.layerCountry,
-                            "state": layerState
-                        }
-                        tasksState.push(task);
-
-                        tasksStates.push.apply(tasksStates, shuffle(tasksState));
-                    });
-                });
-            }
-
             var tasksStatesPopulation = [];
-            if (quizQuestionTypes.includes("state-population")) {
+            for (var i = 1; i < 7; i++) {
+                if (quizQuestionTypes.includes("state-name-" + i)) {
 
-                layerGroupStates.eachLayer(function(layerStates) {
-                    layerStates.eachLayer(function(layerState) {
-                        tasksStatePopulation = [];
+                    layerGroupStates.eachLayer(function(layerStates) {
+                        layerStates.eachLayer(function(layerState) {
+                            tasksState = [];
 
-                        var task = {
-                            "type": "state-population",
-                            "country": layerState.feature.properties.layerCountry,
-                            "state": layerState
-                        }
-                        tasksStatePopulation.push(task);
+                            var task = {
+                                "type": "state-name",
+                                "country": layerState.feature.properties.layerCountry,
+                                "state": layerState
+                            }
+                            tasksState.push(task);
 
-                        tasksStatesPopulation.push.apply(tasksStatesPopulation, shuffle(tasksStatePopulation));
+                            tasksStates.push.apply(tasksStates, shuffle(tasksState));
+                        });
                     });
-                });
+                }
+
+                if (quizQuestionTypes.includes("state-population-" + i)) {
+
+                    layerGroupStates.eachLayer(function(layerStates) {
+                        layerStates.eachLayer(function(layerState) {
+                            tasksStatePopulation = [];
+
+                            var task = {
+                                "type": "state-population",
+                                "country": layerState.feature.properties.layerCountry,
+                                "state": layerState
+                            }
+                            tasksStatePopulation.push(task);
+
+                            tasksStatesPopulation.push.apply(tasksStatesPopulation, shuffle(tasksStatePopulation));
+                        });
+                    });
+                }
             }
 
             var tasksCities = [];
