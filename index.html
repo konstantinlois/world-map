@@ -207,17 +207,17 @@
             maxZoom: 16
         }).addTo(map);
 
-        var statePanes = [];
+        var forwardingPanes = [];
         map.createPane('countries');
-        statePanes.push(map.createPane('states-1'));
-        statePanes.push(map.createPane('states-2'));
-        statePanes.push(map.createPane('states-3'));
-        statePanes.push(map.createPane('states-4'));
-        statePanes.push(map.createPane('states-5'));
-        statePanes.push(map.createPane('states-6'));
-        statePanes.push(map.createPane('states-7'));
-        statePanes.push(map.createPane('states-top'));
-        map.createPane('cities');
+        forwardingPanes.push(map.createPane('states-1'));
+        forwardingPanes.push(map.createPane('states-2'));
+        forwardingPanes.push(map.createPane('states-3'));
+        forwardingPanes.push(map.createPane('states-4'));
+        forwardingPanes.push(map.createPane('states-5'));
+        forwardingPanes.push(map.createPane('states-6'));
+        forwardingPanes.push(map.createPane('states-7'));
+        forwardingPanes.push(map.createPane('states-top'));
+        forwardingPanes.push(map.createPane('cities'));
         map.createPane('roads');
 
         map.getPane('countries').style.zIndex = 1001;
@@ -232,8 +232,8 @@
         map.getPane('cities').style.zIndex = 10010;
         map.getPane('roads').style.zIndex = 1011;
 
-        statePanes.forEach(statePane => {
-            enableForwardingOnPane(statePane);
+        forwardingPanes.forEach(forwardingPane => {
+            enableForwardingOnPane(forwardingPane);
         });
 
         var lastLevel = 0;
@@ -996,13 +996,13 @@
         }
 
         function selectCity(layer) {
-            layerGroupStates.eachLayer(function(layerStates) {
+            /*layerGroupStates.eachLayer(function(layerStates) {
                 layerStates.eachLayer(function(layerState) {
                     if (layerState.feature.properties.name == layer.feature.properties.ADM1NAME) {
-                        selectState(layerState);
+                        selectState(layerState, true);
                     }
                 });
-            });
+            });*/
             unselectCity(currentCity);
 
             currentCity = layer;
