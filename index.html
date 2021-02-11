@@ -824,6 +824,11 @@
                     layerGroupStates.removeLayer(layerStates);
                 }
             });
+            if (currentStateCopy != undefined && currentStateCopy.adminLevel == adminLevel) {
+                map.removeLayer(currentStateCopy);
+                currentStateCopy = undefined;
+                lastLevel = 0;
+            }
         }
 
         function selectState(layer, propagateUp = false) {
@@ -831,7 +836,7 @@
                 return;
             }
 
-            if (propagateUp == false || layer.feature.properties.admin_level > lastLevel) {
+            if (propagateUp == false || layer.feature.properties.admin_level >= lastLevel) {
                 if (currentStateCopy != undefined) {
                     map.removeLayer(currentStateCopy);
                     currentStateCopy = undefined;
@@ -842,6 +847,7 @@
                         return getStateStyle(undefined);
                     }
                 });
+                currentStateCopy.adminLevel = layer.feature.properties.admin_level;
                 currentStateCopy.addTo(map);
                 currentStates.forEach(cs => {
                     unselectState(cs);
