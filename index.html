@@ -185,7 +185,7 @@
             <h4 class="details-heading">Country</h4>
             <p id="details-country">Test</p> <button id="details-country-add-remove" onclick="clickAddRemoveCountryButton()">Add</button>
             <h4 class="details-heading">State</h4>
-            <p id="details-state">Test</p>
+            <ul id="details-states-list"></ul>
             <h4 class="details-heading">City</h4>
             <p id="details-city">Test</p>
             <div id="details-country-indicators">
@@ -360,10 +360,15 @@
                     document.getElementById('details-country-add-remove').innerHTML = 'Add';
                 }
 
-                var detailsState = document.getElementById('details-state');
+                var detailsState = document.getElementById('details-states-list');
                 detailsState.innerHTML = "";
                 currentStates.forEach(state => {
-                    detailsState.innerHTML = detailsState.innerHTML + "<br>" + (state != undefined ? state.feature.properties.name + " (" + state.feature.properties.all_tags.population + ")" : 'none');
+                    if (state != undefined) {
+                        listItem = document.createElement('li');
+                        listItem.innerHTML = "Level " + state.feature.properties.all_tags.admin_level + ": " + state.feature.properties.name + " (" + state.feature.properties.all_tags.population + ")";
+                        detailsState.appendChild(listItem);
+                    }
+                    //detailsState.innerHTML.appendChild(state != undefined ? state.feature.properties.name + " (" + state.feature.properties.all_tags.population + ")" + "<br>" : 'none');
                 });
 
                 var detailsCity = document.getElementById('details-city');
