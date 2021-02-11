@@ -79,7 +79,8 @@
                             <label><input type="checkbox" id="controls-info-states-admin-level-7" name="controls-info-states" value="7"
                                     onclick="toggleStates(this)" /> Admin Level 7</label>
                             <label><input type="checkbox" id="controls-info-cities" value="controls-info-cities"
-                                    onclick="toggleCities()" /> Cities</label>
+                                    onclick="toggleCities()" /> Cities<br><label id="controls-info-cities-population-label">Min population: <input id="controls-info-cities-population" type="number"></label></label>
+                            </label>
                             <label><input type="checkbox" id="controls-info-roads" value="controls-info-roads"
                                         onclick="toggleRoads()" /> Roads</label>
                         </div>
@@ -933,6 +934,10 @@
             if (alreadyShown) {
                 return;
             }
+            var minPopulation = document.getElementById("controls-info-cities-population").value;
+            if (minPopulation == '') {
+                minPopulation = 0;
+            }
             var layerCities = L.geoJSON(cities[0].features, {
                 pane: 'cities',
                 pointToLayer: function(feature, latlng) {
@@ -949,7 +954,8 @@
                     layer.bringToFront();
                 },
                 filter: function(f) {
-                    return f.properties.ADM0NAME === countryLayer.feature.properties.NAME_EN && f.properties.RANK_MIN >= 8;
+                    //return f.properties.ADM0NAME === countryLayer.feature.properties.NAME_EN && f.properties.RANK_MIN >= 8;
+                    return f.properties.ADM0NAME === countryLayer.feature.properties.NAME_EN && f.properties.POP_MIN >= minPopulation;
                 }
             });
             layerCities.country = countryLayer;
@@ -1018,6 +1024,7 @@
 
         function toggleCities() {
             if (document.getElementById('controls-info-cities').checked) {
+                document.getElementById("controls-info-cities-population").disabled = true;
                 layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
                     showCitiesOfCountry(layerCountrySelected);
                 });
@@ -1025,6 +1032,7 @@
                 layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
                     removeCitiesOfCountry(layerCountrySelected);
                 });
+                document.getElementById("controls-info-cities-population").disabled = false;
             }
         }
 

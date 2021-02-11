@@ -198,6 +198,10 @@ input:checked+.slider:before {
     display: block;
 }
 
+#controls-info-cities-population-label {
+    margin-left: 24.5px;
+}
+
 #controls-info-country-indicators {
     border: 2px solid #ccc;
     height: 300px;
