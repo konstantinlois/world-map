@@ -861,6 +861,7 @@
                 currentStateCopy = undefined;
                 lastLevel = 0;
             }
+            delete currentStates[adminLevel];
         }
 
         function selectState(layer, propagateUp = false) {
@@ -948,6 +949,7 @@
             } else {
                 layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
                     removeStatesOfCountry(layerCountrySelected, target.value);
+                    updateDetails();
                 });
             }
         }
