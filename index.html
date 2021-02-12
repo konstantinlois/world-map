@@ -376,7 +376,7 @@
                 });
 
                 var detailsCity = document.getElementById('details-city');
-                detailsCity.innerHTML = currentCity != undefined ? currentCity.feature.properties.name_en + " (" + numberWithCommas(currentCity.feature.properties.POP_MIN) + ")" : 'none';
+                detailsCity.innerHTML = currentCity != undefined ? currentCity.feature.properties.name + " (" + numberWithCommas(currentCity.feature.properties.population) + ")" : 'none';
 
                 var detailsCountryIndicators = document.getElementById('details-country-indicators');
                 detailsCountryIndicators.innerHTML = '';
@@ -927,7 +927,7 @@
 
         // Cities
 
-        function showCitiesOfCountry(countryLayer) {
+        async function showCitiesOfCountry(countryLayer) {
             /*var alreadyShown = false;
             layerGroupCities.eachLayer(function(layerCities) {
                 if (layerCities.country == countryLayer) {
@@ -937,37 +937,43 @@
             if (alreadyShown) {
                 return;
             }*/
-            var minPopulation;
-            if (quizMode) {
-                minPopulation = document.getElementById("quiz-setup-question-type-cities-population").value;
-            } else {
-                minPopulation = document.getElementById("controls-info-cities-population").value;
-            }
-            if (minPopulation == '') {
-                minPopulation = 0;
-            }
-            var layerCities = L.geoJSON(cities[0].features, {
-                pane: 'cities',
-                pointToLayer: function(feature, latlng) {
-                    return L.circleMarker(latlng, getCityStyle());
-                },
-                onEachFeature: function(feature, layer) {
-                    layer.feature.properties.layerCountry = countryLayer;
-                    layer.on('click', function(event) {
-                        if (!quizMode) {
-                            selectCountry(layer.feature.properties.layerCountry);
-                            selectCity(event.target);
+
+            await fetch('data/cities/' + countryLayer.feature.properties.ISO_A3 + '.json')
+                .then(response => response.json())
+                .then(json => {
+                    var minPopulation;
+                    if (quizMode) {
+                        minPopulation = document.getElementById("quiz-setup-question-type-cities-population").value;
+                    } else {
+                        minPopulation = document.getElementById("controls-info-cities-population").value;
+                    }
+                    if (minPopulation == '') {
+                        minPopulation = 0;
+                    }
+                    var layerCities = L.geoJSON(json, {
+                        pane: 'cities',
+                        pointToLayer: function(feature, latlng) {
+                            return L.circleMarker(latlng, getCityStyle());
+                        },
+                        onEachFeature: function(feature, layer) {
+                            layer.feature.properties.layerCountry = countryLayer;
+                            layer.on('click', function(event) {
+                                if (!quizMode) {
+                                    selectCountry(layer.feature.properties.layerCountry);
+                                    selectCity(event.target);
+                                }
+                            });
+                            layer.bringToFront();
+                        },
+                        filter: function(f) {
+                            //return f.properties.ADM0NAME === countryLayer.feature.properties.NAME_EN && f.properties.RANK_MIN >= 8;
+                            //return f.properties.ADM0NAME === countryLayer.feature.properties.NAME_EN && f.properties.POP_MIN >= minPopulation;
+                            return parseInt(f.properties.population) >= minPopulation;
                         }
                     });
-                    layer.bringToFront();
-                },
-                filter: function(f) {
-                    //return f.properties.ADM0NAME === countryLayer.feature.properties.NAME_EN && f.properties.RANK_MIN >= 8;
-                    return f.properties.ADM0NAME === countryLayer.feature.properties.NAME_EN && f.properties.POP_MIN >= minPopulation;
-                }
-            });
-            layerCities.country = countryLayer;
-            layerGroupCities.addLayer(layerCities);
+                    layerCities.country = countryLayer;
+                    layerGroupCities.addLayer(layerCities);
+                });
         }
 
         function removeCitiesOfCountry(countryLayer) {
@@ -1495,8 +1501,11 @@
                     }
                 }
                 if (document.getElementById('quiz-setup-question-type-cities').checked) {
+                    dispatcher.increase();
                     removeCitiesOfCountry(layerCountrySelected);
-                    showCitiesOfCountry(layerCountrySelected);
+                    showCitiesOfCountry(layerCountrySelected).then(() => {
+                        dispatcher.decrease();
+                    });
                 } else {
                     removeCitiesOfCountry(layerCountrySelected);
                 }

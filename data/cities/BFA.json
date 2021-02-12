@@ -1,0 +1,4632 @@
+{
+    "type": "FeatureCollection",
+    "generator": "overpass-ide",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+    "timestamp": "2021-02-12T12:19:03Z",
+    "features": [{
+            "type": "Feature",
+            "properties": {
+                "@id": "node/27565002",
+                "admin_level": "2",
+                "alt_name:de": "Wagadugu",
+                "alt_name:gl": "Ouagadougou",
+                "capital": "yes",
+                "int_name": "Ouagadougou",
+                "is_in:region_code": "11",
+                "name": "Ouagadougou",
+                "name:af": "Ouagadougou",
+                "name:am": "ዋጋዱጉ",
+                "name:an": "Ouagadougou",
+                "name:ar": "واغادوغو",
+                "name:az": "Uaqaduqu",
+                "name:be": "Уагадугу",
+                "name:be-tarask": "Уагадугу",
+                "name:bg": "Уагадугу",
+                "name:bo": "ཨོ་འ་ག་དོའུ་གོའུ།",
+                "name:br": "Ouagadougou",
+                "name:bs": "Ouagadougou",
+                "name:ca": "Ouagadougou",
+                "name:ceb": "Ouagadougou",
+                "name:ckb": "ئۆئاگادۆگۆ",
+                "name:cs": "Ouagadougou",
+                "name:cv": "Уагадугу",
+                "name:cy": "Ouagadougou",
+                "name:da": "Ouagadougou",
+                "name:de": "Ouagadougou",
+                "name:el": "Ουαγκαντουγκού",
+                "name:en": "Ouagadougou",
+                "name:eo": "Uagaduguo",
+                "name:es": "Uagadugú",
+                "name:et": "Ouagadougou",
+                "name:eu": "Uagadugu",
+                "name:fa": "اوآگادوگو",
+                "name:fi": "Ouagadougou",
+                "name:fr": "Ouagadougou",
+                "name:frp": "Ouagadougou",
+                "name:fy": "Ouagadougou",
+                "name:ga": "Ouagadougou",
+                "name:gd": "Ouagadougou",
+                "name:gl": "Uagadugú",
+                "name:he": "ואגאדוגו",
+                "name:hif": "Ouagadougou",
+                "name:hr": "Ouagadougou",
+                "name:hsb": "Ouagadougou",
+                "name:ht": "Ouagadougou",
+                "name:hu": "Ouagadougou",
+                "name:hy": "Ուագադուգու",
+                "name:is": "Ouagadougou",
+                "name:it": "Ouagadougou",
+                "name:ja": "ワガドゥグー",
+                "name:jv": "Ouagadougou",
+                "name:ka": "უაგადუგუ",
+                "name:kab": "Wagadugu",
+                "name:ko": "와가두구",
+                "name:kw": "Ouagadougou",
+                "name:ky": "Уагадугу",
+                "name:la": "Uagadugum",
+                "name:lb": "Ouagadougou",
+                "name:lij": "Ouagadougou",
+                "name:lmo": "Ouagadougou",
+                "name:lt": "Uagadugu",
+                "name:lv": "Vagadugu",
+                "name:mg": "Ouagadougou",
+                "name:mk": "Уагадугу",
+                "name:mr": "वागाडुगू",
+                "name:mrj": "Уагадугу",
+                "name:ms": "Ouagadougou",
+                "name:na": "Ouagadougou",
+                "name:nah": "Huagadugu",
+                "name:nan": "Ouagadougou",
+                "name:nb": "Ouagadougou",
+                "name:nl": "Ouagadougou",
+                "name:nn": "Ouagadougou",
+                "name:nov": "Uagadugu",
+                "name:oc": "Ouagadougou",
+                "name:pl": "Wagadugu",
+                "name:pms": "Ouagadougou",
+                "name:pnb": "اوگاڈوگو",
+                "name:pt": "Ouagadougou",
+                "name:ro": "Ouagadougou",
+                "name:ru": "Уагадугу",
+                "name:rw": "Wagadugu",
+                "name:scn": "Ouagadougou",
+                "name:sco": "Ouagadougou",
+                "name:sh": "Ouagadougou",
+                "name:sk": "Ouagadougou",
+                "name:sl": "Ouagadougou",
+                "name:sn": "Ouagadougou",
+                "name:so": "Ougadougou",
+                "name:sq": "Ouagadougou",
+                "name:sr": "Уагадугу",
+                "name:sv": "Ouagadougou",
+                "name:sw": "Wagadugu",
+                "name:ta": "வாகடூகு",
+                "name:tg": "Уагадугу",
+                "name:th": "วากาดูกู",
+                "name:tl": "Ouagadougou",
+                "name:tr": "Ouagadougou",
+                "name:udm": "Уагадугу",
+                "name:uk": "Уагадугу",
+                "name:ur": "اواگادوگو",
+                "name:uz": "Uagadugu",
+                "name:vec": "Ouagadougou",
+                "name:vep": "Uagadugu",
+                "name:vi": "Ouagadougou",
+                "name:vo": "Ouagadougou",
+                "name:war": "Ouagadougou",
+                "name:yi": "וואגאדוגו",
+                "name:yo": "Ouagadougou",
+                "name:zh": "瓦加杜古",
+                "name:zh-Hant": "烏格都古",
+                "old_name": "Wagadugu",
+                "place": "city",
+                "population": "1915102",
+                "population:date": "2012",
+                "short_name": "Ouaga",
+                "source": "Institut Géographique du Burkina",
+                "source:population": "INSD.BF",
+                "wikidata": "Q3777",
+                "wikipedia": "fr:Ouagadougou"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.5270944,
+                    12.3681873
+                ]
+            },
+            "id": "node/27565002"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/257506849",
+                "admin_level": "8",
+                "capital": "4",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Bobo-Dioulasso",
+                "is_in:province": "Houet",
+                "is_in:province_code": "10",
+                "is_in:region": "Hauts-Bassins",
+                "is_in:region_code": "01",
+                "name": "Bobo-Dioulasso",
+                "name:ar": "بوبو ديولاسو",
+                "name:fr": "Bobo-Dioulasso",
+                "name:ko": "보보디울라소",
+                "name:ru": "Бобо-Диуласо",
+                "place": "city",
+                "population": "724971",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "website": "http://www.mairie-bobo.org/",
+                "wikidata": "Q223761",
+                "wikipedia": "fr:Bobo-Dioulasso"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.2957591,
+                    11.1757783
+                ]
+            },
+            "id": "node/257506849"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/302737590",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "4",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Koudougou",
+                "is_in:province": "Boulkiemdé",
+                "is_in:province_code": "05",
+                "is_in:region": "Centre-Ouest",
+                "is_in:region_code": "07",
+                "name": "Koudougou",
+                "name:fr": "Koudougou",
+                "name:ko": "쿠두구",
+                "name:ru": "Кудугу",
+                "place": "town",
+                "population": "91981",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q460697",
+                "wikipedia": "fr:Koudougou"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.3657338,
+                    12.2503992
+                ]
+            },
+            "id": "node/302737590"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/302737807",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Banfora",
+                "is_in:province": "Comoé",
+                "is_in:province_code": "06",
+                "is_in:region": "Cascades",
+                "is_in:region_code": "12",
+                "name": "Banfora",
+                "name:ar": "بانفورا",
+                "name:fr": "Banfora",
+                "name:ko": "방포라",
+                "name:ru": "Банфора",
+                "place": "city",
+                "population": "75917",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q639674",
+                "wikipedia": "fr:Banfora"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.752639,
+                    10.642703
+                ]
+            },
+            "id": "node/302737807"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/302738072",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Pouytenga;Kouritenga;Centre-Est;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Pouytenga",
+                "is_in:province": "Kouritenga",
+                "is_in:province_code": "14",
+                "is_in:region": "Centre-Est",
+                "is_in:region_code": "10",
+                "name": "Pouytenga",
+                "name:fr": "Pouytenga",
+                "place": "town",
+                "population": "45061",
+                "source:population": "INSD.BF",
+                "wikidata": "Q3400815",
+                "wikipedia": "fr:Pouytenga"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.4257424,
+                    12.2467964
+                ]
+            },
+            "id": "node/302738072"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/302738145",
+                "admin_level": "8",
+                "capital": "4",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Kaya",
+                "is_in:province": "Sanmatenga",
+                "is_in:province_code": "23",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Kaya",
+                "name:fr": "Kaya",
+                "name:ko": "카야",
+                "name:ru": "Кая",
+                "place": "town",
+                "population": "54365",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q766464",
+                "wikipedia": "fr:Kaya (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.0839593,
+                    13.085603
+                ]
+            },
+            "id": "node/302738145"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/322548007",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Pô;Nahouri;Centre-Sud;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Pô",
+                "is_in:province": "Nahouri",
+                "is_in:province_code": "16",
+                "is_in:region": "Centre-Sud",
+                "is_in:region_code": "13",
+                "name": "Pô",
+                "name:fr": "Pô",
+                "place": "town",
+                "population": "24320",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q1756613",
+                "wikipedia": "fr:Pô (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.1432433,
+                    11.1668501
+                ]
+            },
+            "id": "node/322548007"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/322555843",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Koupéla;Kouritenga;Centre-Est;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Koupéla",
+                "is_in:province": "Kouritenga",
+                "is_in:province_code": "14",
+                "is_in:region": "Centre-Est",
+                "is_in:region_code": "10",
+                "name": "Koupéla",
+                "name:fr": "Koupéla",
+                "name:ru": "Купела",
+                "place": "town",
+                "population": "22000",
+                "source:population": "INSD.BF",
+                "wikidata": "Q116524",
+                "wikipedia": "fr:Koupéla"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.3539332,
+                    12.178932
+                ]
+            },
+            "id": "node/322555843"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/322558650",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "4",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Tenkodogo",
+                "is_in:province": "Boulgou",
+                "is_in:province_code": "04",
+                "is_in:region": "Centre-Est",
+                "is_in:region_code": "10",
+                "name": "Tenkodogo",
+                "name:fr": "Tenkodogo",
+                "name:ko": "텐코도고",
+                "place": "town",
+                "population": "37123",
+                "population:date": "2005",
+                "source:population": "INSD.BF",
+                "wikidata": "Q621925",
+                "wikipedia": "fr:Tenkodogo"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.3651416,
+                    11.7828079
+                ]
+            },
+            "id": "node/322558650"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/324416144",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "4",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:department": "Dori",
+                "is_in:province": "Séno",
+                "is_in:province_code": "24",
+                "is_in:region": "Sahel",
+                "is_in:region_code": "03",
+                "name": "Dori",
+                "name:fr": "Dori",
+                "name:ko": "도리",
+                "name:ru": "Дори",
+                "place": "town",
+                "population": "21078",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q999493",
+                "wikipedia": "fr:Dori (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.0289733,
+                    14.0310659
+                ]
+            },
+            "id": "node/324416144"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/324416721",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Yalgo;Namentenga;Centre-Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:province": "Namentenga",
+                "is_in:province_code": "17",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Yalgo",
+                "place": "town",
+                "population": "31889",
+                "source:population": "INSD.BF",
+                "wikidata": "Q16683602",
+                "wikipedia": "fr:Yalgo"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.2653784,
+                    13.588066
+                ]
+            },
+            "id": "node/324416721"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/329970953",
+                "admin_level": "5",
+                "capital": "5",
+                "is_in": "Léo;Sissili;Centre-Ouest;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Léo",
+                "is_in:province": "Sissili",
+                "is_in:province_code": "25",
+                "is_in:region": "Centre-Ouest",
+                "is_in:region_code": "07",
+                "name": "Léo",
+                "name:en": "Leo",
+                "name:fr": "Léo",
+                "place": "town",
+                "population": "26779",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q650951",
+                "wikipedia": "fr:Léo (Burkina)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.1047639,
+                    11.0971341
+                ]
+            },
+            "id": "node/329970953"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/330435343",
+                "admin_level": "8",
+                "capital": "4",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Dédougou",
+                "is_in:province": "Mouhoun",
+                "is_in:province_code": "15",
+                "is_in:region": "Boucle du Mouhoun",
+                "is_in:region_code": "02",
+                "name": "Dédougou",
+                "name:fr": "Dédougou",
+                "name:ko": "데두구",
+                "name:ru": "Дедугу",
+                "place": "town",
+                "population": "32050",
+                "source:population": "INSD.BF",
+                "wikidata": "Q934436",
+                "wikipedia": "fr:Dédougou"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.457987,
+                    12.4617
+                ]
+            },
+            "id": "node/330435343"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/330442150",
+                "admin_level": "8",
+                "alt_name": "Kongounsi",
+                "capital": "5",
+                "is_in": "Kongoussi;Bam;Centre-Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Kongoussi",
+                "is_in:province": "Bam",
+                "is_in:province_code": "01",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Kongoussi",
+                "place": "town",
+                "population": "17893",
+                "source:population": "INSD.BF",
+                "wikidata": "Q163352",
+                "wikipedia": "fr:Kongoussi"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.5263393,
+                    13.3224919
+                ]
+            },
+            "id": "node/330442150"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/353046743",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Orodara;Kénédougou;Hauts-Bassins;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Orodara",
+                "is_in:province": "Kénédougou",
+                "is_in:province_code": "12",
+                "is_in:region": "Hauts-Bassins",
+                "is_in:region_code": "01",
+                "name": "Orodara",
+                "name:en": "Orodara",
+                "name:fr": "Orodara",
+                "name:ru": "Ородара",
+                "place": "town",
+                "source": "Institut Géographique du Burkina",
+                "wikidata": "Q143892",
+                "wikipedia": "fr:Orodara"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.9148962,
+                    10.9821014
+                ]
+            },
+            "id": "node/353046743"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/353275015",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Diébougou;Bougouriba;Sud-Ouest;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Diébougou",
+                "is_in:province": "Bougouriba",
+                "is_in:province_code": "03",
+                "is_in:region": "Sud-Ouest",
+                "is_in:region_code": "05",
+                "name": "Diébougou",
+                "name:fr": "Diébougou",
+                "place": "town",
+                "population": "17937",
+                "population:date": "2012",
+                "source": "Institut Géographique du Burkina",
+                "source:population": "INSD.BF",
+                "wikidata": "Q578567",
+                "wikipedia": "fr:Diébougou"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.2487858,
+                    10.9650701
+                ]
+            },
+            "id": "node/353275015"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/356008606",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Réo;Sanguié;Centre-Ouest;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Réo",
+                "is_in:province": "Sanguié",
+                "is_in:province_code": "22",
+                "is_in:region": "Centre-Ouest",
+                "is_in:region_code": "07",
+                "name": "Réo",
+                "name:en": "Reo",
+                "name:fr": "Réo",
+                "place": "town",
+                "population": "31174",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q1817933",
+                "wikipedia": "fr:Réo"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.4696282,
+                    12.3186862
+                ]
+            },
+            "id": "node/356008606"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/431220390",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Boussé;Kourwéogo;Plateau-Central;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Boussé",
+                "is_in:province": "Kourwéogo",
+                "is_in:province_code": "37",
+                "is_in:region": "Plateau-Central",
+                "is_in:region_code": "08",
+                "name": "Boussé",
+                "name:fr": "Boussé",
+                "place": "town",
+                "population": "13173",
+                "population:date": "2006",
+                "source": "Institut Géographique du Burkina",
+                "source:population": "INSD.BF",
+                "wikidata": "Q895281",
+                "wikipedia": "fr:Boussé"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.8974878,
+                    12.6630268
+                ]
+            },
+            "id": "node/431220390"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/434401633",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Batié;Noumbiel;Sud-Ouest;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Batié",
+                "is_in:province": "Noumbiel",
+                "is_in:province_code": "41",
+                "is_in:region": "Sud-Ouest",
+                "is_in:region_code": "03",
+                "name": "Batié",
+                "name:fr": "Batié",
+                "place": "town",
+                "population": "10105",
+                "population:date": "2012",
+                "source": "Institut Géographique du Burkina",
+                "source:population": "INSD.BF",
+                "wikidata": "Q2278360",
+                "wikipedia": "fr:Batié (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.9208902,
+                    9.8766036
+                ]
+            },
+            "id": "node/434401633"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/620869859",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "name": "Cinkansé",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.006713,
+                    11.1182353
+                ]
+            },
+            "id": "node/620869859"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/635138888",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Niangoloko;Comoé;Cascades;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Niangoloko",
+                "is_in:province": "Comoé",
+                "is_in:province_code": "06",
+                "is_in:region": "Cascades",
+                "is_in:region_code": "12",
+                "name": "Niangoloko",
+                "name:fr": "Niangoloko",
+                "place": "town",
+                "population": "22310",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q1016827",
+                "wikipedia": "fr:Niangoloko"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.916741,
+                    10.2821782
+                ]
+            },
+            "id": "node/635138888"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/647291813",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Boromo;Balé;Boucle du Mouhoun;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Boromo",
+                "is_in:province": "Balé",
+                "is_in:province_code": "31",
+                "is_in:region": "Boucle du Mouhoun",
+                "is_in:region_code": "02",
+                "name": "Boromo",
+                "name:fr": "Boromo",
+                "place": "town",
+                "population": "14594",
+                "population:date": "2012",
+                "source": "Institut Géographique du Burkina",
+                "source:population": "INSD.BF",
+                "wikidata": "Q894055",
+                "wikipedia": "fr:Boromo"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.9300274,
+                    11.7447567
+                ]
+            },
+            "id": "node/647291813"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/807702080",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Dano;Ioba;Sud-Ouest;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Dano",
+                "is_in:province": "Ioba",
+                "is_in:province_code": "33",
+                "is_in:region": "Sud-Ouest",
+                "is_in:region_code": "03",
+                "name": "Dano",
+                "name:fr": "Dano",
+                "place": "town",
+                "population": "17068",
+                "population:date": "2012",
+                "source": "Institut Géographique du Burkina",
+                "source:population": "INSD.BF",
+                "wikidata": "Q1164836",
+                "wikipedia": "fr:Dano (Dano)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.0637939,
+                    11.1435597
+                ]
+            },
+            "id": "node/807702080"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902865739",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Sono;Kossi;Boucle du Mouhoun;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Sono",
+                "is_in:province": "Kossi",
+                "is_in:province_code": "13",
+                "is_in:region": "Boucle du Mouhoun",
+                "is_in:region_code": "02",
+                "name": "Sônô",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q1016747",
+                "wikipedia": "fr:Sono (département)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.493881,
+                    12.8304118
+                ]
+            },
+            "id": "node/902865739"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902866563",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Yaba;Nayala;Boucle du Mouhoun;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Yaba",
+                "is_in:province": "Nayala",
+                "is_in:province_code": "40",
+                "is_in:region": "Boucle du Mouhoun",
+                "is_in:region_code": "02",
+                "name": "Yaba",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.8573776,
+                    12.8722594
+                ]
+            },
+            "id": "node/902866563"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902867125",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Saaba;Kadiogo;Centre;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Saaba",
+                "is_in:province": "Kadiogo",
+                "is_in:province_code": "11",
+                "is_in:region": "Centre",
+                "is_in:region_code": "11",
+                "name": "Saaba",
+                "name:fr": "Saaba",
+                "note": "Inserted by script",
+                "place": "town",
+                "population": "9700",
+                "population:date": "2012",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "wikidata": "Q7395534",
+                "wikipedia": "fr:Saaba"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.420833,
+                    12.376944
+                ]
+            },
+            "id": "node/902867125"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902905434",
+                "boundary": "administrative",
+                "capital": "5",
+                "is_in": "Nouna;Kossi;Boucle du Mouhoun;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Nouna",
+                "is_in:province": "Kossi",
+                "is_in:province_code": "13",
+                "is_in:region": "Boucle du Mouhoun",
+                "is_in:region_code": "02",
+                "name": "Nouna",
+                "name:fr": "Nouna",
+                "name:ru": "Нуна",
+                "place": "town",
+                "population": "19105",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "wikidata": "Q3344855",
+                "wikipedia": "fr:Nouna"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.8586969,
+                    12.732121
+                ]
+            },
+            "id": "node/902905434"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902905625",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Gossina;Nayala;Boucle du Mouhoun;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Gossina",
+                "is_in:province": "Nayala",
+                "is_in:province_code": "40",
+                "is_in:region": "Boucle du Mouhoun",
+                "is_in:region_code": "02",
+                "name": "Gossina",
+                "name:fr": "Gossina",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.8692787,
+                    12.5281974
+                ]
+            },
+            "id": "node/902905625"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902905810",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Tougan;Sourou;Boucle du Mouhoun;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Tougan",
+                "is_in:province": "Sourou",
+                "is_in:province_code": "27",
+                "is_in:region": "Boucle du Mouhoun",
+                "is_in:region_code": "02",
+                "name": "Tougan",
+                "name:fr": "Tougan",
+                "place": "town",
+                "population": "14405",
+                "source": "Bing;Tdh;survey",
+                "source:population": "INSD.BF",
+                "survey:date": "2015-10-30",
+                "wikidata": "Q558346",
+                "wikipedia": "fr:Tougan (ville)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.0695369,
+                    13.0690536
+                ]
+            },
+            "id": "node/902905810"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902925969",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Tanghin-Dassouri;Kadiogo;Centre;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Tanghin-Dassouri",
+                "is_in:province": "Kadiogo",
+                "is_in:province_code": "11",
+                "is_in:region": "Centre",
+                "is_in:region_code": "03",
+                "name": "Tanghin-Dassouri",
+                "name:fr": "Tanghin-Dassouri",
+                "place": "town",
+                "population": "8282",
+                "population:date": "2012",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "wikidata": "Q3136729",
+                "wikipedia": "fr:Tanghin-Dassouri (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.7176598,
+                    12.2750297
+                ]
+            },
+            "id": "node/902925969"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902926043",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Garango;Boulgou;Centre-Est;Burkina Faso;Africa",
+                "name": "Garango",
+                "name:fr": "Garango",
+                "note": "Inserted by script",
+                "place": "town",
+                "population": "30469",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "wikidata": "Q2668534",
+                "wikipedia": "fr:Garango"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.5488823,
+                    11.804999
+                ]
+            },
+            "id": "node/902926043"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902926724",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Boulsa;Namentenga;Centre-Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Boulsa",
+                "is_in:province": "Namentenga",
+                "is_in:province_code": "17",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Boulsa",
+                "name:fr": "Boulsa",
+                "name:ru": "Бульса",
+                "place": "town",
+                "population": "12280",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "wikidata": "Q895110",
+                "wikipedia": "fr:Boulsa"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.5730914,
+                    12.6626565
+                ]
+            },
+            "id": "node/902926724"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902926826",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Barsalogho;Sanmatenga;Centre-Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Barsologho",
+                "is_in:province": "Sanmatenga",
+                "is_in:province_code": "23",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Barsalogho",
+                "name:fr": "Barsalogho",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q809135",
+                "wikipedia": "fr:Barsalogho"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.055833,
+                    13.413889
+                ]
+            },
+            "id": "node/902926826"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902926863",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Dablo;Sanmatenga;Centre-Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Dablo",
+                "is_in:province": "Sanmatenga",
+                "is_in:province_code": "23",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Dablo",
+                "name:fr": "Dablo",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q998241",
+                "wikipedia": "fr:Dablo"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.179054,
+                    13.7133249
+                ]
+            },
+            "id": "node/902926863"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902926920",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Korsimoro;Sanmatenga;Centre-Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Korsimoro",
+                "is_in:province": "Sanmatenga",
+                "is_in:province_code": "23",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Korsimoro",
+                "name:fr": "Korsimoro",
+                "place": "town",
+                "population": "15994",
+                "population:date": "2012",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "wikidata": "Q1330774",
+                "wikipedia": "fr:Korsimoro"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.0663565,
+                    12.8256574
+                ]
+            },
+            "id": "node/902926920"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902926946",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Pensa;Sanmatenga;Centre-Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Pensa",
+                "is_in:province": "Sanmatenga",
+                "is_in:province_code": "23",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Pensa",
+                "name:fr": "Pensa",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q10804631"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.8066866,
+                    13.6472798
+                ]
+            },
+            "id": "node/902926946"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902926990",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Pissila;Sanmatenga;Centre-Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Pissila",
+                "is_in:province": "Sanmatenga",
+                "is_in:province_code": "23",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Pissila",
+                "name:fr": "Pissila",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q1484279"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.8262877,
+                    13.1675736
+                ]
+            },
+            "id": "node/902926990"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902927058",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "alt_name": "Kokologho",
+                "alt_name:fr": "Kokologho",
+                "capital": "6",
+                "is_in": "Kokologo;Boulkiemdé;Centre-Ouest;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Kokologo",
+                "is_in:province": "Boulkiemdé",
+                "is_in:province_code": "05",
+                "is_in:region": "Centre-Ouest",
+                "is_in:region_code": "07",
+                "name": "Kokologo",
+                "name:fr": "Kokologo",
+                "place": "town",
+                "population": "14481",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "wikidata": "Q1778964",
+                "wikipedia": "fr:Kokologo"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.8752254,
+                    12.1934191
+                ]
+            },
+            "id": "node/902927058"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902927264",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Dassa,Sanguie,Centre Ouest,Burkina Faso",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Dassa",
+                "is_in:province": "Sanguié",
+                "is_in:province_code": "22",
+                "is_in:region": "Centre-Ouest",
+                "is_in:region_code": "07",
+                "name": "Dassa",
+                "name:fr": "Dassa",
+                "note": "Inserted by script",
+                "place": "town",
+                "population": "7559",
+                "population:date": "2012",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "wikipedia": "fr:Dassa"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.6909823,
+                    12.4520542
+                ]
+            },
+            "id": "node/902927264"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902927911",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Tibga;Gourma;Est;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Tibga",
+                "is_in:province": "Gourma",
+                "is_in:province_code": "09",
+                "is_in:region": "Est",
+                "is_in:region_code": "04",
+                "name": "Tibga",
+                "name:fr": "Tibga",
+                "note": "Inserted by script",
+                "place": "town",
+                "population": "5078",
+                "population:date": "2006",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "wikipedia": "fr:Tibga (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.061717,
+                    12.1686797
+                ]
+            },
+            "id": "node/902927911"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902928052",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Kantchari;Tapoa;Est;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Kantchari",
+                "is_in:province": "Tapoa",
+                "is_in:province_code": "28",
+                "is_in:region": "Est",
+                "is_in:region_code": "04",
+                "name": "Kantchari",
+                "name:fr": "Kantchari",
+                "place": "town",
+                "population": "7302",
+                "population:date": "2012",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "wikidata": "Q6365356",
+                "wikipedia": "fr:Kantchari (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    1.514282,
+                    12.476981
+                ]
+            },
+            "id": "node/902928052"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902928776",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Yako;Passoré;Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Yako",
+                "is_in:province": "Passoré",
+                "is_in:province_code": "20",
+                "is_in:region": "Nord",
+                "is_in:region_code": "09",
+                "name": "Yako",
+                "name:fr": "Yako",
+                "place": "town",
+                "population": "22685",
+                "population:date": "2012",
+                "source": "Bing;Tdh;survey",
+                "source:population": "INSD.BF",
+                "survey:date": "2015-10-24",
+                "wikidata": "Q940973",
+                "wikipedia": "fr:Yako"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.2634317,
+                    12.9612908
+                ]
+            },
+            "id": "node/902928776"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902928838",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Koumbri;Yatenga;Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Koumbri",
+                "is_in:province": "Yatenga",
+                "is_in:province_code": "29",
+                "is_in:region": "Nord",
+                "is_in:region_code": "09",
+                "name": "Koumbri",
+                "name:fr": "Koumbri",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q18785677",
+                "wikipedia": "fr:Koumbri (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.41771,
+                    13.8488463
+                ]
+            },
+            "id": "node/902928838"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902929215",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Zorgho;Ganzourgou;Plateau-Central;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Zorgho",
+                "is_in:province": "Ganzourgou",
+                "is_in:province_code": "07",
+                "is_in:region": "Plateau-Central",
+                "is_in:region_code": "08",
+                "name": "Zorgho",
+                "place": "town",
+                "population": "22000",
+                "population:date": "2012",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "website": "http://www.zorgho.org/zorgho.html",
+                "wikidata": "Q929255",
+                "wikipedia": "fr:Zorgho"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.6278012,
+                    12.2465618
+                ]
+            },
+            "id": "node/902929215"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902929696",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Djibo;Soum;Sahel;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Djibo",
+                "is_in:province": "Soum",
+                "is_in:province_code": "26",
+                "is_in:region": "Sahel",
+                "is_in:region_code": "03",
+                "name": "Djibo",
+                "name:fr": "Djibo",
+                "place": "town",
+                "population": "28990",
+                "population:date": "2012",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "wikidata": "Q1232175",
+                "wikipedia": "fr:Djibo (Bukina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.6318243,
+                    14.1023225
+                ]
+            },
+            "id": "node/902929696"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902929837",
+                "admin_level": "8",
+                "alt_name": "Seba;Sébba",
+                "alt_name:fr": "Seba;Sébba",
+                "capital": "5",
+                "is_in": "Sebba;Yagha;Sahel;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Sebba",
+                "is_in:province": "Yagha",
+                "is_in:province_code": "43",
+                "is_in:region": "Sahel",
+                "is_in:region_code": "03",
+                "name": "Sebba",
+                "name:fr": "Sebba",
+                "name:ru": "Себба",
+                "place": "town",
+                "population": "5906",
+                "population:date": "2012",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "wikidata": "Q614566",
+                "wikipedia": "fr:Sebba"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.5264471,
+                    13.44169
+                ]
+            },
+            "id": "node/902929837"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902948954",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "8",
+                "is_in": "Kouka;Banwa;Boucle du Mouhoun;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Kouka",
+                "is_in:province": "Banwa",
+                "is_in:province_code": "32",
+                "is_in:region": "Boucle du Mouhoun",
+                "is_in:region_code": "02",
+                "name": "Diontala",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q5279367"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.458072,
+                    11.763842
+                ]
+            },
+            "id": "node/902948954"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902949014",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "8",
+                "is_in": "Kouka;Banwa;Boucle du Mouhoun;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Kouka",
+                "is_in:province": "Banwa",
+                "is_in:province_code": "32",
+                "is_in:region": "Boucle du Mouhoun",
+                "is_in:region_code": "02",
+                "name": "Fini",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q5450321"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.387093,
+                    11.8178671
+                ]
+            },
+            "id": "node/902949014"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902949110",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "8",
+                "is_in": "Kouka;Banwa;Boucle du Mouhoun;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Kouka",
+                "is_in:province": "Banwa",
+                "is_in:province_code": "32",
+                "is_in:region": "Boucle du Mouhoun",
+                "is_in:region_code": "02",
+                "name": "Sama",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q7408398"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.3262095,
+                    11.776311
+                ]
+            },
+            "id": "node/902949110"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902952634",
+                "admin_level": "8",
+                "capital": "8",
+                "description": "Commune rurale",
+                "is_in": "Dédougou;Mouhoun;Boucle du Mouhoun;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Dédougou",
+                "is_in:province": "Mouhoun",
+                "is_in:province_code": "15",
+                "is_in:region": "Boucle du Mouhoun",
+                "is_in:region_code": "02",
+                "name": "Karo",
+                "name:fr": "Karo",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.3043355,
+                    12.361938
+                ]
+            },
+            "id": "node/902952634"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902953126",
+                "is_in": "Dedougou,Mouhoun,Boucel Du Mouhoun,Burkina Faso",
+                "name": "Toroba",
+                "place": "town",
+                "population": "977"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.2314277,
+                    12.4635653
+                ]
+            },
+            "id": "node/902953126"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902954237",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "is_in": "Safané;Mouhoun;Boucle du Mouhoun;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Safané",
+                "is_in:province": "Mouhoun",
+                "is_in:province_code": "15",
+                "is_in:region": "Boucle du Mouhoun",
+                "is_in:region_code": "02",
+                "name": "Datomo",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.2367504,
+                    11.9177736
+                ]
+            },
+            "id": "node/902954237"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902957957",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Ouargaye;Koulpélogo;Centre-Est;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Ouargaye",
+                "is_in:province": "Koulpélogo",
+                "is_in:province_code": "36",
+                "is_in:region": "Centre-Est",
+                "is_in:region_code": "10",
+                "name": "Ouargaye",
+                "name:fr": "Ouargaye",
+                "place": "town",
+                "population": "10103",
+                "population:date": "2012",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "wikidata": "Q1570493",
+                "wikipedia": "fr:Ouargaye (Ouargaye)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.0576243,
+                    11.503281
+                ]
+            },
+            "id": "node/902957957"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902960717",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "8",
+                "is_in": "Loumana;Léraba;Cascades;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:province": "Léraba",
+                "is_in:province_code": "38",
+                "is_in:region": "Cascades",
+                "is_in:region_code": "12",
+                "name": "Baguéra",
+                "name:fr": "Baguéra",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-5.411546,
+                    10.527161
+                ]
+            },
+            "id": "node/902960717"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902962617",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "8",
+                "is_in": "Saaba;Kadiogo;Centre;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Saaba",
+                "is_in:province": "Kadiogo",
+                "is_in:province_code": "11",
+                "is_in:region": "Centre",
+                "is_in:region_code": "11",
+                "name": "Nioko-I",
+                "name:fr": "Nioko",
+                "note": "Inserted by script",
+                "place": "town",
+                "population": "16427",
+                "population:date": "2012",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.4386315,
+                    12.3956833
+                ]
+            },
+            "id": "node/902962617"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902969875",
+                "fixme": "please check exact postion and fix if inaccurate",
+                "is_in": "Tenkodogo,Boulgou,Centre Est,Burkina Faso",
+                "name": "Kampoaga",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.216667,
+                    11.783333
+                ]
+            },
+            "id": "node/902969875"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902974553",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "is_in": "Boulsa,Namentenga,Centre Nord,Burkina Faso",
+                "name": "Belga",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.483333,
+                    12.883333
+                ]
+            },
+            "id": "node/902974553"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902974697",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "is_in": "Boulsa,Namentenga,Centre Nord,Burkina Faso",
+                "name": "Zambanga",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.566667,
+                    12.733333
+                ]
+            },
+            "id": "node/902974697"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902975284",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "is_in": "Yalgo,Namentenga,Centre Nord,Burkina Faso",
+                "name": "Taparko",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.3270522,
+                    13.4842434
+                ]
+            },
+            "id": "node/902975284"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902977595",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "8",
+                "is_in": "Pissila;Sanmatenga;Centre-Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Pissila",
+                "is_in:province": "Sanmatenga",
+                "is_in:province_code": "23",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Issaogo",
+                "name:fr": "Issaogo",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.7471303,
+                    13.0243317
+                ]
+            },
+            "id": "node/902977595"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902977712",
+                "admin_level": "8",
+                "capital": "8",
+                "is_in": "Pissila;Sanmatenga;Centre-Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Pissila",
+                "is_in:province": "Sanmatenga",
+                "is_in:province_code": "23",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Noaka",
+                "name:fr": "Noaka",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.9362031,
+                    13.1898325
+                ]
+            },
+            "id": "node/902977712"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902978615",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Gourcy;Zondoma;Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Gourcy",
+                "is_in:province": "Zondoma",
+                "is_in:province_code": "45",
+                "is_in:region": "Nord",
+                "is_in:region_code": "09",
+                "name": "Gourcy",
+                "name:fr": "Gourcy",
+                "note": "Inserted by script",
+                "place": "town",
+                "population": "24616",
+                "population:date": "2012",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "wikidata": "Q1540219",
+                "wikipedia": "fr:Gourcy (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.3598879,
+                    13.2072912
+                ]
+            },
+            "id": "node/902978615"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902979251",
+                "fixme": "please check exact postion and fix if inaccurate",
+                "is_in": "Sigle,Boulkiemde,Centre Ouest,Burkina Faso",
+                "name": "Bologo",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q4939979"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.266667,
+                    12.033333
+                ]
+            },
+            "id": "node/902979251"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902979377",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Bokin;Passoré;Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Bokin",
+                "is_in:province": "Passoré",
+                "is_in:province_code": "20",
+                "is_in:region": "Nord",
+                "is_in:region_code": "09",
+                "name": "Bokin",
+                "name:fr": "Bokin",
+                "place": "town",
+                "source": "Bing;Tdh;survey",
+                "survey:date": "2015-10-23",
+                "wikipedia": "fr:Bokin (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.7949997,
+                    13.0055552
+                ]
+            },
+            "id": "node/902979377"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902983955",
+                "admin_level": "8",
+                "capital": "8",
+                "is_in": "Mané;Sanmatenga;Centre-Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Mané",
+                "is_in:province": "Sanmatenga",
+                "is_in:province_code": "23",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Yilou",
+                "name:fr": "Yilou",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q7036474"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.5465642,
+                    13.0166729
+                ]
+            },
+            "id": "node/902983955"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902987509",
+                "fixme": "please check exact postion and fix if inaccurate",
+                "is_in": "Bilanga,Gnagna,Est,Burkina Faso",
+                "name": "Moaka",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q6886364"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.092302,
+                    12.298512
+                ]
+            },
+            "id": "node/902987509"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902987850",
+                "fixme": "please check exact postion and fix if inaccurate",
+                "is_in": "Bogande,Gnagna,Est,Burkina Faso",
+                "name": "Ouadangou",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q15264689"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.116667,
+                    12.916667
+                ]
+            },
+            "id": "node/902987850"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902988164",
+                "is_in": "Liptougou,Gnagna,Est,Burkina Faso",
+                "name": "Bonsiega",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q4942588"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.188353,
+                    13.478376
+                ]
+            },
+            "id": "node/902988164"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902989954",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "8",
+                "is_in": "Fada N'Gourma;Gourma;Est;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Fada N'Gourma",
+                "is_in:province": "Gourma",
+                "is_in:province_code": "09",
+                "is_in:region": "Est",
+                "is_in:region_code": "04",
+                "name": "Natiaboani",
+                "name:fr": "Natiaboani",
+                "note": "Inserted by script",
+                "place": "town",
+                "population": "14350",
+                "population:date": "2012",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.5053818,
+                    11.7033888
+                ]
+            },
+            "id": "node/902989954"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902991730",
+                "fixme": "please check exact postion and fix if inaccurate",
+                "is_in": "Bama,Houet,Hauts Bassins,Burkina Faso",
+                "name": "Samandeni",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.4473882,
+                    11.4506751
+                ]
+            },
+            "id": "node/902991730"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902991849",
+                "fixme": "please check exact postion and fix if inaccurate",
+                "is_in": "Bama,Houet,Hauts Bassins,Burkina Faso",
+                "name": "Seguere",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.394914,
+                    11.524614
+                ]
+            },
+            "id": "node/902991849"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902993702",
+                "is_in": "Padema,Houet,Hauts Bassins,Burkina Faso",
+                "name": "Soma",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.4162757,
+                    11.9784761
+                ]
+            },
+            "id": "node/902993702"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/902994455",
+                "fixme": "please check exact postion and fix if inaccurate",
+                "is_in": "Djigouera,Kenedougou,Hauts Bassins,Burkina Faso",
+                "name": "Serekeni",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-5.0136,
+                    11.1488
+                ]
+            },
+            "id": "node/902994455"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/903004367",
+                "is_in": "Titao,Loroum,Nord,Burkina Faso",
+                "name": "You",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.1413246,
+                    13.7034206
+                ]
+            },
+            "id": "node/903004367"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/903013994",
+                "is_in": "Zam,Ganzourgou,Plateau Central,Burkina Faso",
+                "name": "Kougri",
+                "place": "town",
+                "wikidata": "Q6434502"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.077292,
+                    12.376256
+                ]
+            },
+            "id": "node/903013994"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/903014183",
+                "is_in": "Zorgho,Ganzourgou,Plateau Central,Burkina Faso",
+                "name": "Sapaga",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q7420895"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.43203,
+                    12.190716
+                ]
+            },
+            "id": "node/903014183"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/919531228",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Bitou;Boulgou;Centre-Est;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:province": "Boulgou",
+                "is_in:province_code": "04",
+                "is_in:region": "Centre-Est",
+                "is_in:region_code": "10",
+                "name": "Bitou",
+                "name:fr": "Bitou",
+                "place": "town",
+                "population": "20118",
+                "source:population": "INSD.BF",
+                "wikidata": "Q999177",
+                "wikipedia": "fr:Bitou (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.3054445,
+                    11.2558051
+                ]
+            },
+            "id": "node/919531228"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/936971035",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Titao;Loroum;Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Titao",
+                "is_in:province": "Loroum",
+                "is_in:province_code": "39",
+                "is_in:region": "Nord",
+                "is_in:region_code": "09",
+                "name": "Titao",
+                "name:fr": "Titao",
+                "place": "town",
+                "population": "19131",
+                "population:date": "2012",
+                "source": "Institut Géographique du Burkina",
+                "source:population": "INSD.BF",
+                "wikidata": "Q1861898",
+                "wikipedia": "fr:Titao"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.0736431,
+                    13.7667353
+                ]
+            },
+            "id": "node/936971035"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/993610477",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Houndé;Tuy;Hauts-Bassins;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Houndé",
+                "is_in:province": "Tuy",
+                "is_in:province_code": "42",
+                "is_in:region": "Hauts-Bassins",
+                "is_in:region_code": "01",
+                "name": "Houndé",
+                "name:fr": "Houndé",
+                "place": "town",
+                "population": "39458",
+                "population:date": "2012",
+                "source": "Institut Géographique du Burkina",
+                "source:population": "INSD.BF",
+                "wikidata": "Q999435",
+                "wikipedia": "fr:Houndé"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.5205952,
+                    11.4921785
+                ]
+            },
+            "id": "node/993610477"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/1082784388",
+                "admin_level": "8",
+                "capital": "4",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Ziniaré",
+                "is_in:province": "Oubritenga",
+                "is_in:province_code": "18",
+                "is_in:region": "Plateau-Central",
+                "is_in:region_code": "08",
+                "name": "Ziniaré",
+                "name:fr": "Ziniaré",
+                "name:ko": "지니아레",
+                "name:ru": "Зиниаре",
+                "place": "town",
+                "population": "18619",
+                "population:date": "2012",
+                "source": "Institut Géographique du Burkina",
+                "source:population": "INSD.BF",
+                "wikidata": "Q15647343",
+                "wikipedia": "fr:Ziniaré"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.2965531,
+                    12.5836175
+                ]
+            },
+            "id": "node/1082784388"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/1195860711",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Piéla;Gnagna;Est;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Piéla",
+                "is_in:province": "Gnagna",
+                "is_in:province_code": "08",
+                "is_in:region": "Est",
+                "is_in:region_code": "04",
+                "name": "Piéla",
+                "name:fr": "Piéla",
+                "place": "town",
+                "population": "8894",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikipedia": "fr:Piéla (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.1348274,
+                    12.7108236
+                ]
+            },
+            "id": "node/1195860711"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/1402180193",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Gayéri;Komondjari;Est;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Gayéri",
+                "is_in:province": "Komondjari",
+                "is_in:province_code": "34",
+                "is_in:region": "Est",
+                "is_in:region_code": "04",
+                "name": "Gayéri",
+                "name:fr": "Gayéri",
+                "place": "town",
+                "population": "6060",
+                "population:date": "2012",
+                "source": "Institut Géographique du Burkina",
+                "source:population": "INSD.BF",
+                "wikipedia": "fr:Gayéri (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.4882565,
+                    12.6501234
+                ]
+            },
+            "id": "node/1402180193"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/1640458610",
+                "admin_level": "8",
+                "capital": "5",
+                "description": "Commune urbaine",
+                "is_in": "Toma;Nayala;Boucle du Mouhoun;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Toma",
+                "is_in:province": "Nayala",
+                "is_in:province_code": "40",
+                "is_in:region": "Boucle du Mouhoun",
+                "is_in:region_code": "02",
+                "name": "Toma",
+                "name:fr": "Toma",
+                "place": "town",
+                "population": "12587",
+                "source": "Institut Géographique du Burkina",
+                "source:population": "INSD.BF",
+                "wikidata": "Q2304523",
+                "wikipedia": "fr:Toma (Toma)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.8972321,
+                    12.7564457
+                ]
+            },
+            "id": "node/1640458610"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/1920654544",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Bogandé;Gnagna;Est;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Bogandé",
+                "is_in:province": "Gnagna",
+                "is_in:province_code": "08",
+                "is_in:region": "Est",
+                "is_in:region_code": "04",
+                "name": "Bogandé",
+                "name:fr": "Bogandé",
+                "name:ru": "Боганде",
+                "place": "town",
+                "population": "11509",
+                "population:date": "2006",
+                "source": "Institut Géographique du Burkina",
+                "source:population": "INSD.BF",
+                "wikidata": "Q890373",
+                "wikipedia": "fr:Bogandé (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.1432736,
+                    12.9763066
+                ]
+            },
+            "id": "node/1920654544"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/1920687667",
+                "admin_level": "8",
+                "capital": "4",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Manga",
+                "is_in:province": "Zoundwéogo",
+                "is_in:province_code": "30",
+                "is_in:region": "Centre-Sud",
+                "is_in:region_code": "13",
+                "name": "Manga",
+                "name:fr": "Manga",
+                "name:ko": "망가",
+                "place": "town",
+                "population": "19860",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q999498",
+                "wikipedia": "fr:Manga (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.0723972,
+                    11.6673837
+                ]
+            },
+            "id": "node/1920687667"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/1920732032",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "4",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Ouahigouya",
+                "is_in:province": "Yatenga",
+                "is_in:province_code": "29",
+                "is_in:region": "Nord",
+                "is_in:region_code": "09",
+                "name": "Ouahigouya",
+                "name:fr": "Ouahigouya",
+                "name:ko": "와이구야",
+                "name:ru": "Вахигуя",
+                "place": "town",
+                "population": "73153",
+                "population:date": "2012",
+                "source": "Institut Géographique du Burkina",
+                "source:population": "INSD.BF",
+                "website": "http://www.villedeouahigouya.org/",
+                "wikidata": "Q569904",
+                "wikipedia": "fr:Ouahigouya"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.417699,
+                    13.580982
+                ]
+            },
+            "id": "node/1920732032"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/1920763571",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "4",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Gaoua",
+                "is_in:province": "Poni",
+                "is_in:province_code": "21",
+                "is_in:region": "Sud-Ouest",
+                "is_in:region_code": "05",
+                "name": "Gaoua",
+                "name:fr": "Gaoua",
+                "name:ko": "가우아",
+                "place": "town",
+                "population": "25104",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q1011882",
+                "wikipedia": "fr:Gaoua"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.1795681,
+                    10.3303342
+                ]
+            },
+            "id": "node/1920763571"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/1923474142",
+                "admin_level": "8",
+                "alt_name": "Kuko;Kouko;Kouba",
+                "capital": "6",
+                "is_in": "Kouka;Banwa;Boucle du Mouhoun;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Kouka",
+                "is_in:province": "Banwa",
+                "is_in:province_code": "32",
+                "is_in:region": "Boucle du Mouhoun",
+                "is_in:region_code": "02",
+                "name": "Kouka",
+                "place": "town",
+                "population": "26050",
+                "population:date": "2012",
+                "source": "Institut Géographique du Burkina",
+                "source:population": "INSD.BF",
+                "wikidata": "Q5256866",
+                "wikipedia": "fr:Kouka (département)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.338064,
+                    11.892606
+                ]
+            },
+            "id": "node/1923474142"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/1938329771",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Mané;Sanmatenga;Centre-Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Mané",
+                "is_in:province": "Sanmatenga",
+                "is_in:province_code": "23",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Mané",
+                "name:fr": "Mané",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.344193,
+                    12.9876492
+                ]
+            },
+            "id": "node/1938329771"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2126335524",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "fixme": "please check exact postion and fix if inaccurate",
+                "is_in": "Douna;Léraba;Cascades;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:province": "Léraba",
+                "is_in:province_code": "38",
+                "is_in:region": "Cascades",
+                "is_in:region_code": "12",
+                "name": "Douna",
+                "name:fr": "Douna",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "wikidata": "Q3038128",
+                "wikipedia": "fr:Douna"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-5.1076244,
+                    10.6137236
+                ]
+            },
+            "id": "node/2126335524"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2127412021",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "5",
+                "is_in": "Kombissiri;Bazèga;Centre-Sud;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Kombissiri",
+                "is_in:province": "Bazèga",
+                "is_in:province_code": "02",
+                "is_in:region": "Centre-Sud",
+                "is_in:region_code": "13",
+                "name": "Kombissiri",
+                "name:fr": "Kombissiri",
+                "name:ru": "Комбисири",
+                "place": "town",
+                "population": "23460",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q1642022",
+                "wikipedia": "fr:Kombissiri"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.3355778,
+                    12.0666555
+                ]
+            },
+            "id": "node/2127412021"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2195995727",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "alt_name": "Fada N'gourma",
+                "alt_name:fr": "Fada N'gourma",
+                "capital": "4",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Fada N'Gourma",
+                "is_in:province": "Gourma",
+                "is_in:province_code": "09",
+                "is_in:region": "Est",
+                "is_in:region_code": "04",
+                "name": "Fada N'Gourma",
+                "name:fr": "Fada N'Gourma",
+                "name:ko": "파다응구르마",
+                "place": "town",
+                "population": "41156",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q990122",
+                "wikipedia": "fr:Fada N'Gourma"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.3593297,
+                    12.0570943
+                ]
+            },
+            "id": "node/2195995727"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2196644128",
+                "place": "town",
+                "source": "Bing 2013"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.385095,
+                    12.7625323
+                ]
+            },
+            "id": "node/2196644128"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2271542436",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.4940177,
+                    11.601994
+                ]
+            },
+            "id": "node/2271542436"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2303093453",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.9039153,
+                    12.4166943
+                ]
+            },
+            "id": "node/2303093453"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2401977249",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Gon-boussougou;Zoundwéogo;Centre-Sud;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Gon Boussougou",
+                "is_in:province": "Zoundwéogo",
+                "is_in:province_code": "30",
+                "is_in:region": "Centre-Sud",
+                "is_in:region_code": "13",
+                "name": "Gon Boussougou",
+                "name:fr": "Gon Boussougou",
+                "place": "town",
+                "population": "10314",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikipedia": "fr:Gon Boussougou"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.774961,
+                    11.4304795
+                ]
+            },
+            "id": "node/2401977249"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2403731934",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "alt_name": "Vili",
+                "alt_name:fr": "Vili",
+                "capital": "8",
+                "is_in": "Koudougou;Boulkiemdé;Centre-Ouest;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Koudougou",
+                "is_in:province": "Boulkiemdé",
+                "is_in:province_code": "05",
+                "is_in:region": "Centre-Ouest",
+                "is_in:region_code": "07",
+                "name": "Villy",
+                "name:fr": "Villy",
+                "place": "town",
+                "population": "13317",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q6611953",
+                "wikipedia": "fr:Villy (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.1653766,
+                    12.2797127
+                ]
+            },
+            "id": "node/2403731934"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2427388786",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Boussouma;Sanmatenga;Centre-Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Boussouma",
+                "is_in:province": "Sanmatenga",
+                "is_in:province_code": "23",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Boussouma",
+                "name:fr": "Boussouma",
+                "place": "town",
+                "population": "10018",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q895276",
+                "wikipedia": "fr:Boussouma (Sanmatenga)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.0756083,
+                    12.9098871
+                ]
+            },
+            "id": "node/2427388786"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2463470480",
+                "alt_name": "Ka I-n",
+                "name": "Kain",
+                "place": "town",
+                "source": "Bing",
+                "source:date": "2014"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.7586005,
+                    14.0445273
+                ]
+            },
+            "id": "node/2463470480"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2532889925",
+                "admin_level": "8",
+                "alt_name": "Imasgo;Imazgo",
+                "alt_name:fr": "Imasgo;Imazgo",
+                "capital": "6",
+                "is_in": "Imasgho;Boulkiemdé;Centre-Ouest;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Imasgho",
+                "is_in:province": "Boulkiemdé",
+                "is_in:province_code": "05",
+                "is_in:region": "Centre-Ouest",
+                "is_in:region_code": "07",
+                "name": "Imasgho",
+                "name:fr": "Imasgho",
+                "place": "town",
+                "population": "9007",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q6003432",
+                "wikipedia": "fr:Imasgo"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.331934,
+                    12.4363235
+                ]
+            },
+            "id": "node/2532889925"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2532889938",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Kindi;Boulkiemdé;Centre-Ouest;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Kindi",
+                "is_in:province": "Boulkiemdé",
+                "is_in:province_code": "05",
+                "is_in:region": "Centre-Ouest",
+                "is_in:region_code": "07",
+                "name": "Kindi",
+                "name:fr": "Kindi",
+                "place": "town",
+                "population": "11308",
+                "population:date": "2012",
+                "source": "NGA GEOnet Names Server (GNS)",
+                "source:population": "INSD.BF",
+                "wikidata": "Q6410602",
+                "wikipedia": "fr:Kindi (Kindi)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.0381497,
+                    12.4370982
+                ]
+            },
+            "id": "node/2532889938"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2532889946",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Kordié;Sanguié;Centre-Ouest;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Kordié",
+                "is_in:province": "Sanguié",
+                "is_in:province_code": "22",
+                "is_in:region": "Centre-Ouest",
+                "is_in:region_code": "07",
+                "name": "Kordié",
+                "name:fr": "Kordié",
+                "place": "town",
+                "wikidata": "Q6431544",
+                "wikipedia": "fr:Kordié"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.362212,
+                    12.5919453
+                ]
+            },
+            "id": "node/2532889946"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2598201834",
+                "capital": "6",
+                "is_in": "Safané;Mouhoun;Boucle du Mouhoun;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Safané",
+                "is_in:province": "Mouhoun",
+                "is_in:province_code": "15",
+                "is_in:region": "Boucle du Mouhoun",
+                "is_in:region_code": "02",
+                "name": "Safané",
+                "place": "town",
+                "wikidata": "Q16511122",
+                "wikipedia": "fr:Safané"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.231614,
+                    12.1290245
+                ]
+            },
+            "id": "node/2598201834"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2676838609",
+                "place": "town",
+                "source": "Bing"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.4431099,
+                    11.9702707
+                ]
+            },
+            "id": "node/2676838609"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2676838650",
+                "place": "town",
+                "source": "Bing"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.4839653,
+                    11.820206
+                ]
+            },
+            "id": "node/2676838650"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2676838834",
+                "place": "town",
+                "source": "Bing"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.4536456,
+                    11.9049806
+                ]
+            },
+            "id": "node/2676838834"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2676838889",
+                "place": "town",
+                "source": "Bing"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.4558992,
+                    11.8742914
+                ]
+            },
+            "id": "node/2676838889"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2676838926",
+                "place": "town",
+                "source": "Bing"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.4396337,
+                    11.9158343
+                ]
+            },
+            "id": "node/2676838926"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2676838995",
+                "alt_name": "Siankoro",
+                "name": "Tiankoro",
+                "place": "town",
+                "source": "Bing"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.5539827,
+                    12.0165521
+                ]
+            },
+            "id": "node/2676838995"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2676839086",
+                "place": "town",
+                "source": "Bing"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.5704526,
+                    11.9779061
+                ]
+            },
+            "id": "node/2676839086"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/2676839119",
+                "place": "town",
+                "source": "Bing"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.4623359,
+                    11.8573771
+                ]
+            },
+            "id": "node/2676839119"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3058804118",
+                "name": "Delga",
+                "place": "town",
+                "source": "Bing",
+                "source:date": "2011"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.3459999,
+                    14.0919906
+                ]
+            },
+            "id": "node/3058804118"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3101676816",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.9112239,
+                    14.6522159
+                ]
+            },
+            "id": "node/3101676816"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3103669254",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Tougouri;Namentenga;Centre-Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:province": "Namentenga",
+                "is_in:province_code": "17",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Tougouri",
+                "name:fr": "Tougouri",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.5259324,
+                    13.3128062
+                ]
+            },
+            "id": "node/3103669254"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3143788204",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.3103616,
+                    13.0775009
+                ]
+            },
+            "id": "node/3143788204"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3154103750",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.2479369,
+                    13.8538797
+                ]
+            },
+            "id": "node/3154103750"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3177030682",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Matiacoali;Gourma;Est;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Matiacoali",
+                "is_in:province": "Gourma",
+                "is_in:province_code": "09",
+                "is_in:region": "Est",
+                "is_in:region_code": "04",
+                "name": "Matiacoali",
+                "name:fr": "Matiacoali",
+                "place": "town",
+                "population": "4673",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikipedia": "fr:Matiacoali (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    1.0328634,
+                    12.3572328
+                ]
+            },
+            "id": "node/3177030682"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3186280842",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Koubri;Kadiogo;Centre;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Koubri",
+                "is_in:province": "Kadiogo",
+                "is_in:province_code": "11",
+                "is_in:region": "Centre",
+                "is_in:region_code": "11",
+                "name": "Koubri",
+                "name:fr": "Koubri",
+                "place": "town",
+                "population": "8060",
+                "population:date": "2015",
+                "source:population": "INSD.BF",
+                "wikidata": "Q585121",
+                "wikipedia": "fr:Koubri"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.3996575,
+                    12.1871662
+                ]
+            },
+            "id": "node/3186280842"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3207756544",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.3894193,
+                    11.3743581
+                ]
+            },
+            "id": "node/3207756544"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3209017883",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.1101523,
+                    11.0912125
+                ]
+            },
+            "id": "node/3209017883"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3209234414",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.5081007,
+                    11.3569499
+                ]
+            },
+            "id": "node/3209234414"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3213703863",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.8576888,
+                    11.0974634
+                ]
+            },
+            "id": "node/3213703863"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3213704748",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.822969,
+                    11.0567624
+                ]
+            },
+            "id": "node/3213704748"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3215817261",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.2298493,
+                    10.8981266
+                ]
+            },
+            "id": "node/3215817261"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3228073764",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.4948124,
+                    11.2983838
+                ]
+            },
+            "id": "node/3228073764"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3415907590",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Zabré;Boulgou;Centre-Est;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Zabré",
+                "is_in:province": "Boulgou",
+                "is_in:province_code": "04",
+                "is_in:region": "Centre-Est",
+                "is_in:region_code": "10",
+                "name": "Zabré",
+                "name:fr": "Zabré",
+                "place": "town",
+                "population": "13599",
+                "source:population": "INSD.BF",
+                "wikidata": "Q3574468",
+                "wikipedia": "fr:Zabré"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.6339871,
+                    11.1850169
+                ]
+            },
+            "id": "node/3415907590"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3461934917",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.5849937,
+                    13.2469587
+                ]
+            },
+            "id": "node/3461934917"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3463468401",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.5099271,
+                    13.3633214
+                ]
+            },
+            "id": "node/3463468401"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3505224752",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Sabou;Boulkiemdé;Centre-Ouest;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Sabou",
+                "is_in:province": "Boulkiemdé",
+                "is_in:province_code": "05",
+                "is_in:region": "Centre-Ouest",
+                "is_in:region_code": "07",
+                "name": "Sabou",
+                "name:fr": "Sabou",
+                "place": "town",
+                "population": "9047",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q3460692",
+                "wikipedia": "fr:Sabou (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.2262127,
+                    12.0608519
+                ]
+            },
+            "id": "node/3505224752"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3516928727",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Bama;Houet;Hauts-Bassins;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Bama",
+                "is_in:province": "Houet",
+                "is_in:province_code": "10",
+                "is_in:region": "Hauts-Bassins",
+                "is_in:region_code": "01",
+                "name": "Bama",
+                "name:fr": "Bama",
+                "place": "town",
+                "population": "22244",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q805919",
+                "wikipedia": "fr:Bama (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.4293787,
+                    11.3996079
+                ]
+            },
+            "id": "node/3516928727"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3579522297",
+                "name": "Bagré",
+                "name:fr": "Bagré",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.5236111,
+                    11.5
+                ]
+            },
+            "id": "node/3579522297"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3791072020",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.1792177,
+                    12.3265483
+                ]
+            },
+            "id": "node/3791072020"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3824375805",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.5828281,
+                    11.0273685
+                ]
+            },
+            "id": "node/3824375805"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3835634512",
+                "fixme": "name",
+                "name": "Guienbila",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.9548575,
+                    13.6947931
+                ]
+            },
+            "id": "node/3835634512"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3841153265",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Soubakaniédougou;Comoé;Cascades;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Soubakaniédougou",
+                "is_in:province": "Comoé",
+                "is_in:province_code": "06",
+                "is_in:region": "Cascades",
+                "is_in:region_code": "12",
+                "name": "Soubakaniédougou",
+                "name:fr": "Soubakaniédougou",
+                "place": "town",
+                "population": "9451",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q7564061",
+                "wikipedia": "fr:Soubakaniédougou"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-5.0043269,
+                    10.4748239
+                ]
+            },
+            "id": "node/3841153265"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3841984896",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Guibaré;Bam;Centre-Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Guibaré",
+                "is_in:province": "Bam",
+                "is_in:province_code": "01",
+                "is_in:region": "Centre-Nord",
+                "is_in:region_code": "06",
+                "name": "Guibaré",
+                "name:fr": "Guibaré",
+                "place": "town",
+                "population": "2874",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q1553437",
+                "wikipedia": "fr:Guibaré"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.6078701,
+                    13.0939143
+                ]
+            },
+            "id": "node/3841984896"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3854219601",
+                "fixme": "name",
+                "place": "town",
+                "source": "Bing",
+                "source:date": "2012",
+                "survey:date": "2015-11-23"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.7327192,
+                    13.8551821
+                ]
+            },
+            "id": "node/3854219601"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3854285281",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.7955382,
+                    13.7450087
+                ]
+            },
+            "id": "node/3854285281"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3866720667",
+                "admin_level": "6",
+                "capital": "5",
+                "is_in": "Sapouy;Ziro;Centre-Ouest;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Sapouy",
+                "is_in:province": "Ziro",
+                "is_in:province_code": "44",
+                "is_in:region": "Centre-Ouest",
+                "is_in:region_code": "07",
+                "name": "Sapouy",
+                "name:fr": "Sapouy",
+                "name:ru": "Сапуй",
+                "place": "town",
+                "population": "12438",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q2183729",
+                "wikipedia": "fr:Sapouy"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.768851,
+                    11.5532714
+                ]
+            },
+            "id": "node/3866720667"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3876155235",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-5.1000659,
+                    11.176068
+                ]
+            },
+            "id": "node/3876155235"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3877799817",
+                "fixme": "name+residential area",
+                "name": "Sokouraba",
+                "note": "#649043",
+                "place": "town",
+                "source": "Bing",
+                "source:date": "2011"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-5.1696637,
+                    10.8452802
+                ]
+            },
+            "id": "node/3877799817"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3877997880",
+                "fixme": "name+residential area",
+                "place": "town",
+                "source": "Bing",
+                "source:date": "2011"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-5.1183862,
+                    10.9298824
+                ]
+            },
+            "id": "node/3877997880"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3885974233",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    0.1453454,
+                    13.0113072
+                ]
+            },
+            "id": "node/3885974233"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3892377419",
+                "fixme": "name+residential area",
+                "place": "town",
+                "source": "Bing",
+                "source:date": "2011"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.9373729,
+                    11.3939924
+                ]
+            },
+            "id": "node/3892377419"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3901312825",
+                "fixme": "name+residential area",
+                "place": "town",
+                "source": "Bing",
+                "source:date": "2013"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.5561552,
+                    11.5824078
+                ]
+            },
+            "id": "node/3901312825"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3908431483",
+                "fixme": "name+residential area",
+                "place": "town",
+                "source": "Bing",
+                "source:date": "2014"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.2206885,
+                    11.8840544
+                ]
+            },
+            "id": "node/3908431483"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3908471200",
+                "fixme": "name+residential area",
+                "place": "town",
+                "source": "Bing",
+                "source:date": "2014"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.1843255,
+                    11.9298541
+                ]
+            },
+            "id": "node/3908471200"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3908523333",
+                "fixme": "name+residential area",
+                "place": "town",
+                "source": "Bing",
+                "source:date": "2012"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.1460826,
+                    12.0461585
+                ]
+            },
+            "id": "node/3908523333"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3910605963",
+                "name": "Lézotenga",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.1555461,
+                    12.0538089
+                ]
+            },
+            "id": "node/3910605963"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3914096744",
+                "FIXME": "please check exact position and fix if inaccurate",
+                "admin_level": "8",
+                "capital": "6",
+                "is_in": "Dandé;Houet;Hauts-Bassins;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Dandé",
+                "is_in:province": "Houet",
+                "is_in:province_code": "10",
+                "is_in:region": "Hauts-Bassins",
+                "is_in:region_code": "01",
+                "name": "Dandé",
+                "name:fr": "Dandé",
+                "place": "town",
+                "population": "11497",
+                "population:date": "2012",
+                "source:population": "INSD.BF",
+                "wikidata": "Q1159443",
+                "wikipedia": "fr:Dandé (Burkina Faso)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.5666667,
+                    11.5833333
+                ]
+            },
+            "id": "node/3914096744"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3914459184",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.1714242,
+                    11.5869475
+                ]
+            },
+            "id": "node/3914459184"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3916380659",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.1727911,
+                    11.5937777
+                ]
+            },
+            "id": "node/3916380659"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/3987101446",
+                "fixme": "name",
+                "place": "town",
+                "source": "Bing",
+                "source:date": "2012"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.363719,
+                    13.888917
+                ]
+            },
+            "id": "node/3987101446"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4001131359",
+                "fixme": "name+residential area",
+                "place": "town",
+                "source": "Bing",
+                "source:date": "2012"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.2856004,
+                    12.0013833
+                ]
+            },
+            "id": "node/4001131359"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4009973798",
+                "name": "Kouéré",
+                "place": "town",
+                "source": "GNS",
+                "wikidata": "Q6434488"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-4.0014627,
+                    10.4670945
+                ]
+            },
+            "id": "node/4009973798"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4085718685",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.0471152,
+                    11.5730532
+                ]
+            },
+            "id": "node/4085718685"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4109872737",
+                "capital": "6",
+                "is_in": "Boulgou;Centre-Est;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:province": "Boulgou",
+                "is_in:province_code": "04",
+                "is_in:region": "Centre-Est",
+                "is_in:region_code": "10",
+                "name": "Béguédo",
+                "name:fr": "Béguédo",
+                "place": "town",
+                "population": "14692",
+                "population:date": "2006",
+                "source:population": "INSD.BF",
+                "wikidata": "Q10742339",
+                "wikipedia": "fr:Béguédo"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.733889,
+                    11.7808
+                ]
+            },
+            "id": "node/4109872737"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4116520113",
+                "admin_level": "8",
+                "capital": "6",
+                "fixme": "please check exact position and fix if inaccurate",
+                "is_in": "Namissiguima;Yatenga;Nord;Burkina Faso;Africa",
+                "is_in:continent": "Africa",
+                "is_in:country": "Burkina Faso",
+                "is_in:country_code": "BF",
+                "is_in:department": "Namissiguima",
+                "is_in:province": "Yatenga",
+                "is_in:province_code": "29",
+                "is_in:region": "Nord",
+                "is_in:region_code": "09",
+                "name": "Namissiguima",
+                "name:fr": "Namissiguima",
+                "note": "Inserted by script",
+                "place": "town",
+                "source": "NGA GEOnet Names Server (GNS)"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.2128553,
+                    13.6082108
+                ]
+            },
+            "id": "node/4116520113"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4134220806",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.0725155,
+                    11.2195528
+                ]
+            },
+            "id": "node/4134220806"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4134286588",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.0836536,
+                    11.1502622
+                ]
+            },
+            "id": "node/4134286588"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4134289792",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.1048403,
+                    11.260849
+                ]
+            },
+            "id": "node/4134289792"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4171708957",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.449789,
+                    13.2438892
+                ]
+            },
+            "id": "node/4171708957"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4171760224",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.4786102,
+                    13.1384017
+                ]
+            },
+            "id": "node/4171760224"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4177466773",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.3779233,
+                    13.1127948
+                ]
+            },
+            "id": "node/4177466773"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4203712599",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.2409057,
+                    13.4438085
+                ]
+            },
+            "id": "node/4203712599"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4210867816",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.2119535,
+                    12.9782967
+                ]
+            },
+            "id": "node/4210867816"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4215916057",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.0011979,
+                    13.2319199
+                ]
+            },
+            "id": "node/4215916057"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4332384310",
+                "name": "Zaongo",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.5833579,
+                    12.9154773
+                ]
+            },
+            "id": "node/4332384310"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4344356803",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.5415809,
+                    12.7225915
+                ]
+            },
+            "id": "node/4344356803"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4353925169",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.7078404,
+                    12.772967
+                ]
+            },
+            "id": "node/4353925169"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4392791058",
+                "fixme": "name",
+                "place": "town",
+                "source": "Bing",
+                "source:date": "2012"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.2171758,
+                    13.267327
+                ]
+            },
+            "id": "node/4392791058"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4394289872",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.2389855,
+                    12.1781417
+                ]
+            },
+            "id": "node/4394289872"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4436167142",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.905001,
+                    12.8101814
+                ]
+            },
+            "id": "node/4436167142"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4471272992",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-0.8575564,
+                    12.2916723
+                ]
+            },
+            "id": "node/4471272992"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4488693757",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.0158396,
+                    12.6541238
+                ]
+            },
+            "id": "node/4488693757"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4709256373",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.208435,
+                    12.9467794
+                ]
+            },
+            "id": "node/4709256373"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4796510109",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.2595962,
+                    13.2554656
+                ]
+            },
+            "id": "node/4796510109"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4801748076",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.1165278,
+                    13.440373
+                ]
+            },
+            "id": "node/4801748076"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4808792979",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.2831502,
+                    13.2049495
+                ]
+            },
+            "id": "node/4808792979"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4811343350",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.4226228,
+                    13.0265711
+                ]
+            },
+            "id": "node/4811343350"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4815498497",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.5265961,
+                    13.3034741
+                ]
+            },
+            "id": "node/4815498497"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/4903894144",
+                "fixme": "name",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.4295641,
+                    12.2387424
+                ]
+            },
+            "id": "node/4903894144"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/5540455853",
+                "name": "Kolkom",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-2.6000261,
+                    13.1046418
+                ]
+            },
+            "id": "node/5540455853"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/5686989385",
+                "name": "Tougan",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.2739018,
+                    11.9294543
+                ]
+            },
+            "id": "node/5686989385"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/5896902356",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.4438439,
+                    12.8267193
+                ]
+            },
+            "id": "node/5896902356"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/6112825055",
+                "place": "town",
+                "source": "Bing"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.9517254,
+                    10.5887286
+                ]
+            },
+            "id": "node/6112825055"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/6115590001",
+                "admin_level": "6",
+                "capital": "6",
+                "name": "Djigoué",
+                "place": "town",
+                "source": "GNS"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-3.8195032,
+                    10.0524025
+                ]
+            },
+            "id": "node/6115590001"
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "@id": "node/6578046399",
+                "fixme": "name+residential area",
+                "place": "town"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-1.6099048,
+                    11.8683589
+                ]
+            },
+            "id": "node/6578046399"
+        }
+    ]
+}
