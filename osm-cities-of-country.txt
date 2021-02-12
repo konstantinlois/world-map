@@ -1,0 +1,2 @@
+[out:json];{{geocodeArea:Burkina Faso}}->.searchArea;(node[place~"city|town"](area.searchArea);>;);out;
+//place~"city|town|village|hamlet"

@@ -222,6 +222,10 @@ input:checked+.slider:before {
     display: block;
 }
 
+#quiz-setup-question-type-cities-population-label {
+    margin-left: 24.5px;
+}
+
 #quiz-setup-country-indicators {
     border: 2px solid #ccc;
     height: 300px;

@@ -1,0 +1,1 @@
+[out:json];{{geocodeArea:Burkina Faso}}->.searchArea;(node[amenity=school](area.searchArea);>;way[amenity=school](area.searchArea);>;relation[amenity=school](area.searchArea);>;);out;

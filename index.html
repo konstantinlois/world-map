@@ -141,7 +141,10 @@
                             <label><input type="checkbox" id="quiz-setup-question-type-states-7-population"
                                     name="quiz-setup-question-type" value="state-population-7" /> Admin Level 7 Population</label>
                             <label><input type="checkbox" id="quiz-setup-question-type-cities"
-                                    name="quiz-setup-question-type" value="city-name" /> City Name</label>
+                                    name="quiz-setup-question-type" value="city-name" /> City Name
+                                    <br><label id="quiz-setup-question-type-cities-population-label">Min population: <input id="quiz-setup-question-type-cities-population" type="number"></label></label>
+                            <!--<label><input type="checkbox" id="quiz-setup-question-type-cities"
+                                    name="quiz-setup-question-type" value="city-population" /> City Population</label>-->
                             <label><input type="checkbox" id="quiz-setup-question-type-roads"
                                 name="quiz-setup-question-type" value="road-name" /> Road Name</label>
                         </div>
@@ -925,7 +928,7 @@
         // Cities
 
         function showCitiesOfCountry(countryLayer) {
-            var alreadyShown = false;
+            /*var alreadyShown = false;
             layerGroupCities.eachLayer(function(layerCities) {
                 if (layerCities.country == countryLayer) {
                     alreadyShown = true;
@@ -933,8 +936,13 @@
             });
             if (alreadyShown) {
                 return;
+            }*/
+            var minPopulation;
+            if (quizMode) {
+                minPopulation = document.getElementById("quiz-setup-question-type-cities-population").value;
+            } else {
+                minPopulation = document.getElementById("controls-info-cities-population").value;
             }
-            var minPopulation = document.getElementById("controls-info-cities-population").value;
             if (minPopulation == '') {
                 minPopulation = 0;
             }
@@ -1487,6 +1495,7 @@
                     }
                 }
                 if (document.getElementById('quiz-setup-question-type-cities').checked) {
+                    removeCitiesOfCountry(layerCountrySelected);
                     showCitiesOfCountry(layerCountrySelected);
                 } else {
                     removeCitiesOfCountry(layerCountrySelected);
@@ -1534,6 +1543,7 @@
                 }
 
                 if (document.getElementById('controls-info-cities').checked) {
+                    removeCitiesOfCountry(layerCountrySelected);
                     showCitiesOfCountry(layerCountrySelected);
                 } else {
                     removeCitiesOfCountry(layerCountrySelected);
@@ -1929,12 +1939,12 @@
             }
             unselectCity(currentCity);
 
+            quizMode = false;
             tearDownQuizVisuals();
 
             document.getElementById('quiz-panel').style.display = "none";
             document.getElementById('menu-button-open').style.display = "block";
             toggleMenu();
-            quizMode = false;
         }
 
         const myEventForwarder = new L.eventForwarder({
