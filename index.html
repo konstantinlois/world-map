@@ -219,25 +219,80 @@
             maxZoom: 16
         }).addTo(map);
 
-        var featureCollections = [{
-            name: 'roads'
-        }, {
-            name: 'airports'
-        }];
+        var featureCollections = {
+            roads: {
+                zIndex: 1011,
+                style: {
+                    normal: {
+                        weight: 2,
+                        color: '#c5e1a5',
+                        //dashArray: '3',
+                        fillOpacity: 0.0
+                    },
+                    selected: {
+                        weight: 2.5,
+                        //color: '#e0f2f1',
+                        color: '#f44336',
+                        dashArray: '',
+                    }
+                    /*styleMarker: {
+                        pane: 'cities',
+                        radius: map.getZoom() * 1.5,
+                        stroke: true,
+                        weight: 1,
+                        opacity: 1,
+                        color: '#000000',
+                        fillColor: '#e0f2f1',
+                        fillOpacity: 0.3
+                    },
+                    styleMarkerSelected: {
+                        fillColor: "#FCFF4B",
+                        fillOpacity: 0.9
+                    }*/
+                },
+                clickThrough: true
+            },
+            airports: {
+                zIndex: 1012,
+                style: {
+                    normal: {
+                        weight: 2,
+                        color: '#c5e1a5',
+                        //dashArray: '3',
+                        fillOpacity: 0.7
+                    },
+                    selected: {
+                        weight: 2.5,
+                        //color: '#e0f2f1',
+                        color: '#f44336',
+                        dashArray: '',
+                    }
+                },
+                clickThrough: true
+            }
+        };
 
         var featureCollectionsCountryFeatureGroups = {};
         var currentFeature = undefined;
 
-        featureCollections.forEach((featureCollection) => {
-            addFeatureCollection(featureCollection.name);
-        });
+        for (featureCollection in featureCollections) {
+            addFeatureCollection(featureCollection);
+        }
 
-        function addFeatureCollection(featureCollection) {
-            map.createPane(featureCollection);
+        function addFeatureCollection(featureCollectionName) {
+            var featureCollection = featureCollections[featureCollectionName];
+            var featureCollectionPane = map.createPane(featureCollectionName);
+            featureCollectionPane.style.zIndex = featureCollection.zIndex;
             var featureCollectionFeatureGroup = L.featureGroup([], {
-                pane: featureCollection
+                pane: featureCollectionName
             }).addTo(map);
-            featureCollectionsCountryFeatureGroups[featureCollection] = featureCollectionFeatureGroup;
+            for (styleType in featureCollection.style) {
+                featureCollection.style[styleType].pane = featureCollectionName;
+            }
+            if (featureCollection.clickThrough) {
+                enableForwardingOnPane(featureCollectionPane);
+            }
+            featureCollectionsCountryFeatureGroups[featureCollectionName] = featureCollectionFeatureGroup;
         }
 
         var forwardingPanes = [];
@@ -251,7 +306,7 @@
         forwardingPanes.push(map.createPane('states-7'));
         forwardingPanes.push(map.createPane('states-top'));
         forwardingPanes.push(map.createPane('cities'));
-        map.createPane('roads');
+        //map.createPane('roads');
 
         map.getPane('countries').style.zIndex = 1001;
         map.getPane('states-1').style.zIndex = 1008;
@@ -263,7 +318,7 @@
         map.getPane('states-7').style.zIndex = 1002;
         map.getPane('states-top').style.zIndex = 1009;
         map.getPane('cities').style.zIndex = 10010;
-        map.getPane('roads').style.zIndex = 1011;
+        //map.getPane('roads').style.zIndex = 1011;
 
         forwardingPanes.forEach(forwardingPane => {
             enableForwardingOnPane(forwardingPane);
@@ -1176,16 +1231,19 @@
             var layerFeatureCollectionOfCountry = L.geoJSON(json, {
                 pane: featureCollectionName,
                 style: function() {
-                    return getFeatureStyle();
+                    return featureCollections[featureCollectionName].style.normal;
+                    //return getFeatureStyle();
                 },
                 pointToLayer: function(feature, latlng) {
-                    return L.circleMarker(latlng, getFeatureMarkerStyle());
+                    return L.circleMarker(latlng, featureCollections[featureCollectionName].style.normal);
+                    //return L.circleMarker(latlng, featureCollections[featureCollectionName].style);
                 },
                 /*filter: function(f) {
                     return f.properties.geonunit === country.feature.properties.NAME_EN;
                 },*/
                 onEachFeature: function(feature, layer) {
                     layer.feature.properties.layerCountry = country;
+                    layer['featureCollectionName'] = featureCollectionName;
                     layer.on('click', function(event) {
                         if (!quizMode) {
                             selectCountry(event.target.feature.properties.layerCountry)
@@ -1204,20 +1262,20 @@
             }
         }
 
-        function getFeatureStyle(layerFeature = undefined) {
-            styleObject = {
-                weight: 2,
-                color: '#c5e1a5',
-                //dashArray: '3',
-                fillOpacity: 0.0
-            };
-            if (layerFeature != undefined) {
-                stlyeObject = applyFeatureSelectedStyle(layerFeature, styleObject);
+        function getFeatureStyle(layerFeature) {
+            var result;
+            if (layerFeature != undefined && layerFeature == currentFeature) {
+                /*if (layerFeature.geometry.type == "Polygon") {
+
+                } else {
+
+                }*/
+                return featureCollections[layerFeature.featureCollectionName].style.selected;
             }
-            return styleObject;
+            return featureCollections[layerFeature.featureCollectionName].style.normal;
         }
 
-        function applyFeatureSelectedStyle(layerFeature, styleObject) {
+        /*function applyFeatureSelectedStyle(layerFeature, styleObject) {
             if (layerFeature == currentFeature) {
                 styleObject.weight = 2.5;
                 //color: '#e0f2f1',
@@ -1225,11 +1283,11 @@
                 styleObject.dashArray = '';
             }
             return styleObject;
-        }
+        }*/
 
-        function getFeatureMarkerStyle(layerFeature = undefined) {
+        /*function getFeatureMarkerStyle(layerFeature = undefined) {
             styleObject = {
-                pane: 'cities',
+                //pane: 'airports',
                 radius: map.getZoom() * 1.5,
                 stroke: true,
                 weight: 1,
@@ -1242,15 +1300,15 @@
                 styleObject = applyMarkerSelectionStyle(layerFeature, styleObject);
             }
             return styleObject;
-        }
+        }*/
 
-        function applyMarkerSelectionStyle(layerFeature, styleObject) {
+        /*function applyMarkerSelectionStyle(layerFeature, styleObject) {
             if (layerFeature == currentCity) {
                 styleObject.fillColor = "#FCFF4B";
                 styleObject.fillOpacity = 0.9;
             }
             return styleObject;
-        }
+        }*/
 
         function removeFeatureCollectionOfCountry(featureCollectionName, layerCountry) {
             featureCollectionsCountryFeatureGroups[featureCollectionName].eachLayer(function(layerFeatureCollectionOfCountry) {
