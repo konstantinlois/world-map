@@ -1723,12 +1723,23 @@
                     removeFeatureCollectionOfCountry('roads', layerCountrySelected);
                 }*/
 
-                /*for (quizQuestionTypesFeatureCollection in quizQuestionTypesFeatureCollections) {
+                for (const [featureCollectionKey, featureCollectionValue] of Object.entries(quizQuestionTypesFeatureCollections)) {
                     var load = false;
-                    for (quizQuestionTypesFeatureCollectionProperty in quizQuestionTypesFeatureCollection.properties) {
-
+                    for (const [propertyKey, propertyValue] of Object.entries(featureCollectionValue)) {
+                        if (propertyValue) {
+                            load = true;
+                            break;
+                        }
                     }
-                }*/
+                    if (load) {
+                        dispatcher.increase();
+                        showFeatureCollectionOfCountry(featureCollectionKey, layerCountrySelected).then(() => {
+                            dispatcher.decrease();
+                        });
+                    } else {
+                        removeFeatureCollectionOfCountry(featureCollectionKey, layerCountrySelected);
+                    }
+                }
             });
 
             dispatcher.decrease();
@@ -1769,11 +1780,21 @@
                 } else {
                     removeCitiesOfCountry(layerCountrySelected);
                 }
-                if (document.getElementById('controls-info-roads').checked) {
+                /*if (document.getElementById('controls-info-roads').checked) {
                     await showFeatureCollectionOfCountry('roads', layerCountrySelected);
                 } else {
                     removeFeatureCollectionOfCountry('roads', layerCountrySelected);
-                }
+                }*/
+
+                var featureCollectionCheckBoxes = document.querySelectorAll('input[name=controls-info-feature-collection]');
+                featureCollectionCheckBoxes.forEach(featureCollectionCheckBox => {
+                    if (featureCollectionCheckBox.checked) {
+                        removeFeatureCollectionOfCountry(featureCollectionCheckBox.value, layerCountrySelected);
+                        showFeatureCollectionOfCountry(featureCollectionCheckBox.value, layerCountrySelected);
+                    } else {
+                        removeFeatureCollectionOfCountry(featureCollectionCheckBox.value, layerCountrySelected);
+                    }
+                });
             });
             if (!map.hasLayer(layerGroupStates)) {
                 layerGroupStates.addTo(map);
@@ -1781,8 +1802,10 @@
             if (!map.hasLayer(layerGroupCities)) {
                 layerGroupCities.addTo(map);
             }
-            if (!map.hasLayer(featureCollectionsFeatureGroups['roads'])) {
-                featureCollectionsFeatureGroups['roads'].addTo(map);
+            for (const [featureGroupKey, featureGroupValue] of Object.entries(featureCollectionsFeatureGroups)) {
+                if (!map.hasLayer(featureGroupValue)) {
+                    featureGroupValue.addTo(map);
+                }
             }
         }
 
@@ -1963,7 +1986,11 @@
 
             map.removeLayer(layerGroupStates);
             map.removeLayer(layerGroupCities);
-            map.removeLayer(featureCollectionsFeatureGroups['roads']);
+            //map.removeLayer(featureCollectionsFeatureGroups['roads']);
+
+            for (const [featureGroupKey, featureGroupValue] of Object.entries(featureCollectionsFeatureGroups)) {
+                map.removeLayer(featureGroupValue);
+            }
 
             switch (currentTask.type) {
                 case "country-name":
