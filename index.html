@@ -82,7 +82,7 @@
                                     onclick="toggleCities()" /> Cities<br><label id="controls-info-cities-population-label">Min population: <input id="controls-info-cities-population" type="number"></label></label>
                             </label>
                             <label><input type="checkbox" id="controls-info-roads" value="controls-info-roads"
-                                        onclick="toggleRoads()" /> Roads</label>
+                                        onclick="toggleFeatureCollection(this, 'roads')" /> Roads</label>
                         </div>
                         <br>
                         <h4 class="menu-sub-section-heading">Indicators</h4>
@@ -217,6 +217,20 @@
             maxZoom: 16
         }).addTo(map);
 
+        var featureCollections = {
+            'roads': undefined
+        }
+
+        var currentFeature = undefined;
+
+        for (featureCollection in featureCollections) {
+            map.createPane(featureCollection);
+            var featureGroup = L.featureGroup([], {
+                pane: featureCollection
+            }).addTo(map);
+            featureCollections[featureCollection] = featureGroup;
+        }
+
         var forwardingPanes = [];
         map.createPane('countries');
         forwardingPanes.push(map.createPane('states-1'));
@@ -286,9 +300,9 @@
         var layerGroupCities = L.featureGroup([], {
             pane: map.getPane('cities')
         }).addTo(map);
-        var layerGroupRoads = L.featureGroup([], {
+        /*var featureCollections['roads'] = L.featureGroup([], {
             pane: map.getPane('roads')
-        }).addTo(map);
+        }).addTo(map);*/
         var layerGroupStatesTop = L.featureGroup([], {
             pane: map.getPane('states-top')
         }).addTo(map);
@@ -553,7 +567,7 @@
                     showCitiesOfCountry(layerCountry);
                 }
                 if (document.getElementById('controls-info-roads').checked) {
-                    showRoadsOfCountry(layerCountry);
+                    showFeatureCollectionOfCountry('roads', layerCountry);
                 }
                 updateCountryStyle(layerCountry);
             }
@@ -572,7 +586,7 @@
                 removeCitiesOfCountry(layerCountry);
             }
             if (document.getElementById('controls-info-roads').checked) {
-                removeRoadsOfCountry(layerCountry);
+                removeFeatureCollectionOfCountry('roads', layerCountry);
             }
             updateCountryStyle(currentCountry);
         }
@@ -1093,7 +1107,7 @@
 
         // Roads
 
-        currentRoad = undefined;
+        //currentRoad = undefined;
 
         /*fetch('nigeria-roads-query.txt')
             .then(response => response.text())
@@ -1138,10 +1152,10 @@
             });
         }*/
 
-        async function showRoadsOfCountry(country) {
+        async function showFeatureCollectionOfCountry(featureCollectionName, country) {
             var alreadyShown = false;
-            layerGroupRoads.eachLayer(function(layerRoads) {
-                if (layerRoads.country == country) {
+            featureCollections[featureCollectionName].eachLayer(function(layerFeatureCollectionCountry) {
+                if (layerFeatureCollectionCountry.country == country) {
                     alreadyShown = true;
                 }
             });
@@ -1149,11 +1163,14 @@
                 return;
             }
 
-            const json = await fetch('data/roads/' + country.feature.properties.ISO_A3 + '.json').then(response => response.json());
+            const json = await fetch('data/' + featureCollectionName + '/' + country.feature.properties.ISO_A3 + '.json').then(response => response.json());
             var layerRoads = L.geoJSON(json, {
-                pane: 'roads',
+                pane: featureCollectionName,
                 style: function() {
-                    return getRoadStyle();
+                    return getFeatureStyle();
+                },
+                pointToLayer: function(feature, latlng) {
+                    return L.circleMarker(latlng, getFeatureMarkerStyle());
                 },
                 /*filter: function(f) {
                     return f.properties.geonunit === country.feature.properties.NAME_EN;
@@ -1169,16 +1186,16 @@
                 }
             });
             layerRoads.country = country;
-            layerGroupRoads.addLayer(layerRoads);
+            featureCollections[featureCollectionName].addLayer(layerRoads);
         }
 
         function updateRoadStyle(layerRoad) {
             if (layerRoad != undefined) {
-                layerRoad.setStyle(getRoadStyle(layerRoad));
+                layerRoad.setStyle(getFeatureStyle(layerRoad));
             }
         }
 
-        function getRoadStyle(layerRoad = undefined) {
+        function getFeatureStyle(layerRoad = undefined) {
             styleObject = {
                 weight: 2,
                 color: '#c5e1a5',
@@ -1192,7 +1209,7 @@
         }
 
         function applyRoadSelectedStyle(layerRoad, styleObject) {
-            if (layerRoad == currentRoad) {
+            if (layerRoad == currentFeature) {
                 styleObject.weight = 2.5;
                 //color: '#e0f2f1',
                 styleObject.color = '#f44336';
@@ -1201,10 +1218,35 @@
             return styleObject;
         }
 
-        function removeRoadsOfCountry(country) {
-            layerGroupRoads.eachLayer(function(layerRoads) {
+        function getFeatureMarkerStyle(layerCity = undefined) {
+            styleObject = {
+                pane: 'cities',
+                radius: map.getZoom() * 1.5,
+                stroke: true,
+                weight: 1,
+                opacity: 1,
+                color: '#000000',
+                fillColor: '#e0f2f1',
+                fillOpacity: 0.3
+            };
+            if (layerCity != undefined) {
+                styleObject = applyMarkerSelectionStyle(layerCity, styleObject);
+            }
+            return styleObject;
+        }
+
+        function applyMarkerSelectionStyle(layerCity, styleObject) {
+            if (layerCity == currentCity) {
+                styleObject.fillColor = "#FCFF4B";
+                styleObject.fillOpacity = 0.9;
+            }
+            return styleObject;
+        }
+
+        function removeFeatureCollectionOfCountry(featureCollectionName, country) {
+            featureCollections[featureCollectionName].eachLayer(function(layerRoads) {
                 if (layerRoads.country === country) {
-                    layerGroupRoads.removeLayer(layerRoads);
+                    featureCollections[featureCollectionName].removeLayer(layerRoads);
                 }
             });
         }
@@ -1214,9 +1256,9 @@
                 return;
             }
 
-            unselectRoad(currentRoad);
+            unselectRoad(currentFeature);
 
-            currentRoad = layer;
+            currentFeature = layer;
             updateRoadStyle(layer);
             updateDetails();
         }
@@ -1226,7 +1268,7 @@
                 unselectCity(currentCity);
             }
 
-            currentRoad = undefined;
+            currentFeature = undefined;
             updateRoadStyle(road);
             updateDetails();
         }
@@ -1235,14 +1277,14 @@
             map.fitBounds(roadLayer.getBounds().pad(0.5));
         }
 
-        function toggleRoads() {
-            if (document.getElementById('controls-info-roads').checked) {
+        function toggleFeatureCollection(target, featureCollectionName) {
+            if (target.checked) {
                 layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
-                    showRoadsOfCountry(layerCountrySelected);
+                    showFeatureCollectionOfCountry(featureCollectionName, layerCountrySelected);
                 });
             } else {
                 layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
-                    removeRoadsOfCountry(layerCountrySelected);
+                    removeFeatureCollectionOfCountry(featureCollectionName, layerCountrySelected);
                 });
             }
         }
@@ -1514,7 +1556,7 @@
             unselectCountry(currentCountry);
             map.removeLayer(layerGroupStates);
             map.removeLayer(layerGroupCities);
-            map.removeLayer(layerGroupRoads);
+            map.removeLayer(featureCollections['roads']);
 
             var dispatcher = new Dispatcher(1, callback);
 
@@ -1540,11 +1582,11 @@
                 }
                 if (document.getElementById('quiz-setup-question-type-roads').checked) {
                     dispatcher.increase();
-                    showRoadsOfCountry(layerCountrySelected).then(() => {
+                    showFeatureCollectionOfCountry('roads', layerCountrySelected).then(() => {
                         dispatcher.decrease();
                     });
                 } else {
-                    removeRoadsOfCountry(layerCountrySelected);
+                    removeFeatureCollectionOfCountry('roads', layerCountrySelected);
                 }
             });
 
@@ -1587,9 +1629,9 @@
                     removeCitiesOfCountry(layerCountrySelected);
                 }
                 if (document.getElementById('controls-info-roads').checked) {
-                    await showRoadsOfCountry(layerCountrySelected);
+                    await showFeatureCollectionOfCountry('roads', layerCountrySelected);
                 } else {
-                    removeRoadsOfCountry(layerCountrySelected);
+                    removeFeatureCollectionOfCountry('roads', layerCountrySelected);
                 }
             });
             if (!map.hasLayer(layerGroupStates)) {
@@ -1598,8 +1640,8 @@
             if (!map.hasLayer(layerGroupCities)) {
                 layerGroupCities.addTo(map);
             }
-            if (!map.hasLayer(layerGroupRoads)) {
-                layerGroupRoads.addTo(map);
+            if (!map.hasLayer(featureCollections['roads'])) {
+                featureCollections['roads'].addTo(map);
             }
         }
 
@@ -1704,7 +1746,7 @@
             var tasksRoads = [];
             if (quizQuestionTypes.includes("road-name")) {
 
-                layerGroupRoads.eachLayer(function(layerRoads) {
+                featureCollections['roads'].eachLayer(function(layerRoads) {
                     layerRoads.eachLayer(function(layerRoad) {
                         tasksRoad = [];
 
@@ -1759,7 +1801,7 @@
 
             map.removeLayer(layerGroupStates);
             map.removeLayer(layerGroupCities);
-            map.removeLayer(layerGroupRoads);
+            map.removeLayer(featureCollections['roads']);
 
             switch (currentTask.type) {
                 case "country-name":
@@ -1814,8 +1856,8 @@
                     document.getElementById("quiz-panel-question").innerHTML = "What is the name of this city?";
                     break;
                 case "road-name":
-                    if (!map.hasLayer(layerGroupRoads)) {
-                        layerGroupRoads.addTo(map);
+                    if (!map.hasLayer(featureCollections['roads'])) {
+                        featureCollections['roads'].addTo(map);
                     }
                     selectCountry(currentTask.country);
                     selectRoad(currentTask.road);
