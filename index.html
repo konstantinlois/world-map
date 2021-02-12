@@ -83,6 +83,8 @@
                             </label>
                             <label><input type="checkbox" id="controls-info-roads" value="controls-info-roads"
                                         onclick="toggleFeatureCollection(this, 'roads')" /> Roads</label>
+                            <label><input type="checkbox" id="controls-info-airports" value="controls-info-airports"
+                                        onclick="toggleFeatureCollection(this, 'airports')" /> Airports</label>
                         </div>
                         <br>
                         <h4 class="menu-sub-section-heading">Indicators</h4>
@@ -217,18 +219,25 @@
             maxZoom: 16
         }).addTo(map);
 
-        var featureCollections = {
-            'roads': undefined
-        }
+        var featureCollections = [{
+            name: 'roads'
+        }, {
+            name: 'airports'
+        }];
 
+        var featureCollectionsCountryFeatureGroups = {};
         var currentFeature = undefined;
 
-        for (featureCollection in featureCollections) {
+        featureCollections.forEach((featureCollection) => {
+            addFeatureCollection(featureCollection.name);
+        });
+
+        function addFeatureCollection(featureCollection) {
             map.createPane(featureCollection);
-            var featureGroup = L.featureGroup([], {
+            var featureCollectionFeatureGroup = L.featureGroup([], {
                 pane: featureCollection
             }).addTo(map);
-            featureCollections[featureCollection] = featureGroup;
+            featureCollectionsCountryFeatureGroups[featureCollection] = featureCollectionFeatureGroup;
         }
 
         var forwardingPanes = [];
@@ -1154,8 +1163,8 @@
 
         async function showFeatureCollectionOfCountry(featureCollectionName, country) {
             var alreadyShown = false;
-            featureCollections[featureCollectionName].eachLayer(function(layerFeatureCollectionCountry) {
-                if (layerFeatureCollectionCountry.country == country) {
+            featureCollectionsCountryFeatureGroups[featureCollectionName].eachLayer(function(layerFeatureCollectionOfCountry) {
+                if (layerFeatureCollectionOfCountry.country == country) {
                     alreadyShown = true;
                 }
             });
@@ -1164,7 +1173,7 @@
             }
 
             const json = await fetch('data/' + featureCollectionName + '/' + country.feature.properties.ISO_A3 + '.json').then(response => response.json());
-            var layerRoads = L.geoJSON(json, {
+            var layerFeatureCollectionOfCountry = L.geoJSON(json, {
                 pane: featureCollectionName,
                 style: function() {
                     return getFeatureStyle();
@@ -1180,36 +1189,36 @@
                     layer.on('click', function(event) {
                         if (!quizMode) {
                             selectCountry(event.target.feature.properties.layerCountry)
-                            selectRoad(event.target);
+                            selectFeature(event.target);
                         }
                     });
                 }
             });
-            layerRoads.country = country;
-            featureCollections[featureCollectionName].addLayer(layerRoads);
+            layerFeatureCollectionOfCountry.country = country;
+            featureCollectionsCountryFeatureGroups[featureCollectionName].addLayer(layerFeatureCollectionOfCountry);
         }
 
-        function updateRoadStyle(layerRoad) {
-            if (layerRoad != undefined) {
-                layerRoad.setStyle(getFeatureStyle(layerRoad));
+        function updateFeatureStyle(layerFeature) {
+            if (layerFeature != undefined) {
+                layerFeature.setStyle(getFeatureStyle(layerFeature));
             }
         }
 
-        function getFeatureStyle(layerRoad = undefined) {
+        function getFeatureStyle(layerFeature = undefined) {
             styleObject = {
                 weight: 2,
                 color: '#c5e1a5',
                 //dashArray: '3',
                 fillOpacity: 0.0
             };
-            if (layerRoad != undefined) {
-                stlyeObject = applyRoadSelectedStyle(layerRoad, styleObject);
+            if (layerFeature != undefined) {
+                stlyeObject = applyFeatureSelectedStyle(layerFeature, styleObject);
             }
             return styleObject;
         }
 
-        function applyRoadSelectedStyle(layerRoad, styleObject) {
-            if (layerRoad == currentFeature) {
+        function applyFeatureSelectedStyle(layerFeature, styleObject) {
+            if (layerFeature == currentFeature) {
                 styleObject.weight = 2.5;
                 //color: '#e0f2f1',
                 styleObject.color = '#f44336';
@@ -1218,7 +1227,7 @@
             return styleObject;
         }
 
-        function getFeatureMarkerStyle(layerCity = undefined) {
+        function getFeatureMarkerStyle(layerFeature = undefined) {
             styleObject = {
                 pane: 'cities',
                 radius: map.getZoom() * 1.5,
@@ -1229,56 +1238,56 @@
                 fillColor: '#e0f2f1',
                 fillOpacity: 0.3
             };
-            if (layerCity != undefined) {
-                styleObject = applyMarkerSelectionStyle(layerCity, styleObject);
+            if (layerFeature != undefined) {
+                styleObject = applyMarkerSelectionStyle(layerFeature, styleObject);
             }
             return styleObject;
         }
 
-        function applyMarkerSelectionStyle(layerCity, styleObject) {
-            if (layerCity == currentCity) {
+        function applyMarkerSelectionStyle(layerFeature, styleObject) {
+            if (layerFeature == currentCity) {
                 styleObject.fillColor = "#FCFF4B";
                 styleObject.fillOpacity = 0.9;
             }
             return styleObject;
         }
 
-        function removeFeatureCollectionOfCountry(featureCollectionName, country) {
-            featureCollections[featureCollectionName].eachLayer(function(layerRoads) {
-                if (layerRoads.country === country) {
-                    featureCollections[featureCollectionName].removeLayer(layerRoads);
+        function removeFeatureCollectionOfCountry(featureCollectionName, layerCountry) {
+            featureCollectionsCountryFeatureGroups[featureCollectionName].eachLayer(function(layerFeatureCollectionOfCountry) {
+                if (layerFeatureCollectionOfCountry.country === layerCountry) {
+                    featureCollectionsCountryFeatureGroups[featureCollectionName].removeLayer(layerFeatureCollectionOfCountry);
                 }
             });
         }
 
-        function selectRoad(layer) {
-            if (layer == undefined) {
+        function selectFeature(layerFeature) {
+            if (layerFeature == undefined) {
                 return;
             }
 
-            unselectRoad(currentFeature);
+            unselectFeature(currentFeature);
 
-            currentFeature = layer;
-            updateRoadStyle(layer);
+            currentFeature = layerFeature;
+            updateFeatureStyle(layerFeature);
             updateDetails();
         }
 
-        function unselectRoad(road) {
-            if (currentCity != undefined && road != undefined && currentCity.feature.properties.ADM1NAME == road.feature.properties.name) {
+        function unselectFeature(layerFeature) {
+            /*if (currentCity != undefined && layerFeature != undefined && currentCity.feature.properties.ADM1NAME == layerFeature.feature.properties.name) {
                 unselectCity(currentCity);
-            }
+            }*/
 
             currentFeature = undefined;
-            updateRoadStyle(road);
+            updateFeatureStyle(layerFeature);
             updateDetails();
         }
 
-        function zoomToRoad(roadLayer) {
-            map.fitBounds(roadLayer.getBounds().pad(0.5));
+        function zoomToFeature(layerFeature) {
+            map.fitBounds(layerFeature.getBounds().pad(0.5));
         }
 
-        function toggleFeatureCollection(target, featureCollectionName) {
-            if (target.checked) {
+        function toggleFeatureCollection(checkbox, featureCollectionName) {
+            if (checkbox.checked) {
                 layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
                     showFeatureCollectionOfCountry(featureCollectionName, layerCountrySelected);
                 });
@@ -1556,7 +1565,7 @@
             unselectCountry(currentCountry);
             map.removeLayer(layerGroupStates);
             map.removeLayer(layerGroupCities);
-            map.removeLayer(featureCollections['roads']);
+            map.removeLayer(featureCollectionsCountryFeatureGroups['roads']);
 
             var dispatcher = new Dispatcher(1, callback);
 
@@ -1640,8 +1649,8 @@
             if (!map.hasLayer(layerGroupCities)) {
                 layerGroupCities.addTo(map);
             }
-            if (!map.hasLayer(featureCollections['roads'])) {
-                featureCollections['roads'].addTo(map);
+            if (!map.hasLayer(featureCollectionsCountryFeatureGroups['roads'])) {
+                featureCollectionsCountryFeatureGroups['roads'].addTo(map);
             }
         }
 
@@ -1746,7 +1755,7 @@
             var tasksRoads = [];
             if (quizQuestionTypes.includes("road-name")) {
 
-                featureCollections['roads'].eachLayer(function(layerRoads) {
+                featureCollectionsCountryFeatureGroups['roads'].eachLayer(function(layerRoads) {
                     layerRoads.eachLayer(function(layerRoad) {
                         tasksRoad = [];
 
@@ -1801,7 +1810,7 @@
 
             map.removeLayer(layerGroupStates);
             map.removeLayer(layerGroupCities);
-            map.removeLayer(featureCollections['roads']);
+            map.removeLayer(featureCollectionsCountryFeatureGroups['roads']);
 
             switch (currentTask.type) {
                 case "country-name":
@@ -1856,11 +1865,11 @@
                     document.getElementById("quiz-panel-question").innerHTML = "What is the name of this city?";
                     break;
                 case "road-name":
-                    if (!map.hasLayer(featureCollections['roads'])) {
-                        featureCollections['roads'].addTo(map);
+                    if (!map.hasLayer(featureCollectionsCountryFeatureGroups['roads'])) {
+                        featureCollectionsCountryFeatureGroups['roads'].addTo(map);
                     }
                     selectCountry(currentTask.country);
-                    selectRoad(currentTask.road);
+                    selectFeature(currentTask.road);
                     zoomToCountry(currentTask.country);
                     document.getElementById("quiz-panel-question").innerHTML = "What is the name of this road?";
                     break;
