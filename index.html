@@ -186,12 +186,18 @@
     <div id="details">
         <div id="details-content">
             <div id="details-button-close" onclick="unselectCountry(currentCountry)">✕</div>
-            <h4 class="details-heading">Country</h4>
-            <p id="details-country">Test</p> <button id="details-country-add-remove" onclick="clickAddRemoveCountryButton()">Add</button>
-            <h4 class="details-heading">State</h4>
-            <ul id="details-states-list"></ul>
-            <h4 class="details-heading">City</h4>
-            <p id="details-city">Test</p>
+            <div id="details-country-container">
+                <h4 class="details-heading">Country</h4>
+                <p id="details-country">Test</p> <button id="details-country-add-remove" onclick="clickAddRemoveCountryButton()">Add</button>
+            </div>
+            <div id="details-states-container">
+                <h4 class="details-heading">State</h4>
+                <ul id="details-states-list"></ul>
+            </div>
+            <div id="details-city-container">
+                <h4 class="details-heading">City</h4>
+                <p id="details-city">Test</p>
+            </div>
             <div id="details-country-indicators">
 
             </div>
@@ -364,19 +370,33 @@
                     document.getElementById('details-country-add-remove').innerHTML = 'Add';
                 }
 
+                var detailsStatesContainer = document.getElementById("details-states-container");
                 var detailsState = document.getElementById('details-states-list');
                 detailsState.innerHTML = "";
-                currentStates.forEach(state => {
-                    if (state != undefined) {
-                        listItem = document.createElement('li');
-                        listItem.innerHTML = "Level " + state.feature.properties.all_tags.admin_level + ": " + state.feature.properties.name + " (" + state.feature.properties.all_tags.population + ")";
-                        detailsState.appendChild(listItem);
-                    }
-                    //detailsState.innerHTML.appendChild(state != undefined ? state.feature.properties.name + " (" + state.feature.properties.all_tags.population + ")" + "<br>" : 'none');
-                });
+                if (currentStateCopy != undefined) {
+                    detailsStatesContainer.style.display = "block";
+                    currentStates.forEach(state => {
+                        if (state != undefined) {
+                            listItem = document.createElement('li');
+                            listItem.innerHTML = "Level " + state.feature.properties.all_tags.admin_level + ": " + state.feature.properties.name + " (" + state.feature.properties.all_tags.population + ")";
+                            detailsState.appendChild(listItem);
+                        }
+                        //detailsState.innerHTML.appendChild(state != undefined ? state.feature.properties.name + " (" + state.feature.properties.all_tags.population + ")" + "<br>" : 'none');
+                    });
+                } else {
+                    detailsStatesContainer.style.display = "none";
+                }
 
+                var detailsCityContainer = document.getElementById("details-city-container");
                 var detailsCity = document.getElementById('details-city');
-                detailsCity.innerHTML = currentCity != undefined ? currentCity.feature.properties.name + " (" + numberWithCommas(currentCity.feature.properties.population) + ")" : 'none';
+                if (currentCity != undefined) {
+                    detailsCityContainer.style.display = "block";
+                    var detailsCity = document.getElementById('details-city');
+                    detailsCity.innerHTML = currentCity.feature.properties.name + " (" + numberWithCommas(currentCity.feature.properties.population) + ")"
+                } else {
+                    detailsCityContainer.style.display = "none";
+                    detailsCity.innerHTML = "";
+                }
 
                 var detailsCountryIndicators = document.getElementById('details-country-indicators');
                 detailsCountryIndicators.innerHTML = '';
@@ -398,9 +418,9 @@
         function toggleDetails(show) {
             var details = document.getElementById('details');
             if (show) {
-                details.style.maxHeight = "250px";
+                details.style.height = "250px";
             } else {
-                details.style.maxHeight = null;
+                details.style.height = null;
             }
         }
 
@@ -558,7 +578,9 @@
         }
 
         function selectCountry(country) {
-            unselectCountry(currentCountry);
+            if (currentCountry != undefined && country != currentCountry) {
+                unselectCountry(currentCountry);
+            }
 
             currentCountry = country;
             updateCountryStyle(country);
@@ -566,11 +588,12 @@
         }
 
         function unselectCountry(country) {
-            /*currentStates.forEach(currentState => {
+            currentStates.forEach(currentState => {
                 if (currentState != undefined && country != undefined && currentState.feature.properties.layerCountry == country) {
                     unselectState(currentState);
                 }
-            });*/
+            });
+
 
             /*if (currentState != undefined && country != undefined && currentState.feature.properties.layerCountry == country) {
                 unselectState(currentState);
@@ -846,6 +869,9 @@
             }
 
             if (propagateUp == false || layer.feature.properties.admin_level >= lastLevel) {
+                currentStates.forEach(cs => {
+                    unselectState(cs);
+                });
                 if (currentStateCopy != undefined) {
                     map.removeLayer(currentStateCopy);
                     currentStateCopy = undefined;
@@ -858,9 +884,6 @@
                 });
                 currentStateCopy.adminLevel = layer.feature.properties.admin_level;
                 currentStateCopy.addTo(map);
-                currentStates.forEach(cs => {
-                    unselectState(cs);
-                });
             }
 
             lastLevel = layer.feature.properties.admin_level;
@@ -897,6 +920,10 @@
 
                 //currentStates[i] = undefined;
 
+                if (currentStateCopy != undefined && state.feature.properties.all_tags.admin_level == currentStateCopy.adminLevel) {
+                    map.removeLayer(currentStateCopy);
+                    currentStateCopy = undefined;
+                }
                 delete currentStates[state.feature.properties.admin_level];
             }
 
