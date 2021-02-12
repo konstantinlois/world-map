@@ -81,10 +81,10 @@
                             <label><input type="checkbox" id="controls-info-cities" value="controls-info-cities"
                                     onclick="toggleCities()" /> Cities<br><label id="controls-info-cities-population-label">Min population: <input id="controls-info-cities-population" type="number"></label></label>
                             </label>
-                            <label><input type="checkbox" id="controls-info-roads" value="controls-info-roads"
-                                        onclick="toggleFeatureCollection(this, 'roads')" /> Roads</label>
-                            <label><input type="checkbox" id="controls-info-airports" value="controls-info-airports"
-                                        onclick="toggleFeatureCollection(this, 'airports')" /> Airports</label>
+                            <!--<label><input type="checkbox" id="controls-info-roads" value="controls-info-roads"
+                                        onclick="toggleFeatureCollection(this, 'roads')" /> Roads</label>-->
+                            <!--<label><input type="checkbox" id="controls-info-airports" value="controls-info-airports"
+                                        onclick="toggleFeatureCollection(this, 'airports')" /> Airports</label>-->
                         </div>
                         <br>
                         <h4 class="menu-sub-section-heading">Indicators</h4>
@@ -221,6 +221,7 @@
 
         var featureCollections = {
             roads: {
+                name: "Roads",
                 zIndex: 1011,
                 style: {
                     normal: {
@@ -253,6 +254,7 @@
                 clickThrough: true
             },
             airports: {
+                name: "Airports",
                 zIndex: 1012,
                 style: {
                     normal: {
@@ -272,7 +274,7 @@
             }
         };
 
-        var featureCollectionsCountryFeatureGroups = {};
+        var featureCollectionsFeatureGroups = {};
         var currentFeature = undefined;
 
         for (featureCollection in featureCollections) {
@@ -283,16 +285,33 @@
             var featureCollection = featureCollections[featureCollectionName];
             var featureCollectionPane = map.createPane(featureCollectionName);
             featureCollectionPane.style.zIndex = featureCollection.zIndex;
-            var featureCollectionFeatureGroup = L.featureGroup([], {
-                pane: featureCollectionName
-            }).addTo(map);
             for (styleType in featureCollection.style) {
                 featureCollection.style[styleType].pane = featureCollectionName;
             }
             if (featureCollection.clickThrough) {
                 enableForwardingOnPane(featureCollectionPane);
             }
-            featureCollectionsCountryFeatureGroups[featureCollectionName] = featureCollectionFeatureGroup;
+            var featureCollectionFeatureGroup = L.featureGroup([], {
+                pane: featureCollectionName
+            }).addTo(map);
+            featureCollectionsFeatureGroups[featureCollectionName] = featureCollectionFeatureGroup;
+
+            var controlsInfoTypes = document.getElementById('controls-info-types');
+            var checkbox = document.createElement('input');
+            checkbox.type = "checkbox";
+            checkbox.name = "controls-info-feature-collection";
+            checkbox.value = featureCollectionName;
+            checkbox.id = "controls-info-" + featureCollectionName;
+            checkbox.onclick = function() {
+                toggleFeatureCollection(checkbox, featureCollectionName);
+            };
+
+            var label = document.createElement('label');
+            //label.htmlFor = "checkbox-info-world-bank-" + featureCollection.name;
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(" " + featureCollection.name));
+
+            controlsInfoTypes.appendChild(label);
         }
 
         var forwardingPanes = [];
@@ -364,9 +383,6 @@
         var layerGroupCities = L.featureGroup([], {
             pane: map.getPane('cities')
         }).addTo(map);
-        /*var featureCollections['roads'] = L.featureGroup([], {
-            pane: map.getPane('roads')
-        }).addTo(map);*/
         var layerGroupStatesTop = L.featureGroup([], {
             pane: map.getPane('states-top')
         }).addTo(map);
@@ -630,9 +646,12 @@
                 if (document.getElementById('controls-info-cities').checked) {
                     showCitiesOfCountry(layerCountry);
                 }
-                if (document.getElementById('controls-info-roads').checked) {
-                    showFeatureCollectionOfCountry('roads', layerCountry);
-                }
+
+                var checkedFeatureCollectionCheckBoxes = document.querySelectorAll('input[name=controls-info-feature-collection]:checked');
+                checkedFeatureCollectionCheckBoxes.forEach(checkedFeatureCollectionCheckBox => {
+                    showFeatureCollectionOfCountry(checkedFeatureCollectionCheckBox.value, layerCountry);
+                });
+
                 updateCountryStyle(layerCountry);
             }
         }
@@ -649,9 +668,12 @@
             if (document.getElementById('controls-info-cities').checked) {
                 removeCitiesOfCountry(layerCountry);
             }
-            if (document.getElementById('controls-info-roads').checked) {
-                removeFeatureCollectionOfCountry('roads', layerCountry);
-            }
+
+            var checkedFeatureCollectionCheckBoxes = document.querySelectorAll('input[name=controls-info-feature-collection]:checked');
+            checkedFeatureCollectionCheckBoxes.forEach(checkedFeatureCollectionCheckBox => {
+                removeFeatureCollectionOfCountry(checkedFeatureCollectionCheckBox.value, layerCountry);
+            });
+
             updateCountryStyle(currentCountry);
         }
 
@@ -1218,7 +1240,7 @@
 
         async function showFeatureCollectionOfCountry(featureCollectionName, country) {
             var alreadyShown = false;
-            featureCollectionsCountryFeatureGroups[featureCollectionName].eachLayer(function(layerFeatureCollectionOfCountry) {
+            featureCollectionsFeatureGroups[featureCollectionName].eachLayer(function(layerFeatureCollectionOfCountry) {
                 if (layerFeatureCollectionOfCountry.country == country) {
                     alreadyShown = true;
                 }
@@ -1253,7 +1275,7 @@
                 }
             });
             layerFeatureCollectionOfCountry.country = country;
-            featureCollectionsCountryFeatureGroups[featureCollectionName].addLayer(layerFeatureCollectionOfCountry);
+            featureCollectionsFeatureGroups[featureCollectionName].addLayer(layerFeatureCollectionOfCountry);
         }
 
         function updateFeatureStyle(layerFeature) {
@@ -1311,9 +1333,9 @@
         }*/
 
         function removeFeatureCollectionOfCountry(featureCollectionName, layerCountry) {
-            featureCollectionsCountryFeatureGroups[featureCollectionName].eachLayer(function(layerFeatureCollectionOfCountry) {
+            featureCollectionsFeatureGroups[featureCollectionName].eachLayer(function(layerFeatureCollectionOfCountry) {
                 if (layerFeatureCollectionOfCountry.country === layerCountry) {
-                    featureCollectionsCountryFeatureGroups[featureCollectionName].removeLayer(layerFeatureCollectionOfCountry);
+                    featureCollectionsFeatureGroups[featureCollectionName].removeLayer(layerFeatureCollectionOfCountry);
                 }
             });
         }
@@ -1623,7 +1645,7 @@
             unselectCountry(currentCountry);
             map.removeLayer(layerGroupStates);
             map.removeLayer(layerGroupCities);
-            map.removeLayer(featureCollectionsCountryFeatureGroups['roads']);
+            map.removeLayer(featureCollectionsFeatureGroups['roads']);
 
             var dispatcher = new Dispatcher(1, callback);
 
@@ -1707,8 +1729,8 @@
             if (!map.hasLayer(layerGroupCities)) {
                 layerGroupCities.addTo(map);
             }
-            if (!map.hasLayer(featureCollectionsCountryFeatureGroups['roads'])) {
-                featureCollectionsCountryFeatureGroups['roads'].addTo(map);
+            if (!map.hasLayer(featureCollectionsFeatureGroups['roads'])) {
+                featureCollectionsFeatureGroups['roads'].addTo(map);
             }
         }
 
@@ -1813,7 +1835,7 @@
             var tasksRoads = [];
             if (quizQuestionTypes.includes("road-name")) {
 
-                featureCollectionsCountryFeatureGroups['roads'].eachLayer(function(layerRoads) {
+                featureCollectionsFeatureGroups['roads'].eachLayer(function(layerRoads) {
                     layerRoads.eachLayer(function(layerRoad) {
                         tasksRoad = [];
 
@@ -1868,7 +1890,7 @@
 
             map.removeLayer(layerGroupStates);
             map.removeLayer(layerGroupCities);
-            map.removeLayer(featureCollectionsCountryFeatureGroups['roads']);
+            map.removeLayer(featureCollectionsFeatureGroups['roads']);
 
             switch (currentTask.type) {
                 case "country-name":
@@ -1923,8 +1945,8 @@
                     document.getElementById("quiz-panel-question").innerHTML = "What is the name of this city?";
                     break;
                 case "road-name":
-                    if (!map.hasLayer(featureCollectionsCountryFeatureGroups['roads'])) {
-                        featureCollectionsCountryFeatureGroups['roads'].addTo(map);
+                    if (!map.hasLayer(featureCollectionsFeatureGroups['roads'])) {
+                        featureCollectionsFeatureGroups['roads'].addTo(map);
                     }
                     selectCountry(currentTask.country);
                     selectFeature(currentTask.road);
