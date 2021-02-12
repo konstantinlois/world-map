@@ -145,10 +145,8 @@
                             <label><input type="checkbox" id="quiz-setup-question-type-cities"
                                     name="quiz-setup-question-type" value="city-name" /> City Name
                                     <br><label id="quiz-setup-question-type-cities-population-label">Min population: <input id="quiz-setup-question-type-cities-population" type="number"></label></label>
-                            <!--<label><input type="checkbox" id="quiz-setup-question-type-cities"
-                                    name="quiz-setup-question-type" value="city-population" /> City Population</label>-->
-                            <label><input type="checkbox" id="quiz-setup-question-type-roads"
-                                name="quiz-setup-question-type" value="road-name" /> Road Name</label>
+                            <!--<label><input type="checkbox" id="quiz-setup-question-type-roads"
+                                name="quiz-setup-question-type" value="road-name" /> Road Name</label>-->
                         </div>
                         <br>
                         <h4 class="menu-sub-section-heading">Indicators</h4>
@@ -222,6 +220,7 @@
         var featureCollections = {
             roads: {
                 name: "Roads",
+                nameSingular: "Road",
                 zIndex: 1011,
                 style: {
                     normal: {
@@ -251,10 +250,14 @@
                         fillOpacity: 0.9
                     }*/
                 },
-                clickThrough: true
+                clickThrough: true,
+                properties: [
+                    "ref"
+                ]
             },
             airports: {
                 name: "Airports",
+                nameSingular: "Airport",
                 zIndex: 1012,
                 style: {
                     normal: {
@@ -270,12 +273,16 @@
                         dashArray: '',
                     }
                 },
-                clickThrough: true
+                clickThrough: true,
+                properties: [
+                    "name"
+                ]
             }
         };
 
         var featureCollectionsFeatureGroups = {};
         var currentFeature = undefined;
+        var quizQuestionTypesFeatureCollections = {};
 
         for (featureCollection in featureCollections) {
             addFeatureCollection(featureCollection);
@@ -296,6 +303,13 @@
             }).addTo(map);
             featureCollectionsFeatureGroups[featureCollectionName] = featureCollectionFeatureGroup;
 
+            createFeatureCollectionCheckboxes(featureCollectionName);
+            createFeatureCollectionQuizCheckboxes(featureCollectionName);
+        }
+
+        function createFeatureCollectionCheckboxes(featureCollectionName) {
+            var featureCollection = featureCollections[featureCollectionName];
+
             var controlsInfoTypes = document.getElementById('controls-info-types');
             var checkbox = document.createElement('input');
             checkbox.type = "checkbox";
@@ -312,6 +326,37 @@
             label.appendChild(document.createTextNode(" " + featureCollection.name));
 
             controlsInfoTypes.appendChild(label);
+        }
+
+        function createFeatureCollectionQuizCheckboxes(featureCollectionName) {
+            var featureCollection = featureCollections[featureCollectionName];
+
+            quizQuestionTypesFeatureCollections[featureCollectionName] = {};
+
+            var quizSetupQuestionTypes = document.getElementById('quiz-setup-question-types');
+
+            featureCollection.properties.forEach(property => {
+                quizQuestionTypesFeatureCollections[featureCollectionName][property] = false;
+                var checkbox = document.createElement('input');
+                checkbox.type = "checkbox";
+                //checkbox.name = "quiz-setup-question-type";
+                //checkbox.value = featureCollectionName + "," + property;
+                checkbox.id = "quiz-setup-question-type-" + featureCollectionName + "-property-" + property;
+                checkbox.onclick = function() {
+                    if (checkbox.checked) {
+                        quizQuestionTypesFeatureCollections[featureCollectionName][property] = true;
+                    } else {
+                        quizQuestionTypesFeatureCollections[featureCollectionName][property] = false;
+                    }
+                };
+
+                var label = document.createElement('label');
+                //label.htmlFor = "checkbox-info-world-bank-" + featureCollection.name;
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(" " + featureCollection.name + " " + property));
+
+                quizSetupQuestionTypes.appendChild(label);
+            });
         }
 
         var forwardingPanes = [];
@@ -1669,14 +1714,21 @@
                 } else {
                     removeCitiesOfCountry(layerCountrySelected);
                 }
-                if (document.getElementById('quiz-setup-question-type-roads').checked) {
+                /*if (document.getElementById('quiz-setup-question-type-roads').checked) {
                     dispatcher.increase();
                     showFeatureCollectionOfCountry('roads', layerCountrySelected).then(() => {
                         dispatcher.decrease();
                     });
                 } else {
                     removeFeatureCollectionOfCountry('roads', layerCountrySelected);
-                }
+                }*/
+
+                /*for (quizQuestionTypesFeatureCollection in quizQuestionTypesFeatureCollections) {
+                    var load = false;
+                    for (quizQuestionTypesFeatureCollectionProperty in quizQuestionTypesFeatureCollection.properties) {
+
+                    }
+                }*/
             });
 
             dispatcher.decrease();
@@ -1832,7 +1884,7 @@
                 });
             }
 
-            var tasksRoads = [];
+            /*var tasksRoads = [];
             if (quizQuestionTypes.includes("road-name")) {
 
                 featureCollectionsFeatureGroups['roads'].eachLayer(function(layerRoads) {
@@ -1849,13 +1901,34 @@
                         tasksRoads.push.apply(tasksRoads, shuffle(tasksRoad));
                     });
                 });
+            }*/
+
+            var tasksFeatureCollectionProperties = [];
+            for (featureCollectionKey in quizQuestionTypesFeatureCollections) {
+                var featureCollectionValue = quizQuestionTypesFeatureCollections[featureCollectionKey];
+                for (propertyKey in featureCollectionValue) {
+                    var propertyValue = featureCollectionValue[propertyKey];
+                    if (propertyValue) {
+                        featureCollectionsFeatureGroups[featureCollectionKey].eachLayer((featureCollectionOfCountry) => {
+                            featureCollectionOfCountry.eachLayer((layerFeature) => {
+                                var task = {
+                                    "type": "feature-collection-property",
+                                    "layerFeature": layerFeature,
+                                    "property": propertyKey
+                                }
+                                tasksFeatureCollectionProperties.push(task);
+                            });
+                        });
+                    }
+                }
             }
 
             tasks.push.apply(tasks, shuffle(tasksCountries));
             tasks.push.apply(tasks, shuffle(tasksStates));
             tasks.push.apply(tasks, shuffle(tasksStatesPopulation));
             tasks.push.apply(tasks, shuffle(tasksCities));
-            tasks.push.apply(tasks, shuffle(tasksRoads));
+            //tasks.push.apply(tasks, shuffle(tasksRoads));
+            tasks.push.apply(tasks, shuffle(tasksFeatureCollectionProperties));
 
             tasks = shuffle(tasks);
         }
@@ -1944,14 +2017,26 @@
                     map.flyTo([point.lat - 1, point.lng], 5);
                     document.getElementById("quiz-panel-question").innerHTML = "What is the name of this city?";
                     break;
-                case "road-name":
-                    if (!map.hasLayer(featureCollectionsFeatureGroups['roads'])) {
-                        featureCollectionsFeatureGroups['roads'].addTo(map);
+                    /*case "road-name":
+                        if (!map.hasLayer(featureCollectionsFeatureGroups['roads'])) {
+                            featureCollectionsFeatureGroups['roads'].addTo(map);
+                        }
+                        selectCountry(currentTask.country);
+                        selectFeature(currentTask.road);
+                        zoomToCountry(currentTask.country);
+                        document.getElementById("quiz-panel-question").innerHTML = "What is the name of this road?";
+                        break;*/
+                case "feature-collection-property":
+                    if (!map.hasLayer(featureCollectionsFeatureGroups[currentTask.layerFeature.featureCollectionName])) {
+                        featureCollectionsFeatureGroups[currentTask.layerFeature.featureCollectionName].addTo(map);
                     }
-                    selectCountry(currentTask.country);
-                    selectFeature(currentTask.road);
-                    zoomToCountry(currentTask.country);
-                    document.getElementById("quiz-panel-question").innerHTML = "What is the name of this road?";
+                    selectCountry(currentTask.layerFeature.feature.properties.layerCountry);
+                    selectFeature(currentTask.layerFeature);
+                    zoomToCountry(currentTask.layerFeature.feature.properties.layerCountry);
+
+                    var featureCollectionDisplayNameSingular = featureCollections[currentTask.layerFeature.featureCollectionName].nameSingular;
+
+                    document.getElementById("quiz-panel-question").innerHTML = "What is the " + currentTask.property + " of this " + featureCollectionDisplayNameSingular + "?";
                     break;
             }
         }
@@ -2038,13 +2123,22 @@
                     }
                     //resetHighlightCity(currentTask.city);
                     break;
-                case "road-name":
-                    if (document.getElementById("quiz-panel-input").value == currentTask.road.feature.properties.ref) {
+                    /*case "road-name":
+                        if (document.getElementById("quiz-panel-input").value == currentTask.road.feature.properties.ref) {
+                            answerRight(currentTask);
+                            showAnswerRightWrong(true, null);
+                        } else {
+                            answerWrong(currentTask);
+                            showAnswerRightWrong(false, "The correct answer is: " + currentTask.road.feature.properties.ref);
+                        }
+                        break;*/
+                case "feature-collection-property":
+                    if (document.getElementById("quiz-panel-input").value == currentTask.layerFeature.feature.properties[currentTask.property]) {
                         answerRight(currentTask);
                         showAnswerRightWrong(true, null);
                     } else {
                         answerWrong(currentTask);
-                        showAnswerRightWrong(false, "The correct answer is: " + currentTask.road.feature.properties.ref);
+                        showAnswerRightWrong(false, "The correct answer is: " + currentTask.layerFeature.feature.properties[currentTask.property]);
                     }
                     break;
             }
