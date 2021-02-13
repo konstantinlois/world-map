@@ -343,9 +343,9 @@
             // featureCollectionsFeatureGroups
             var featureCollectionPane = map.createPane(featureCollectionName);
             featureCollectionPane.style.zIndex = featureCollection.zIndex;
-            for (styleType in featureCollection.style) {
+            /*for (styleType in featureCollection.style) {
                 featureCollection.style[styleType].pane = featureCollectionName;
-            }
+            }*/
             if (featureCollection.clickThrough) {
                 enableForwardingOnPane(featureCollectionPane);
             }
@@ -1333,7 +1333,9 @@
                     //return getFeatureStyle();
                 },
                 pointToLayer: function(feature, latlng) {
-                    return L.circleMarker(latlng, featureCollections[featureCollectionName].style.normal);
+                    var styleObject = Object.assign({}, featureCollections[featureCollectionName].style.normal);
+                    styleObject.pane = featureCollectionName;
+                    return L.circleMarker(latlng, styleObject);
                     //return L.circleMarker(latlng, featureCollections[featureCollectionName].style);
                 },
                 /*filter: function(f) {
@@ -1432,9 +1434,13 @@
             featureCollectionsSelectedLayer = L.geoJSON(layerFeature.toGeoJSON(), {
                 pane: 'selected-' + layerFeature.featureCollectionName,
                 style: function() {
-                    return {
-                        "color": "#ffffff"
-                    };
+                    return featureCollections[layerFeature.featureCollectionName].style.selected;
+                },
+                pointToLayer: function(feature, latlng) {
+                    var styleObject = Object.assign({}, featureCollections[layerFeature.featureCollectionName].style.selected);
+                    styleObject.pane = layerFeature.featureCollectionName;
+                    return L.circleMarker(latlng, styleObject);
+                    //return L.circleMarker(latlng, featureCollections[featureCollectionName].style);
                 }
             });
             featureCollectionsSelectedLayer.addTo(map);
