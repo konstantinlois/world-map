@@ -192,16 +192,20 @@
                 zIndex: 1016,
                 style: {
                     normal: {
-                        weight: 2,
-                        color: '#c5e1a5',
-                        //dashArray: '3',
-                        fillOpacity: 0.7
+                        stroke: true,
+                        weight: 1,
+                        opacity: 1,
+                        color: '#004D40',
+                        fillColor: '#004D40',
+                        fillOpacity: 0.1
                     },
                     selected: {
-                        weight: 2.5,
-                        //color: '#e0f2f1',
-                        color: '#f44336',
-                        dashArray: '',
+                        stroke: true,
+                        weight: 1,
+                        opacity: 1,
+                        color: '#004D40',
+                        fillColor: '#004D40',
+                        fillOpacity: 0.9
                     }
                 },
                 clickThrough: true,
@@ -217,16 +221,20 @@
                 zIndex: 1017,
                 style: {
                     normal: {
-                        weight: 2,
-                        color: '#c5e1a5',
-                        //dashArray: '3',
-                        fillOpacity: 0.7
+                        stroke: true,
+                        weight: 1,
+                        opacity: 1,
+                        color: '#FCFF4B',
+                        fillColor: '#e0f2f1',
+                        fillOpacity: 0.3
                     },
                     selected: {
-                        weight: 2.5,
-                        //color: '#e0f2f1',
-                        color: '#f44336',
-                        dashArray: '',
+                        stroke: true,
+                        weight: 1,
+                        opacity: 1,
+                        color: '#FCFF4B',
+                        fillColor: '#FCFF4B',
+                        fillOpacity: 0.9
                     }
                 },
                 clickThrough: true,
@@ -859,44 +867,55 @@
                 return;
             }
 
-            const json = await fetch('data/' + featureCollectionName + '/' + country.feature.properties.ISO_A3 + '.json').then(response => response.json());
-            var layerFeatureCollectionOfCountry = L.geoJSON(json, {
-                pane: featureCollectionName,
-                style: function() {
-                    return featureCollections[featureCollectionName].style.normal;
-                    //return getFeatureStyle();
-                },
-                pointToLayer: function(feature, latlng) {
-                    var styleObject = Object.assign({}, featureCollections[featureCollectionName].style.normal);
-                    styleObject.pane = featureCollectionName;
-                    return L.circleMarker(latlng, styleObject);
-                    //return L.circleMarker(latlng, featureCollections[featureCollectionName].style);
-                },
-                filter: function(feature) {
-                    var filter = featureCollections[featureCollectionName].filter;
-                    if (filter != undefined) {
-                        if (quizMode) {
-                            return filter.filterFunction(feature, document.getElementById("quiz-setup-question-type-feature-collection-" + featureCollectionName + "-filter-input").value);
-                        } else {
-                            return filter.filterFunction(feature, document.getElementById("controls-info-feature-collection-" + featureCollectionName + "-filter-input").value);
-                        }
+            await fetch('data/' + featureCollectionName + '/' + country.feature.properties.ISO_A3 + '.json')
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error("data could not be fetched");
                     }
-                    return true;
-                    //return f.properties.geonunit === country.feature.properties.NAME_EN;
-                },
-                onEachFeature: function(feature, layer) {
-                    layer.feature.properties.layerCountry = country;
-                    layer['featureCollectionName'] = featureCollectionName;
-                    layer.on('click', function(event) {
-                        if (!quizMode) {
-                            selectCountry(event.target.feature.properties.layerCountry)
-                            selectFeature(event.target);
+                })
+                .then(json => {
+                    var layerFeatureCollectionOfCountry = L.geoJSON(json, {
+                        pane: featureCollectionName,
+                        style: function() {
+                            return featureCollections[featureCollectionName].style.normal;
+                            //return getFeatureStyle();
+                        },
+                        pointToLayer: function(feature, latlng) {
+                            var styleObject = Object.assign({}, featureCollections[featureCollectionName].style.normal);
+                            styleObject.pane = featureCollectionName;
+                            return L.circleMarker(latlng, styleObject);
+                            //return L.circleMarker(latlng, featureCollections[featureCollectionName].style);
+                        },
+                        filter: function(feature) {
+                            var filter = featureCollections[featureCollectionName].filter;
+                            if (filter != undefined) {
+                                if (quizMode) {
+                                    return filter.filterFunction(feature, document.getElementById("quiz-setup-question-type-feature-collection-" + featureCollectionName + "-filter-input").value);
+                                } else {
+                                    return filter.filterFunction(feature, document.getElementById("controls-info-feature-collection-" + featureCollectionName + "-filter-input").value);
+                                }
+                            }
+                            return true;
+                            //return f.properties.geonunit === country.feature.properties.NAME_EN;
+                        },
+                        onEachFeature: function(feature, layer) {
+                            layer.feature.properties.layerCountry = country;
+                            layer['featureCollectionName'] = featureCollectionName;
+                            layer.on('click', function(event) {
+                                if (!quizMode) {
+                                    selectCountry(event.target.feature.properties.layerCountry)
+                                    selectFeature(event.target);
+                                }
+                            });
                         }
                     });
-                }
-            });
-            layerFeatureCollectionOfCountry.country = country;
-            featureCollectionsFeatureGroups[featureCollectionName].addLayer(layerFeatureCollectionOfCountry);
+                    layerFeatureCollectionOfCountry.country = country;
+                    featureCollectionsFeatureGroups[featureCollectionName].addLayer(layerFeatureCollectionOfCountry);
+                }).catch(error => {
+                    console.log(error.message);
+                });
         }
 
         function updateFeatureStyle(layerFeature) {
