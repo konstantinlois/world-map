@@ -282,7 +282,7 @@
                 name: "Admin Levels 4",
                 nameSingular: "Admin Level 4",
                 zIndex: 1014,
-                selectedZIndex: 1013,
+                selectedZIndex: 3013,
                 style: {
                     normal: {
                         weight: 2,
@@ -306,7 +306,7 @@
                 name: "Admin Levels 5",
                 nameSingular: "Admin Level 5",
                 zIndex: 1013,
-                selectedZIndex: 1014,
+                selectedZIndex: 3014,
                 style: {
                     normal: {
                         weight: 2,
@@ -329,8 +329,8 @@
         };
 
         var featureCollectionsFeatureGroups = {};
-        var currentFeature = undefined;
-        var featureCollectionsCurrentFeature = {};
+        var featureCollectionsSelectedLayers = {};
+        var featureCollectionsCurrentFeatures = {};
         var quizQuestionTypesFeatureCollections = {};
 
         for (featureCollection in featureCollections) {
@@ -339,6 +339,8 @@
 
         function addFeatureCollection(featureCollectionName) {
             var featureCollection = featureCollections[featureCollectionName];
+
+            // featureCollectionsFeatureGroups
             var featureCollectionPane = map.createPane(featureCollectionName);
             featureCollectionPane.style.zIndex = featureCollection.zIndex;
             for (styleType in featureCollection.style) {
@@ -351,7 +353,15 @@
                 pane: featureCollectionName
             }).addTo(map);
             featureCollectionsFeatureGroups[featureCollectionName] = featureCollectionFeatureGroup;
-            featureCollectionsCurrentFeature[featureCollectionName] = undefined;
+            featureCollectionsCurrentFeatures[featureCollectionName] = undefined;
+
+            // featureCollectionsSelectedLayers
+            var featureCollectionSelectedLayerPane = map.createPane("selected-" + featureCollectionName);
+            featureCollectionSelectedLayerPane.style.zIndex = featureCollection.selectedZIndex;
+            if (featureCollection.clickThrough) {
+                enableForwardingOnPane(featureCollectionSelectedLayerPane);
+            }
+            featureCollectionsSelectedLayers[featureCollectionName] = undefined;
 
             createFeatureCollectionCheckboxes(featureCollectionName);
             createFeatureCollectionQuizCheckboxes(featureCollectionName);
@@ -1352,7 +1362,7 @@
 
         function getFeatureStyle(layerFeature) {
             var result;
-            if (layerFeature != undefined && layerFeature == featureCollectionsCurrentFeature[layerFeature.featureCollectionName]) {
+            if (layerFeature != undefined && layerFeature == featureCollectionsCurrentFeatures[layerFeature.featureCollectionName]) {
                 /*if (layerFeature.geometry.type == "Polygon") {
 
                 } else {
@@ -1411,9 +1421,21 @@
                 return;
             }
 
-            unselectFeature(featureCollectionsCurrentFeature[layerFeature.featureCollectionName]);
+            unselectFeature(featureCollectionsCurrentFeatures[layerFeature.featureCollectionName]);
 
-            featureCollectionsCurrentFeature[layerFeature.featureCollectionName] = layerFeature;
+            featureCollectionsCurrentFeatures[layerFeature.featureCollectionName] = layerFeature;
+
+            featureCollectionsSelectedLayer = L.geoJSON(layerFeature.toGeoJSON(), {
+                pane: 'selected-' + layerFeature.featureCollectionName,
+                style: function() {
+                    return {
+                        "color": "#ffffff"
+                    };
+                }
+            });
+            featureCollectionsSelectedLayer.addTo(map);
+            featureCollectionsSelectedLayers[layerFeature.featureCollectionName] = featureCollectionsSelectedLayer;
+
             updateFeatureStyle(layerFeature);
 
             layerFeature.bringToFront();
@@ -1427,7 +1449,9 @@
             }*/
 
             if (layerFeature != undefined) {
-                featureCollectionsCurrentFeature[layerFeature.featureCollectionName] = undefined;
+                featureCollectionsCurrentFeatures[layerFeature.featureCollectionName] = undefined;
+                map.removeLayer(featureCollectionsSelectedLayers[layerFeature.featureCollectionName]);
+                featureCollectionsSelectedLayers[layerFeature.featureCollectionName] = undefined;
                 updateFeatureStyle(layerFeature);
                 updateDetails();
             }
