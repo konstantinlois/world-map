@@ -867,6 +867,13 @@
                 return;
             }
 
+            var icon = L.icon({
+                iconUrl: 'icons/airport.svg',
+                iconSize: [15, 17],
+                iconAnchor: [7, 17],
+                popupAnchor: [0, -28]
+            });
+
             await fetch('data/' + featureCollectionName + '/' + country.feature.properties.ISO_A3 + '.json')
                 .then(response => {
                     if (response.ok) {
@@ -886,7 +893,9 @@
                             var styleObject = Object.assign({}, featureCollections[featureCollectionName].style.normal);
                             styleObject.pane = featureCollectionName;
                             return L.circleMarker(latlng, styleObject);
-                            //return L.circleMarker(latlng, featureCollections[featureCollectionName].style);
+                            /*return L.marker(latlng, {
+                                icon: icon
+                            });*/
                         },
                         filter: function(feature) {
                             var filter = featureCollections[featureCollectionName].filter;
@@ -898,7 +907,6 @@
                                 }
                             }
                             return true;
-                            //return f.properties.geonunit === country.feature.properties.NAME_EN;
                         },
                         onEachFeature: function(feature, layer) {
                             layer.feature.properties.layerCountry = country;
@@ -913,7 +921,8 @@
                     });
                     layerFeatureCollectionOfCountry.country = country;
                     featureCollectionsFeatureGroups[featureCollectionName].addLayer(layerFeatureCollectionOfCountry);
-                }).catch(error => {
+                })
+                .catch(error => {
                     console.log(error.message);
                 });
         }
