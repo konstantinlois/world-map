@@ -725,15 +725,6 @@
                 layerGroupCountriesSelected.addLayer(layerCountry);
                 document.getElementById('checkbox-' + layerCountry.feature.properties.NAME_EN).checked = true;
 
-                var checkedStatesCheckBoxes = document.querySelectorAll('input[name=controls-info-states]:checked');
-                for (var i = 0; i < checkedStatesCheckBoxes.length; i++) {
-                    showStatesOfCountry(layerCountry, checkedStatesCheckBoxes[i].value);
-                }
-
-                if (document.getElementById('controls-info-cities').checked) {
-                    showCitiesOfCountry(layerCountry);
-                }
-
                 var checkedFeatureCollectionCheckBoxes = document.querySelectorAll('input[name=controls-info-feature-collection]:checked');
                 checkedFeatureCollectionCheckBoxes.forEach(checkedFeatureCollectionCheckBox => {
                     showFeatureCollectionOfCountry(checkedFeatureCollectionCheckBox.value, layerCountry);
@@ -746,15 +737,6 @@
         function removeCountryFromCurrentCountries(layerCountry) {
             layerGroupCountriesSelected.removeLayer(layerCountry);
             document.getElementById('checkbox-' + layerCountry.feature.properties.NAME_EN).checked = false;
-
-            var checkedStatesCheckBoxes = document.querySelectorAll('input[name=controls-info-states]:checked');
-            for (var i = 0; i < checkedStatesCheckBoxes.length; i++) {
-                removeStatesOfCountry(layerCountry, checkedStatesCheckBoxes[i].value);
-            }
-
-            if (document.getElementById('controls-info-cities').checked) {
-                removeCitiesOfCountry(layerCountry);
-            }
 
             var checkedFeatureCollectionCheckBoxes = document.querySelectorAll('input[name=controls-info-feature-collection]:checked');
             checkedFeatureCollectionCheckBoxes.forEach(checkedFeatureCollectionCheckBox => {
@@ -800,14 +782,6 @@
                     removeCountryFromCurrentCountries(layerCountry);
                 }
             });
-        }
-
-        function zoomToBiggestSelectedArea() {
-            if (layerGroupStates.getBounds().isValid()) {
-                map.fitBounds(layerGroupStates.getBounds());
-            } else {
-                map.fitBounds(layerGroupCountries.getBounds());
-            }
         }
 
         function zoomToCountry(layerCountry, padding = 0.2) {
@@ -1025,10 +999,6 @@
         }
 
         function unselectFeature(layerFeature) {
-            /*if (currentCity != undefined && layerFeature != undefined && currentCity.feature.properties.ADM1NAME == layerFeature.feature.properties.name) {
-                unselectCity(currentCity);
-            }*/
-
             if (layerFeature != undefined) {
                 featureCollectionsCurrentFeatures[layerFeature.featureCollectionName] = undefined;
                 map.removeLayer(featureCollectionsSelectedLayers[layerFeature.featureCollectionName]);
