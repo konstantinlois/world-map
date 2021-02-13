@@ -17,8 +17,6 @@
     <link rel="stylesheet" href="style.css">
 
     <script src="countries.json"></script>
-    <!--<script src="states.json"></script>-->
-    <!--<script src="cities.json"></script>-->
 
 </head>
 
@@ -64,27 +62,9 @@
                     <div class="menu-section-content">
                         <h4 class="menu-sub-section-heading">Geographical Infos</h4>
                         <div id="controls-info-types">
-                            <label><input type="checkbox" id="controls-info-states-admin-level-1" name="controls-info-states" value="1"
-                                    onclick="toggleStates(this)" /> Admin Level 1</label>
-                            <label><input type="checkbox" id="controls-info-states-admin-level-2" name="controls-info-states" value="2"
-                                    onclick="toggleStates(this)" /> Admin Level 2</label>
-                            <label><input type="checkbox" id="controls-info-states-admin-level-3" name="controls-info-states" value="3"
-                                    onclick="toggleStates(this)" /> Admin Level 3</label>
-                            <label><input type="checkbox" id="controls-info-states-admin-level-4" name="controls-info-states" value="4"
-                                    onclick="toggleStates(this)" /> Admin Level 4</label>
-                            <label><input type="checkbox" id="controls-info-states-admin-level-5" name="controls-info-states" value="5"
-                                    onclick="toggleStates(this)" /> Admin Level 5</label>
-                            <label><input type="checkbox" id="controls-info-states-admin-level-6" name="controls-info-states" value="6"
-                                    onclick="toggleStates(this)" /> Admin Level 6</label>
-                            <label><input type="checkbox" id="controls-info-states-admin-level-7" name="controls-info-states" value="7"
-                                    onclick="toggleStates(this)" /> Admin Level 7</label>
                             <label><input type="checkbox" id="controls-info-cities" value="controls-info-cities"
                                     onclick="toggleCities()" /> Cities<br><label id="controls-info-cities-population-label">Min population: <input id="controls-info-cities-population" type="number"></label></label>
                             </label>
-                            <!--<label><input type="checkbox" id="controls-info-roads" value="controls-info-roads"
-                                        onclick="toggleFeatureCollection(this, 'roads')" /> Roads</label>-->
-                            <!--<label><input type="checkbox" id="controls-info-airports" value="controls-info-airports"
-                                        onclick="toggleFeatureCollection(this, 'airports')" /> Airports</label>-->
                         </div>
                         <br>
                         <h4 class="menu-sub-section-heading">Indicators</h4>
@@ -114,39 +94,9 @@
                                 Name</label>
                             <label><input type="checkbox" name="quiz-setup-question-type" value="country-population" />
                                 Country Population</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states-1"
-                                    name="quiz-setup-question-type" value="state-name-1" /> Admin Level 1 Name</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states-2"
-                                    name="quiz-setup-question-type" value="state-name-2" /> Admin Level 2 Name</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states-3"
-                                    name="quiz-setup-question-type" value="state-name-3" /> Admin Level 3 Name</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states-4"
-                                    name="quiz-setup-question-type" value="state-name-4" /> Admin Level 4 Name</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states-5"
-                                    name="quiz-setup-question-type" value="state-name-5" /> Admin Level 5 Name</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states-6"
-                                    name="quiz-setup-question-type" value="state-name-6" /> Admin Level 6 Name</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states-7"
-                                    name="quiz-setup-question-type" value="state-name-7" /> Admin Level 7 Name</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states-1-population"
-                                    name="quiz-setup-question-type" value="state-population-1" /> Admin Level 1 Population</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states-2-population"
-                                    name="quiz-setup-question-type" value="state-population-2" /> Admin Level 2 Population</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states-3-population"
-                                    name="quiz-setup-question-type" value="state-population-3" /> Admin Level 3 Population</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states-4-population"
-                                    name="quiz-setup-question-type" value="state-population-4" /> Admin Level 4 Population</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states-5-population"
-                                    name="quiz-setup-question-type" value="state-population-5" /> Admin Level 5 Population</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states-6-population"
-                                    name="quiz-setup-question-type" value="state-population-6" /> Admin Level 6 Population</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-states-7-population"
-                                    name="quiz-setup-question-type" value="state-population-7" /> Admin Level 7 Population</label>
                             <label><input type="checkbox" id="quiz-setup-question-type-cities"
                                     name="quiz-setup-question-type" value="city-name" /> City Name
                                     <br><label id="quiz-setup-question-type-cities-population-label">Min population: <input id="quiz-setup-question-type-cities-population" type="number"></label></label>
-                            <!--<label><input type="checkbox" id="quiz-setup-question-type-roads"
-                                name="quiz-setup-question-type" value="road-name" /> Road Name</label>-->
                         </div>
                         <br>
                         <h4 class="menu-sub-section-heading">Indicators</h4>
@@ -304,6 +254,12 @@
                     }
                 },
                 clickThrough: true,
+                filter: {
+                    name: "Min. Population",
+                    filterFunction: function(feature, filterValue) {
+                        return feature.properties.population != undefined && parseInt(feature.properties.population) >= parseInt(filterValue);
+                    }
+                },
                 properties: {
                     "name": {
                         nameSingular: "Name"
@@ -420,14 +376,39 @@
             checkbox.name = "controls-info-feature-collection";
             checkbox.value = featureCollectionName;
             checkbox.id = "controls-info-" + featureCollectionName;
-            checkbox.onclick = function() {
-                toggleFeatureCollection(checkbox, featureCollectionName);
-            };
 
             var label = document.createElement('label');
-            //label.htmlFor = "checkbox-info-world-bank-" + featureCollection.name;
             label.appendChild(checkbox);
+
             label.appendChild(document.createTextNode(" " + featureCollection.name));
+
+            var filter = featureCollections[featureCollectionName].filter;
+
+            if (filter != undefined) {
+                var br = document.createElement('br');
+                label.appendChild(br);
+                var filterLabel = document.createElement('label');
+                filterLabel.className = "controls-info-feature-collection-filter-label";
+                filterLabel.appendChild(document.createTextNode(filter.name + ": "));
+                var filterInput = document.createElement('input');
+                filterInput.id = "controls-info-feature-collection-filter-input";
+                filterInput.type = "text";
+                filterLabel.appendChild(filterInput);
+                label.appendChild(filterLabel);
+
+                checkbox.onclick = function() {
+                    if (checkbox.checked) {
+                        filterInput.disabled = true;
+                    } else {
+                        filterInput.disabled = false;
+                    }
+                    toggleFeatureCollection(checkbox, featureCollectionName);
+                };
+            } else {
+                checkbox.onclick = function() {
+                    toggleFeatureCollection(checkbox, featureCollectionName);
+                };
+            }
 
             controlsInfoTypes.appendChild(label);
         }
@@ -1409,9 +1390,14 @@
                     return L.circleMarker(latlng, styleObject);
                     //return L.circleMarker(latlng, featureCollections[featureCollectionName].style);
                 },
-                /*filter: function(f) {
-                    return f.properties.geonunit === country.feature.properties.NAME_EN;
-                },*/
+                filter: function(feature) {
+                    var filter = featureCollections[featureCollectionName].filter;
+                    if (filter != undefined) {
+                        return filter.filterFunction(feature, document.getElementById("controls-info-feature-collection-filter-input").value);
+                    }
+                    return true;
+                    //return f.properties.geonunit === country.feature.properties.NAME_EN;
+                },
                 onEachFeature: function(feature, layer) {
                     layer.feature.properties.layerCountry = country;
                     layer['featureCollectionName'] = featureCollectionName;
