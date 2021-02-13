@@ -391,7 +391,7 @@
                 filterLabel.className = "controls-info-feature-collection-filter-label";
                 filterLabel.appendChild(document.createTextNode(filter.name + ": "));
                 var filterInput = document.createElement('input');
-                filterInput.id = "controls-info-feature-collection-filter-input";
+                filterInput.id = "controls-info-feature-collection-" + featureCollectionName + "-filter-input";
                 filterInput.type = "text";
                 filterLabel.appendChild(filterInput);
                 label.appendChild(filterLabel);
@@ -419,6 +419,28 @@
             quizQuestionTypesFeatureCollections[featureCollectionName] = {};
 
             var quizSetupQuestionTypes = document.getElementById('quiz-setup-question-types');
+
+            if (Object.entries(featureCollection.properties).length > 0) {
+                var featureCollectionHeader = document.createElement("h5");
+                featureCollectionHeader.appendChild(document.createTextNode(featureCollection.name));
+
+                quizSetupQuestionTypes.appendChild(featureCollectionHeader);
+            }
+
+            var filter = featureCollections[featureCollectionName].filter;
+
+            if (filter != undefined) {
+                //var br = document.createElement('br');
+                //quizSetupQuestionTypes.appendChild(br);
+                var filterLabel = document.createElement('label');
+                filterLabel.className = "quiz-setup-question-type-feature-collection-filter-label";
+                filterLabel.appendChild(document.createTextNode(filter.name + ": "));
+                var filterInput = document.createElement('input');
+                filterInput.id = "quiz-setup-question-type-feature-collection-" + featureCollectionName + "-filter-input";
+                filterInput.type = "text";
+                filterLabel.appendChild(filterInput);
+                quizSetupQuestionTypes.appendChild(filterLabel);
+            }
 
             for (const [propertyKey, propertyValue] of Object.entries(featureCollection.properties)) {
                 quizQuestionTypesFeatureCollections[featureCollectionName][propertyKey] = false;
@@ -1393,7 +1415,11 @@
                 filter: function(feature) {
                     var filter = featureCollections[featureCollectionName].filter;
                     if (filter != undefined) {
-                        return filter.filterFunction(feature, document.getElementById("controls-info-feature-collection-filter-input").value);
+                        if (quizMode) {
+                            return filter.filterFunction(feature, document.getElementById("quiz-setup-question-type-feature-collection-" + featureCollectionName + "-filter-input").value);
+                        } else {
+                            return filter.filterFunction(feature, document.getElementById("controls-info-feature-collection-" + featureCollectionName + "-filter-input").value);
+                        }
                     }
                     return true;
                     //return f.properties.geonunit === country.feature.properties.NAME_EN;
@@ -1805,41 +1831,10 @@
 
         async function setUpQuizVisuals(callback) {
             unselectCountry(currentCountry);
-            map.removeLayer(layerGroupStates);
-            map.removeLayer(layerGroupCities);
-            map.removeLayer(featureCollectionsFeatureGroups['roads']);
 
             var dispatcher = new Dispatcher(1, callback);
 
             await layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
-                for (var i = 1; i <= 7; i++) {
-                    if (document.getElementById('quiz-setup-question-type-states-' + i).checked || document.getElementById('quiz-setup-question-type-states-' + i + '-population').checked) {
-                        dispatcher.increase();
-                        showStatesOfCountry(layerCountrySelected, i).then(() => {
-                            dispatcher.decrease();
-                        });
-                    } else {
-                        removeStatesOfCountry(layerCountrySelected, i);
-                    }
-                }
-                if (document.getElementById('quiz-setup-question-type-cities').checked) {
-                    dispatcher.increase();
-                    removeCitiesOfCountry(layerCountrySelected);
-                    showCitiesOfCountry(layerCountrySelected).then(() => {
-                        dispatcher.decrease();
-                    });
-                } else {
-                    removeCitiesOfCountry(layerCountrySelected);
-                }
-                /*if (document.getElementById('quiz-setup-question-type-roads').checked) {
-                    dispatcher.increase();
-                    showFeatureCollectionOfCountry('roads', layerCountrySelected).then(() => {
-                        dispatcher.decrease();
-                    });
-                } else {
-                    removeFeatureCollectionOfCountry('roads', layerCountrySelected);
-                }*/
-
                 for (const [featureCollectionKey, featureCollectionValue] of Object.entries(quizQuestionTypesFeatureCollections)) {
                     var load = false;
                     for (const [propertyKey, propertyValue] of Object.entries(featureCollectionValue)) {
@@ -1850,6 +1845,7 @@
                     }
                     if (load) {
                         dispatcher.increase();
+                        removeFeatureCollectionOfCountry(featureCollectionKey, layerCountrySelected);
                         showFeatureCollectionOfCountry(featureCollectionKey, layerCountrySelected).then(() => {
                             dispatcher.decrease();
                         });
@@ -1882,27 +1878,6 @@
 
         async function tearDownQuizVisuals() {
             layerGroupCountriesSelected.eachLayer(await async function(layerCountrySelected) {
-
-                for (var i = 1; i < 7; i++) {
-                    if (document.getElementById('controls-info-states-admin-level-' + i).checked) {
-                        showStatesOfCountry(layerCountrySelected, i);
-                    } else {
-                        removeStatesOfCountry(layerCountrySelected, i);
-                    }
-                }
-
-                if (document.getElementById('controls-info-cities').checked) {
-                    removeCitiesOfCountry(layerCountrySelected);
-                    showCitiesOfCountry(layerCountrySelected);
-                } else {
-                    removeCitiesOfCountry(layerCountrySelected);
-                }
-                /*if (document.getElementById('controls-info-roads').checked) {
-                    await showFeatureCollectionOfCountry('roads', layerCountrySelected);
-                } else {
-                    removeFeatureCollectionOfCountry('roads', layerCountrySelected);
-                }*/
-
                 var featureCollectionCheckBoxes = document.querySelectorAll('input[name=controls-info-feature-collection]');
                 featureCollectionCheckBoxes.forEach(featureCollectionCheckBox => {
                     if (featureCollectionCheckBox.checked) {
