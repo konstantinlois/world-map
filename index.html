@@ -1411,6 +1411,10 @@
         function removeFeatureCollectionOfCountry(featureCollectionName, layerCountry) {
             featureCollectionsFeatureGroups[featureCollectionName].eachLayer(function(layerFeatureCollectionOfCountry) {
                 if (layerFeatureCollectionOfCountry.country === layerCountry) {
+                    var currentFeatureCollectionFeature = featureCollectionsCurrentFeatures[featureCollectionName];
+                    if (currentFeatureCollectionFeature != undefined && currentFeatureCollectionFeature.feature.properties.layerCountry == layerCountry) {
+                        unselectFeature(currentFeatureCollectionFeature);
+                    }
                     featureCollectionsFeatureGroups[featureCollectionName].removeLayer(layerFeatureCollectionOfCountry);
                 }
             });
