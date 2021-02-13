@@ -830,6 +830,10 @@
                 unselectCity(currentCity);
             }
 
+            for (const [featureCollectionKey, featureCollectionCurrentFeature] of Object.entries(featureCollectionsCurrentFeatures)) {
+                unselectFeature(featureCollectionCurrentFeature);
+            }
+
             currentCountry = undefined;
             updateCountryStyle(country);
             updateDetails();
