@@ -1,4 +1,5 @@
 body {
+    position: fixed;
     padding: 0;
     margin: 0;
     font: 16px Arial, sans-serif;
@@ -154,7 +155,7 @@ input:checked+.slider:before {
 }
 
 #menu {
-    position: absolute;
+    position: fixed;
     top: 0px;
     left: 0px;
     z-index: 1001;
@@ -165,7 +166,7 @@ input:checked+.slider:before {
     overflow-y: scroll;
     transition: width 0.5s;
     width: 0px;
-    height: calc(100vh - 22px);
+    height: calc(100% - 22px);
 }
 
 #menu-content {
