@@ -254,9 +254,11 @@
                     }*/
                 },
                 clickThrough: true,
-                properties: [
-                    "ref"
-                ]
+                properties: {
+                    "ref": {
+                        nameSingular: "Ref"
+                    }
+                }
             },
             airports: {
                 name: "Airports",
@@ -277,9 +279,11 @@
                     }
                 },
                 clickThrough: true,
-                properties: [
-                    "name"
-                ]
+                properties: {
+                    "name": {
+                        nameSingular: "Name"
+                    }
+                }
             },
             cities: {
                 name: "Cities",
@@ -300,10 +304,19 @@
                     }
                 },
                 clickThrough: true,
-                properties: [
-                    "name",
-                    "population"
-                ]
+                properties: {
+                    "name": {
+                        nameSingular: "Name"
+                    },
+                    "population": {
+                        nameSingular: "Population",
+                        quizCheckAnswer: function(feature, answer) {
+                            //return feature.properties.ref == answer;
+                            return Math.abs(answer.replace(/,/g, '') - feature.properties.population) <= 50000;
+                        },
+                        showAnswerOnCorrect: true
+                    }
+                }
             },
             'admin-levels-4': {
                 name: "Admin Levels 4",
@@ -325,9 +338,11 @@
                     }
                 },
                 clickThrough: true,
-                properties: [
-                    "name"
-                ]
+                properties: {
+                    "name": {
+                        nameSingular: "Name"
+                    }
+                }
             },
             'admin-levels-5': {
                 name: "Admin Levels 5",
@@ -349,9 +364,11 @@
                     }
                 },
                 clickThrough: true,
-                properties: [
-                    "name"
-                ]
+                properties: {
+                    "name": {
+                        nameSingular: "Name"
+                    }
+                }
             }
         };
 
@@ -422,28 +439,31 @@
 
             var quizSetupQuestionTypes = document.getElementById('quiz-setup-question-types');
 
-            featureCollection.properties.forEach(property => {
-                quizQuestionTypesFeatureCollections[featureCollectionName][property] = false;
+            for (const [propertyKey, propertyValue] of Object.entries(featureCollection.properties)) {
+                quizQuestionTypesFeatureCollections[featureCollectionName][propertyKey] = false;
                 var checkbox = document.createElement('input');
                 checkbox.type = "checkbox";
                 //checkbox.name = "quiz-setup-question-type";
                 //checkbox.value = featureCollectionName + "," + property;
-                checkbox.id = "quiz-setup-question-type-" + featureCollectionName + "-property-" + property;
-                checkbox.onclick = function() {
-                    if (checkbox.checked) {
-                        quizQuestionTypesFeatureCollections[featureCollectionName][property] = true;
-                    } else {
-                        quizQuestionTypesFeatureCollections[featureCollectionName][property] = false;
+                checkbox.id = "quiz-setup-question-type-" + featureCollectionName + "-property-" + propertyKey;
+                checkbox.onclick = (function(checkbox) {
+                    return function() {
+                        //var checkbox = document.getElementById("quiz-setup-question-type-" + featureCollectionName + "-property-" + propertyKey);
+                        if (checkbox.checked) {
+                            quizQuestionTypesFeatureCollections[featureCollectionName][propertyKey] = true;
+                        } else {
+                            quizQuestionTypesFeatureCollections[featureCollectionName][propertyKey] = false;
+                        }
                     }
-                };
+                })(checkbox);
 
                 var label = document.createElement('label');
                 //label.htmlFor = "checkbox-info-world-bank-" + featureCollection.name;
                 label.appendChild(checkbox);
-                label.appendChild(document.createTextNode(" " + featureCollection.name + " " + property));
+                label.appendChild(document.createTextNode(" " + featureCollection.name + " " + propertyValue.nameSingular));
 
                 quizSetupQuestionTypes.appendChild(label);
-            });
+            }
         }
 
         var forwardingPanes = [];
@@ -635,27 +655,27 @@
                         heading.innerHTML = featureCollections[featureCollectionKey].nameSingular;
                         detailsFeatureCollections.appendChild(heading);
 
-                        featureCollections[featureCollectionKey].properties.forEach(property => {
+                        for (const [propertyKey, propertyValue] of Object.entries(featureCollections[featureCollectionKey].properties)) {
                             var info = document.createElement('p');
-                            info.innerHTML = property + ": " + featureCollectionCurrentFeature.feature.properties[property];
+                            info.innerHTML = propertyValue.nameSingular + ": " + featureCollectionCurrentFeature.feature.properties[propertyKey];
                             detailsFeatureCollections.appendChild(info);
-                        });
+                        }
                     }
-                }
 
-                // Indicators
-                var detailsCountryIndicators = document.getElementById('details-country-indicators');
-                detailsCountryIndicators.innerHTML = '';
+                    // Indicators
+                    var detailsCountryIndicators = document.getElementById('details-country-indicators');
+                    detailsCountryIndicators.innerHTML = '';
 
-                var countryIndicators = currentCountry.feature.properties.indicators;
-                if (countryIndicators != undefined) {
-                    for (const countryIndicator of Object.values(countryIndicators)) {
-                        var heading = document.createElement('h4');
-                        var info = document.createElement('p');
-                        heading.innerHTML = countryIndicator.indicator.value;
-                        info.innerHTML = countryIndicator.value + " [in " + countryIndicator.date + "]";
-                        detailsCountryIndicators.appendChild(heading);
-                        detailsCountryIndicators.appendChild(info);
+                    var countryIndicators = currentCountry.feature.properties.indicators;
+                    if (countryIndicators != undefined) {
+                        for (const countryIndicator of Object.values(countryIndicators)) {
+                            var heading = document.createElement('h4');
+                            var info = document.createElement('p');
+                            heading.innerHTML = countryIndicator.indicator.value;
+                            info.innerHTML = countryIndicator.value + " [in " + countryIndicator.date + "]";
+                            detailsCountryIndicators.appendChild(heading);
+                            detailsCountryIndicators.appendChild(info);
+                        }
                     }
                 }
             }
@@ -2282,9 +2302,23 @@
                         }
                         break;*/
                 case "feature-collection-property":
-                    if (document.getElementById("quiz-panel-input").value == currentTask.layerFeature.feature.properties[currentTask.property]) {
+                    var property = featureCollections[currentTask.layerFeature.featureCollectionName].properties[currentTask.property];
+                    var checkFunction;
+                    if (property.quizCheckAnswer != undefined) {
+                        checkFunction = property.quizCheckAnswer;
+                    } else {
+                        checkFunction = function(feature, answer) {
+                            return answer == feature.properties[currentTask.property];
+                        }
+                    }
+                    //if (document.getElementById("quiz-panel-input").value == currentTask.layerFeature.feature.properties[currentTask.property]) {
+                    if (checkFunction(currentTask.layerFeature.feature, document.getElementById("quiz-panel-input").value)) {
                         answerRight(currentTask);
-                        showAnswerRightWrong(true, null);
+                        if (property.showAnswerOnCorrect == true) {
+                            showAnswerRightWrong(true, "The exact answer is: " + currentTask.layerFeature.feature.properties[currentTask.property]);
+                        } else {
+                            showAnswerRightWrong(true, null);
+                        }
                     } else {
                         answerWrong(currentTask);
                         showAnswerRightWrong(false, "The correct answer is: " + currentTask.layerFeature.feature.properties[currentTask.property]);
