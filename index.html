@@ -281,6 +281,30 @@
                     "name"
                 ]
             },
+            cities: {
+                name: "Cities",
+                nameSingular: "City",
+                zIndex: 1017,
+                style: {
+                    normal: {
+                        weight: 2,
+                        color: '#c5e1a5',
+                        //dashArray: '3',
+                        fillOpacity: 0.7
+                    },
+                    selected: {
+                        weight: 2.5,
+                        //color: '#e0f2f1',
+                        color: '#f44336',
+                        dashArray: '',
+                    }
+                },
+                clickThrough: true,
+                properties: [
+                    "name",
+                    "population"
+                ]
+            },
             'admin-levels-4': {
                 name: "Admin Levels 4",
                 nameSingular: "Admin Level 4",
@@ -2021,12 +2045,14 @@
                     if (propertyValue) {
                         featureCollectionsFeatureGroups[featureCollectionKey].eachLayer((featureCollectionOfCountry) => {
                             featureCollectionOfCountry.eachLayer((layerFeature) => {
-                                var task = {
-                                    "type": "feature-collection-property",
-                                    "layerFeature": layerFeature,
-                                    "property": propertyKey
+                                if (layerFeature.feature.properties[propertyKey] != undefined) {
+                                    var task = {
+                                        "type": "feature-collection-property",
+                                        "layerFeature": layerFeature,
+                                        "property": propertyKey
+                                    }
+                                    tasksFeatureCollectionProperties.push(task);
                                 }
-                                tasksFeatureCollectionProperties.push(task);
                             });
                         });
                     }
