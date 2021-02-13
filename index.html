@@ -62,14 +62,10 @@
                     <div class="menu-section-content">
                         <h4 class="menu-sub-section-heading">Geographical Infos</h4>
                         <div id="controls-info-types">
-                            <label><input type="checkbox" id="controls-info-cities" value="controls-info-cities"
-                                    onclick="toggleCities()" /> Cities<br><label id="controls-info-cities-population-label">Min population: <input id="controls-info-cities-population" type="number"></label></label>
-                            </label>
                         </div>
                         <br>
                         <h4 class="menu-sub-section-heading">Indicators</h4>
                         <div id="controls-info-country-indicators">
-
                         </div>
                         <select id="controls-info-country-indicator-on-map" onchange="indicatorOnMapChanged()">
                             <option value="">None</option>
@@ -80,10 +76,6 @@
                 </div>
             </div>
 
-            <!--<label class="switch">
-			<input id="checkbox-controls-quiz" type="checkbox" onclick="toggleControlsQuiz()">
-			<span class="slider round"></span>
-		</label>-->
             <div class="quiz-setup">
                 <h2 class="collapsible-button menu-section-heading">Quiz</h2>
                 <div id="quiz-setup-content" class="collapsible-content">
@@ -94,14 +86,10 @@
                                 Name</label>
                             <label><input type="checkbox" name="quiz-setup-question-type" value="country-population" />
                                 Country Population</label>
-                            <label><input type="checkbox" id="quiz-setup-question-type-cities"
-                                    name="quiz-setup-question-type" value="city-name" /> City Name
-                                    <br><label id="quiz-setup-question-type-cities-population-label">Min population: <input id="quiz-setup-question-type-cities-population" type="number"></label></label>
                         </div>
                         <br>
                         <h4 class="menu-sub-section-heading">Indicators</h4>
                         <div id="quiz-setup-country-indicators">
-
                         </div>
                         <br>
                         <button onclick="startQuiz()">Start</button>
@@ -109,9 +97,7 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 
     <div id="quiz-panel">
@@ -138,21 +124,11 @@
             <div id="details-button-close" onclick="unselectCountry(currentCountry)">✕</div>
             <div id="details-country-container">
                 <h4 class="details-heading">Country</h4>
-                <p id="details-country">Test</p> <button id="details-country-add-remove" onclick="clickAddRemoveCountryButton()">Add</button>
-            </div>
-            <div id="details-states-container">
-                <h4 class="details-heading">State</h4>
-                <ul id="details-states-list"></ul>
-            </div>
-            <div id="details-city-container">
-                <h4 class="details-heading">City</h4>
-                <p id="details-city">Test</p>
+                <p id="details-country"></p> <button id="details-country-add-remove" onclick="clickAddRemoveCountryButton()">Add</button>
             </div>
             <div id="details-feature-collections">
-
             </div>
             <div id="details-country-indicators">
-
             </div>
         </div>
     </div>
@@ -257,6 +233,9 @@
                 filter: {
                     name: "Min. Population",
                     filterFunction: function(feature, filterValue) {
+                        if (filterValue == "") {
+                            filterValue = 0;
+                        }
                         return feature.properties.population != undefined && parseInt(feature.properties.population) >= parseInt(filterValue);
                     }
                 },
@@ -469,36 +448,8 @@
             }
         }
 
-        var forwardingPanes = [];
         map.createPane('countries');
-        forwardingPanes.push(map.createPane('states-1'));
-        forwardingPanes.push(map.createPane('states-2'));
-        forwardingPanes.push(map.createPane('states-3'));
-        forwardingPanes.push(map.createPane('states-4'));
-        forwardingPanes.push(map.createPane('states-5'));
-        forwardingPanes.push(map.createPane('states-6'));
-        forwardingPanes.push(map.createPane('states-7'));
-        forwardingPanes.push(map.createPane('states-top'));
-        forwardingPanes.push(map.createPane('cities'));
-        //map.createPane('roads');
-
         map.getPane('countries').style.zIndex = 1001;
-        map.getPane('states-1').style.zIndex = 1008;
-        map.getPane('states-2').style.zIndex = 1007;
-        map.getPane('states-3').style.zIndex = 1006;
-        map.getPane('states-4').style.zIndex = 1005;
-        map.getPane('states-5').style.zIndex = 1004;
-        map.getPane('states-6').style.zIndex = 1003;
-        map.getPane('states-7').style.zIndex = 1002;
-        map.getPane('states-top').style.zIndex = 1009;
-        map.getPane('cities').style.zIndex = 10010;
-        //map.getPane('roads').style.zIndex = 1011;
-
-        forwardingPanes.forEach(forwardingPane => {
-            enableForwardingOnPane(forwardingPane);
-        });
-
-        var lastLevel = 0;
 
         function enableForwardingOnPane(pane) {
             L.DomEvent.on(pane, 'click', function(e) {
@@ -532,15 +483,6 @@
         var layerGroupCountries = L.featureGroup([], {
             pane: map.getPane('countries')
         }).addTo(map);
-        var layerGroupStates = L.featureGroup([], {
-            //pane: map.getPane('states')
-        }).addTo(map);
-        var layerGroupCities = L.featureGroup([], {
-            pane: map.getPane('cities')
-        }).addTo(map);
-        var layerGroupStatesTop = L.featureGroup([], {
-            pane: map.getPane('states-top')
-        }).addTo(map);
 
         var availableIndicators = [];
         var loadedIndicators = [];
@@ -550,11 +492,6 @@
 
         var menuOpen = false;
 
-        /*var slides = document.getElementsByClassName("menu-content");
-        for (var i = 0; i < slides.length; i++) {
-            Distribute(slides.item(i));
-        }*/
-
         var menu = document.getElementById('menu');
         if (screen.width < 700) {
             menu.style.maxWidth = "100%";
@@ -563,7 +500,6 @@
             menu.style.maxWidth = 450 + "px";
             document.getElementById("menu-content").style.maxWidth = 450 - 80 + "px";
         }
-
 
         function toggleMenu() {
             var menu = document.getElementById('menu');
@@ -580,9 +516,8 @@
         }
 
         var coll = document.getElementsByClassName("collapsible-button");
-        var i;
 
-        for (i = 0; i < coll.length; i++) {
+        for (var i = 0; i < coll.length; i++) {
             coll[i].addEventListener("click", function() {
                 //this.classList.toggle("active");
                 var content = this.nextElementSibling;
@@ -599,9 +534,6 @@
         var layerGroupCountriesSelected = L.featureGroup([]);
 
         var currentCountry;
-        var currentStates = [];
-        var currentStateCopy;
-        var currentCity;
 
         function updateDetails() {
             if (quizMode == true) {
@@ -617,34 +549,6 @@
                     document.getElementById('details-country-add-remove').innerHTML = 'Remove';
                 } else {
                     document.getElementById('details-country-add-remove').innerHTML = 'Add';
-                }
-
-                var detailsStatesContainer = document.getElementById("details-states-container");
-                var detailsState = document.getElementById('details-states-list');
-                detailsState.innerHTML = "";
-                if (currentStateCopy != undefined) {
-                    detailsStatesContainer.style.display = "block";
-                    currentStates.forEach(state => {
-                        if (state != undefined) {
-                            listItem = document.createElement('li');
-                            listItem.innerHTML = "Level " + state.feature.properties.all_tags.admin_level + ": " + state.feature.properties.name + " (" + state.feature.properties.all_tags.population + ")";
-                            detailsState.appendChild(listItem);
-                        }
-                        //detailsState.innerHTML.appendChild(state != undefined ? state.feature.properties.name + " (" + state.feature.properties.all_tags.population + ")" + "<br>" : 'none');
-                    });
-                } else {
-                    detailsStatesContainer.style.display = "none";
-                }
-
-                var detailsCityContainer = document.getElementById("details-city-container");
-                var detailsCity = document.getElementById('details-city');
-                if (currentCity != undefined) {
-                    detailsCityContainer.style.display = "block";
-                    var detailsCity = document.getElementById('details-city');
-                    detailsCity.innerHTML = currentCity.feature.properties.name + " (" + numberWithCommas(currentCity.feature.properties.population) + ")"
-                } else {
-                    detailsCityContainer.style.display = "none";
-                    detailsCity.innerHTML = "";
                 }
 
                 // Feature Collections
@@ -664,21 +568,21 @@
                             detailsFeatureCollections.appendChild(info);
                         }
                     }
+                }
 
-                    // Indicators
-                    var detailsCountryIndicators = document.getElementById('details-country-indicators');
-                    detailsCountryIndicators.innerHTML = '';
+                // Indicators
+                var detailsCountryIndicators = document.getElementById('details-country-indicators');
+                detailsCountryIndicators.innerHTML = '';
 
-                    var countryIndicators = currentCountry.feature.properties.indicators;
-                    if (countryIndicators != undefined) {
-                        for (const countryIndicator of Object.values(countryIndicators)) {
-                            var heading = document.createElement('h4');
-                            var info = document.createElement('p');
-                            heading.innerHTML = countryIndicator.indicator.value;
-                            info.innerHTML = countryIndicator.value + " [in " + countryIndicator.date + "]";
-                            detailsCountryIndicators.appendChild(heading);
-                            detailsCountryIndicators.appendChild(info);
-                        }
+                var countryIndicators = currentCountry.feature.properties.indicators;
+                if (countryIndicators != undefined) {
+                    for (const countryIndicator of Object.values(countryIndicators)) {
+                        var heading = document.createElement('h4');
+                        var info = document.createElement('p');
+                        heading.innerHTML = countryIndicator.indicator.value;
+                        info.innerHTML = countryIndicator.value + " [in " + countryIndicator.date + "]";
+                        detailsCountryIndicators.appendChild(heading);
+                        detailsCountryIndicators.appendChild(info);
                     }
                 }
             }
@@ -863,20 +767,6 @@
         }
 
         function unselectCountry(country) {
-            currentStates.forEach(currentState => {
-                if (currentState != undefined && country != undefined && currentState.feature.properties.layerCountry == country) {
-                    unselectState(currentState);
-                }
-            });
-
-
-            /*if (currentState != undefined && country != undefined && currentState.feature.properties.layerCountry == country) {
-                unselectState(currentState);
-            }*/
-            if (currentCity != undefined && country != undefined && currentCity.feature.properties.layerCountry == country) {
-                unselectCity(currentCity);
-            }
-
             for (const [featureCollectionKey, featureCollectionCurrentFeature] of Object.entries(featureCollectionsCurrentFeatures)) {
                 unselectFeature(featureCollectionCurrentFeature);
             }
@@ -956,437 +846,7 @@
             });
         }
 
-        // States and Provinces
-
-        async function showStatesOfCountry(country, adminLevel) {
-            var alreadyShown = false;
-            layerGroupStates.eachLayer(function(layerStates) {
-                if (layerStates.country == country && layerStates.adminLevel == adminLevel) {
-                    alreadyShown = true;
-                }
-            });
-            if (alreadyShown) {
-                return;
-            }
-            /*var layerStates = L.geoJSON(states[0].features, {
-                pane: 'states',
-                style: function() {
-                    return getStateStyle();
-                },
-                filter: function(f) {
-                    return f.properties.geonunit === country.feature.properties.NAME_EN;
-                },
-                onEachFeature: function(feature, layer) {
-                    layer.feature.properties.layerCountry = country;
-                    layer.on('click', function(event) {
-                        if (!quizMode) {
-                            selectCountry(event.target.feature.properties.layerCountry)
-                            selectState(event.target);
-                        }
-                    });
-                }
-            });*/
-
-            await fetch('data/boundaries/' + country.feature.properties.ISO_A3 + '.json')
-                .then(response => response.json())
-                .then(json => {
-                    var layerStates = L.geoJSON(json, {
-                        pane: 'states-' + adminLevel,
-                        style: function() {
-                            return getStateStyle(adminLevel);
-                        },
-                        filter: function(f) {
-                            return f.properties.admin_level == adminLevel;
-                        },
-                        onEachFeature: function(feature, layer) {
-                            layer.feature.properties.layerCountry = country;
-                            layer.on('click', function(event) {
-                                if (!quizMode) {
-                                    selectCountry(event.target.feature.properties.layerCountry)
-                                    selectState(event.target, true);
-                                }
-                            });
-                        }
-                    });
-                    layerStates.country = country;
-                    layerStates.adminLevel = adminLevel;
-                    layerGroupStates.addLayer(layerStates);
-                });
-        }
-
-        function updateStateStyle(layerState) {
-            if (layerState != undefined) {
-                layerState.setStyle(getStateStyle(layerState.feature.properties.admin_level, layerState));
-            }
-        }
-
-        function getStateStyle(adminLevel, layerState = undefined) {
-            var color = "#000000";
-            var weight = 1.5;
-            var dashArray = '';
-            if (adminLevel == undefined) {
-                color = "#fff";
-            } else {
-                switch (adminLevel.toString()) {
-                    case "1":
-                        color = "#d32f2f";
-                        break;
-                    case "2":
-                        color = "#c2185b";
-                        break;
-                    case "3":
-                        color = "#7b1fa2";
-                        break;
-                    case "4":
-                        color = "#fbc02d";
-                        weight = 2.5;
-                        break;
-                    case "5":
-                        color = "#512da8";
-                        weight = 2;
-                        break;
-                    case "6":
-                        color = "#26c6da";
-                        weight = 1.5;
-                        break;
-                    case "7":
-                        color = "#00796b";
-                        break;
-                }
-            }
-            styleObject = {
-                weight: weight,
-                //color: '#c5e1a5',
-                color: color,
-                //dashArray: '',
-                fillOpacity: 0.0,
-                opacity: 1
-            };
-            if (layerState != undefined) {
-                styleObject = applyStateSelectedStyle(layerState, styleObject);
-            }
-            return styleObject;
-        }
-
-        function applyStateSelectedStyle(layerState, styleObject) {
-            if (layerState == currentStates[layerState.feature.properties.admin_level]) {
-                /*var weight = 1;
-                switch (layerState.feature.properties.admin_level.toString()) {
-                    case "1":
-                        break;
-                    case "2":
-                        break;
-                    case "3":
-                        break;
-                    case "4":
-                        weight = 4;
-                        break;
-                    case "5":
-                        weight = 1;
-                        break;
-                    case "6":
-                        break;
-                    case "7":
-                        break;
-                }*/
-                //styleObject.weight = 2.5;
-                //color: '#e0f2f1',
-                //styleObject.color = '#fff';
-                styleObject.dashArray = '';
-                styleObject.opacity = 1;
-            }
-            return styleObject;
-        }
-
-        function removeStatesOfCountry(country, adminLevel) {
-            layerGroupStates.eachLayer(function(layerStates) {
-                if (layerStates.country === country && layerStates.adminLevel == adminLevel) {
-                    layerGroupStates.removeLayer(layerStates);
-                }
-            });
-            if (currentStateCopy != undefined && currentStateCopy.adminLevel == adminLevel) {
-                map.removeLayer(currentStateCopy);
-                currentStateCopy = undefined;
-                lastLevel = 0;
-            }
-            delete currentStates[adminLevel];
-        }
-
-        function selectState(layer, propagateUp = false) {
-            if (layer == undefined) {
-                return;
-            }
-
-            if (propagateUp == false || layer.feature.properties.admin_level >= lastLevel) {
-                currentStates.forEach(cs => {
-                    unselectState(cs);
-                });
-                if (currentStateCopy != undefined) {
-                    map.removeLayer(currentStateCopy);
-                    currentStateCopy = undefined;
-                }
-                currentStateCopy = L.geoJSON(layer.toGeoJSON(), {
-                    pane: 'states-top',
-                    style: function() {
-                        styleObject = getStateStyle(layer.feature.properties.admin_level, undefined);
-                        styleObject.color = '#ffffff';
-                        return styleObject;
-                    }
-                });
-                currentStateCopy.adminLevel = layer.feature.properties.admin_level;
-                currentStateCopy.addTo(map);
-            }
-
-            lastLevel = layer.feature.properties.admin_level;
-
-            currentStates[layer.feature.properties.admin_level] = layer;
-            updateStateStyle(layer);
-
-            /*var last = undefined;
-            currentStates.forEach(state => {
-                if (state != undefined) {
-                    last = state;
-                }
-            });*/
-
-            //state.bringToFront();
-            //lastLevel = layer.feature.properties.admin_level;
-
-            updateDetails();
-        }
-
-        function unselectState(state) {
-            if (currentCity != undefined && state != undefined && currentCity.feature.properties.ADM1NAME == state.feature.properties.name) {
-                unselectCity(currentCity);
-            }
-
-            if (state != undefined) {
-                /*if (lastLevel < state.feature.properties.admin_level) {
-                    for (var i = state.feature.properties.admin_level; i >= 0; i--) {
-                        currentStates[i] = undefined;
-                    }
-                } else {
-                    currentStates[state.feature.properties.admin_level] = undefined;
-                }*/
-
-                //currentStates[i] = undefined;
-
-                if (currentStateCopy != undefined && state.feature.properties.all_tags.admin_level == currentStateCopy.adminLevel) {
-                    map.removeLayer(currentStateCopy);
-                    currentStateCopy = undefined;
-                }
-                delete currentStates[state.feature.properties.admin_level];
-            }
-
-            /*if (currentStateCopy != undefined) {
-                map.removeLayer(currentStateCopy);
-                currentStateCopy = undefined;
-            }*/
-
-            updateStateStyle(state);
-            updateDetails();
-        }
-
-        function zoomToState(stateLayer) {
-            map.fitBounds(stateLayer.getBounds().pad(0.5));
-        }
-
-        function toggleStates(target) {
-            if (target.checked) {
-                layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
-                    showStatesOfCountry(layerCountrySelected, target.value);
-                });
-            } else {
-                layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
-                    removeStatesOfCountry(layerCountrySelected, target.value);
-                    updateDetails();
-                });
-            }
-        }
-
-        // Cities
-
-        async function showCitiesOfCountry(countryLayer) {
-            /*var alreadyShown = false;
-            layerGroupCities.eachLayer(function(layerCities) {
-                if (layerCities.country == countryLayer) {
-                    alreadyShown = true;
-                }
-            });
-            if (alreadyShown) {
-                return;
-            }*/
-
-            await fetch('data/cities/' + countryLayer.feature.properties.ISO_A3 + '.json')
-                .then(response => response.json())
-                .then(json => {
-                    var minPopulation;
-                    if (quizMode) {
-                        minPopulation = document.getElementById("quiz-setup-question-type-cities-population").value;
-                    } else {
-                        minPopulation = document.getElementById("controls-info-cities-population").value;
-                    }
-                    if (minPopulation == '') {
-                        minPopulation = 0;
-                    }
-                    var layerCities = L.geoJSON(json, {
-                        pane: 'cities',
-                        pointToLayer: function(feature, latlng) {
-                            return L.circleMarker(latlng, getCityStyle());
-                        },
-                        onEachFeature: function(feature, layer) {
-                            layer.feature.properties.layerCountry = countryLayer;
-                            layer.on('click', function(event) {
-                                if (!quizMode) {
-                                    selectCountry(layer.feature.properties.layerCountry);
-                                    selectCity(event.target);
-                                }
-                            });
-                            layer.bringToFront();
-                        },
-                        filter: function(f) {
-                            //return f.properties.ADM0NAME === countryLayer.feature.properties.NAME_EN && f.properties.RANK_MIN >= 8;
-                            //return f.properties.ADM0NAME === countryLayer.feature.properties.NAME_EN && f.properties.POP_MIN >= minPopulation;
-                            return parseInt(f.properties.population) >= minPopulation;
-                        }
-                    });
-                    layerCities.country = countryLayer;
-                    layerGroupCities.addLayer(layerCities);
-                });
-        }
-
-        function removeCitiesOfCountry(countryLayer) {
-            layerGroupCities.eachLayer(function(layerCities) {
-                if (layerCities.country === countryLayer) {
-                    layerGroupCities.removeLayer(layerCities);
-                }
-            });
-        }
-
-        function updateCityStyle(layerCity) {
-            if (layerCity != undefined) {
-                layerCity.setStyle(getCityStyle(layerCity));
-            }
-        }
-
-        function getCityStyle(layerCity = undefined) {
-            styleObject = {
-                pane: 'cities',
-                radius: map.getZoom() * 1.5,
-                stroke: true,
-                weight: 1,
-                opacity: 1,
-                color: '#000000',
-                fillColor: '#e0f2f1',
-                fillOpacity: 0.3
-            };
-            if (layerCity != undefined) {
-                styleObject = applyCitySelectionStyle(layerCity, styleObject);
-            }
-            return styleObject;
-        }
-
-        function applyCitySelectionStyle(layerCity, styleObject) {
-            if (layerCity == currentCity) {
-                styleObject.fillColor = "#FCFF4B";
-                styleObject.fillOpacity = 0.9;
-            }
-            return styleObject;
-        }
-
-        function selectCity(layer) {
-            /*layerGroupStates.eachLayer(function(layerStates) {
-                layerStates.eachLayer(function(layerState) {
-                    if (layerState.feature.properties.name == layer.feature.properties.ADM1NAME) {
-                        selectState(layerState, true);
-                    }
-                });
-            });*/
-            unselectCity(currentCity);
-
-            currentCity = layer;
-            updateCityStyle(layer);
-            updateDetails();
-        }
-
-        function unselectCity(city) {
-            currentCity = undefined;
-            updateCityStyle(city);
-            updateDetails();
-        }
-
-        function toggleCities() {
-            if (document.getElementById('controls-info-cities').checked) {
-                document.getElementById("controls-info-cities-population").disabled = true;
-                layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
-                    showCitiesOfCountry(layerCountrySelected);
-                });
-            } else {
-                layerGroupCountriesSelected.eachLayer(function(layerCountrySelected) {
-                    removeCitiesOfCountry(layerCountrySelected);
-                });
-                document.getElementById("controls-info-cities-population").disabled = false;
-            }
-        }
-
-        map.on('zoomend', function() {
-            var currentZoom = map.getZoom();
-
-            layerGroupCities.eachLayer(function(layerCities) {
-                layerCities.eachLayer(function(layerCity) {
-                    layerCity.setStyle({
-                        radius: currentZoom * 1.5
-                    })
-                });
-            });
-        });
-
-        // Roads
-
-        //currentRoad = undefined;
-
-        /*fetch('nigeria-roads-query.txt')
-            .then(response => response.text())
-            .then((data) => {
-                console.log(data);
-                var url = 'https://overpass-api.de/api/interpreter?data=' + encodeURI(data);
-
-                console.log(url);
-
-                fetch(url).then(function(response) {
-                    return response.json().then(function(json) {
-                        var geojsonCollection = osmtogeojson(json);
-                        console.log('Copy the string after in a static file and you have your geojson: ', JSON.stringify(geojsonCollection));
-                        L.geoJSON(geojsonCollection, {
-                            pane: 'cities',
-                            onEachFeature: onEachRoad
-                        }).addTo(map);
-                    });
-                });
-            })*/
-
-        /*fetch('data/roads/NGA2.json').then(function(response) {
-            return response.json().then(function(json) {
-                //var geojsonCollection = osmtogeojson(json);
-                //console.log('Copy the string after in a static file and you have your geojson: ', JSON.stringify(geojsonCollection));
-                L.geoJSON(json, {
-                    pane: 'roads',
-                    onEachFeature: onEachRoad
-                }).addTo(map);
-            });
-        });*/
-
-        /*function onEachRoad(feature, layer) {
-            layer.on('click', function(event) {
-                selectRoad();
-
-                console.log(event.target.feature.properties);
-                console.log(event.target.feature.properties.name);
-                event.target.setStyle({
-                    color: "#000000"
-                });
-            });
-        }*/
+        // Feature Collections
 
         async function showFeatureCollectionOfCountry(featureCollectionName, country) {
             var alreadyShown = false;
@@ -1829,6 +1289,24 @@
             });
         }
 
+        class Dispatcher {
+            constructor(pCount, pCallback) {
+                this.count = pCount;
+                this.callback = pCallback;
+            }
+
+            increase() {
+                this.count++;
+            }
+
+            decrease() {
+                this.count--;
+                if (this.count <= 0) {
+                    this.callback();
+                }
+            }
+        }
+
         async function setUpQuizVisuals(callback) {
             unselectCountry(currentCountry);
 
@@ -1858,24 +1336,6 @@
             dispatcher.decrease();
         }
 
-        class Dispatcher {
-            constructor(pCount, pCallback) {
-                this.count = pCount;
-                this.callback = pCallback;
-            }
-
-            increase() {
-                this.count++;
-            }
-
-            decrease() {
-                this.count--;
-                if (this.count <= 0) {
-                    this.callback();
-                }
-            }
-        }
-
         async function tearDownQuizVisuals() {
             layerGroupCountriesSelected.eachLayer(await async function(layerCountrySelected) {
                 var featureCollectionCheckBoxes = document.querySelectorAll('input[name=controls-info-feature-collection]');
@@ -1888,12 +1348,6 @@
                     }
                 });
             });
-            if (!map.hasLayer(layerGroupStates)) {
-                layerGroupStates.addTo(map);
-            }
-            if (!map.hasLayer(layerGroupCities)) {
-                layerGroupCities.addTo(map);
-            }
             for (const [featureGroupKey, featureGroupValue] of Object.entries(featureCollectionsFeatureGroups)) {
                 if (!map.hasLayer(featureGroupValue)) {
                     featureGroupValue.addTo(map);
@@ -1940,84 +1394,6 @@
                 tasksCountries.push.apply(tasksCountries, shuffle(tasksCountry));
             });
 
-            var tasksStates = [];
-            var tasksStatesPopulation = [];
-            for (var i = 1; i < 7; i++) {
-                if (quizQuestionTypes.includes("state-name-" + i)) {
-
-                    layerGroupStates.eachLayer(function(layerStates) {
-                        layerStates.eachLayer(function(layerState) {
-                            tasksState = [];
-
-                            var task = {
-                                "type": "state-name",
-                                "country": layerState.feature.properties.layerCountry,
-                                "state": layerState
-                            }
-                            tasksState.push(task);
-
-                            tasksStates.push.apply(tasksStates, shuffle(tasksState));
-                        });
-                    });
-                }
-
-                if (quizQuestionTypes.includes("state-population-" + i)) {
-
-                    layerGroupStates.eachLayer(function(layerStates) {
-                        layerStates.eachLayer(function(layerState) {
-                            tasksStatePopulation = [];
-
-                            var task = {
-                                "type": "state-population",
-                                "country": layerState.feature.properties.layerCountry,
-                                "state": layerState
-                            }
-                            tasksStatePopulation.push(task);
-
-                            tasksStatesPopulation.push.apply(tasksStatesPopulation, shuffle(tasksStatePopulation));
-                        });
-                    });
-                }
-            }
-
-            var tasksCities = [];
-            if (quizQuestionTypes.includes("city-name")) {
-
-                layerGroupCities.eachLayer(function(layerCities) {
-                    layerCities.eachLayer(function(layerCity) {
-                        var tasksCity = [];
-
-                        var task = {
-                            "type": "city-name",
-                            "country": layerCity.feature.properties.layerCountry,
-                            "city": layerCity
-                        }
-                        tasksCity.push(task);
-
-                        tasksCities.push.apply(tasksCities, shuffle(tasksCity));
-                    });
-                });
-            }
-
-            /*var tasksRoads = [];
-            if (quizQuestionTypes.includes("road-name")) {
-
-                featureCollectionsFeatureGroups['roads'].eachLayer(function(layerRoads) {
-                    layerRoads.eachLayer(function(layerRoad) {
-                        tasksRoad = [];
-
-                        var task = {
-                            "type": "road-name",
-                            "country": layerRoad.feature.properties.layerCountry,
-                            "road": layerRoad
-                        }
-                        tasksRoad.push(task);
-
-                        tasksRoads.push.apply(tasksRoads, shuffle(tasksRoad));
-                    });
-                });
-            }*/
-
             var tasksFeatureCollectionProperties = [];
             for (featureCollectionKey in quizQuestionTypesFeatureCollections) {
                 var featureCollectionValue = quizQuestionTypesFeatureCollections[featureCollectionKey];
@@ -2041,10 +1417,6 @@
             }
 
             tasks.push.apply(tasks, shuffle(tasksCountries));
-            tasks.push.apply(tasks, shuffle(tasksStates));
-            tasks.push.apply(tasks, shuffle(tasksStatesPopulation));
-            tasks.push.apply(tasks, shuffle(tasksCities));
-            //tasks.push.apply(tasks, shuffle(tasksRoads));
             tasks.push.apply(tasks, shuffle(tasksFeatureCollectionProperties));
 
             tasks = shuffle(tasks);
@@ -2087,10 +1459,6 @@
             document.getElementById("quiz-panel-input-container").style.height = "auto";
             currentTask = tasks[currentIndex];
 
-            map.removeLayer(layerGroupStates);
-            map.removeLayer(layerGroupCities);
-            //map.removeLayer(featureCollectionsFeatureGroups['roads']);
-
             for (const [featureGroupKey, featureGroupValue] of Object.entries(featureCollectionsFeatureGroups)) {
                 hideFeatureCollection(featureGroupKey);
             }
@@ -2112,50 +1480,6 @@
                     map.flyTo(currentTask.country.getCenter(), 3);
                     document.getElementById("quiz-panel-question").innerHTML = "What is the " + currentTask.indicator.indicator.value + " of this country in " + currentTask.indicator.date + "?";
                     break;
-                case "state-name":
-                    if (!map.hasLayer(layerGroupStates)) {
-                        layerGroupStates.addTo(map);
-                    }
-                    selectCountry(currentTask.country);
-                    selectState(currentTask.state);
-                    zoomToCountry(currentTask.country);
-                    document.getElementById("quiz-panel-question").innerHTML = "What is the name of this state?";
-                    break;
-                case "state-population":
-                    if (!map.hasLayer(layerGroupStates)) {
-                        layerGroupStates.addTo(map);
-                    }
-                    selectCountry(currentTask.country);
-                    selectState(currentTask.state);
-                    zoomToCountry(currentTask.country);
-                    document.getElementById("quiz-panel-question").innerHTML = "What was the population of this state in " + currentTask.state.feature.properties.all_tags["population:date"] + "?";
-                    break;
-                case "city-name":
-                    if (!map.hasLayer(layerGroupCities)) {
-                        layerGroupCities.addTo(map);
-                    }
-                    selectCountry(currentTask.country);
-                    selectCity(currentTask.city);
-                    /*if(savedBounds == undefined){
-                    	savedBounds = map.getBounds();
-                    }*/
-                    /*var bounds = currentState.getBounds().pad(0.5);
-                    bounds._southWest.lat = bounds._southWest.lat-2;
-                    bounds._northEast.lat = bounds._northEast.lat-2;
-                    map.fitBounds(bounds);*/
-                    var point = currentTask.city.getLatLng();
-                    map.flyTo([point.lat - 1, point.lng], 5);
-                    document.getElementById("quiz-panel-question").innerHTML = "What is the name of this city?";
-                    break;
-                    /*case "road-name":
-                        if (!map.hasLayer(featureCollectionsFeatureGroups['roads'])) {
-                            featureCollectionsFeatureGroups['roads'].addTo(map);
-                        }
-                        selectCountry(currentTask.country);
-                        selectFeature(currentTask.road);
-                        zoomToCountry(currentTask.country);
-                        document.getElementById("quiz-panel-question").innerHTML = "What is the name of this road?";
-                        break;*/
                 case "feature-collection-property":
                     if (!map.hasLayer(featureCollectionsFeatureGroups[currentTask.layerFeature.featureCollectionName])) {
                         featureCollectionsFeatureGroups[currentTask.layerFeature.featureCollectionName].addTo(map);
@@ -2163,6 +1487,9 @@
                     selectCountry(currentTask.layerFeature.feature.properties.layerCountry);
                     selectFeature(currentTask.layerFeature);
                     zoomToCountry(currentTask.layerFeature.feature.properties.layerCountry);
+
+                    /*var point = currentTask.city.getLatLng();
+                    map.flyTo([point.lat - 1, point.lng], 5);*/
 
                     var featureCollectionDisplayNameSingular = featureCollections[currentTask.layerFeature.featureCollectionName].nameSingular;
 
@@ -2201,67 +1528,6 @@
                         showAnswerRightWrong(false, "the correct answer is: " + numberWithCommas(currentTask.indicator.value));
                     }
                     break;
-                case "state-name":
-                    if (document.getElementById("quiz-panel-input").value == currentTask.state.feature.properties.name) {
-                        answerRight(currentTask);
-                        showAnswerRightWrong(true, null);
-                    } else {
-                        answerWrong(currentTask);
-                        showAnswerRightWrong(false, "The correct answer is: " + currentTask.state.feature.properties.name);
-                    }
-                    break;
-                case "state-population":
-                    var tolerance = 0;
-                    switch (currentTask.state.feature.properties.all_tags.admin_level) {
-                        case "1":
-                            tolerance = 1000000;
-                            break;
-                        case "2":
-                            tolerance = 1000000;
-                            break;
-                        case "3":
-                            tolerance = 1000000;
-                            break;
-                        case "4":
-                            tolerance = 100000;
-                            break;
-                        case "5":
-                            tolerance = 100000;
-                            break;
-                        case "6":
-                            tolerance = 10000;
-                            break;
-                        case "7":
-                            tolerance = 10000;
-                            break;
-                    }
-                    if (Math.abs(document.getElementById("quiz-panel-input").value.replace(/,/g, '') - currentTask.state.feature.properties.all_tags.population) <= tolerance) {
-                        answerRight(currentTask);
-                        showAnswerRightWrong(true, "the exact answer is: " + numberWithCommas(currentTask.state.feature.properties.all_tags.population));
-                    } else {
-                        answerWrong(currentTask);
-                        showAnswerRightWrong(false, "the correct answer is: " + numberWithCommas(currentTask.state.feature.properties.all_tags.population));
-                    }
-                    break;
-                case "city-name":
-                    if (document.getElementById("quiz-panel-input").value == currentTask.city.feature.properties.name_en) {
-                        answerRight(currentTask);
-                        showAnswerRightWrong(true, null);
-                    } else {
-                        answerWrong(currentTask);
-                        showAnswerRightWrong(false, "The correct answer is: " + currentTask.city.feature.properties.name_en);
-                    }
-                    //resetHighlightCity(currentTask.city);
-                    break;
-                    /*case "road-name":
-                        if (document.getElementById("quiz-panel-input").value == currentTask.road.feature.properties.ref) {
-                            answerRight(currentTask);
-                            showAnswerRightWrong(true, null);
-                        } else {
-                            answerWrong(currentTask);
-                            showAnswerRightWrong(false, "The correct answer is: " + currentTask.road.feature.properties.ref);
-                        }
-                        break;*/
                 case "feature-collection-property":
                     var property = featureCollections[currentTask.layerFeature.featureCollectionName].properties[currentTask.property];
                     var checkFunction;
@@ -2272,7 +1538,9 @@
                             return answer == feature.properties[currentTask.property];
                         }
                     }
-                    //if (document.getElementById("quiz-panel-input").value == currentTask.layerFeature.feature.properties[currentTask.property]) {
+
+                    // showAnswerRightWrong(true, "the exact answer is: " + numberWithCommas(currentTask.state.feature.properties.all_tags.population));
+
                     if (checkFunction(currentTask.layerFeature.feature, document.getElementById("quiz-panel-input").value)) {
                         answerRight(currentTask);
                         if (property.showAnswerOnCorrect == true) {
@@ -2341,10 +1609,6 @@
 
         function finishQuiz() {
             unselectCountry(currentCountry);
-            for (var i = 0; i < currentStates.length; i++) {
-                unselectState(currentStates[i]);
-            }
-            unselectCity(currentCity);
 
             quizMode = false;
             tearDownQuizVisuals();
@@ -2354,7 +1618,7 @@
             toggleMenu();
         }
 
-        const myEventForwarder = new L.eventForwarder({
+        /*const myEventForwarder = new L.eventForwarder({
             map: map,
             events: {
                 click: true,
@@ -2363,12 +1627,10 @@
             }
         });
 
-        //myEventForwarder.enable();
+        myEventForwarder.enable(); */
 
         //map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
     </script>
-
-
 
 </body>
 
