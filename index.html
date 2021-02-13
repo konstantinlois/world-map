@@ -2054,6 +2054,15 @@
             return a;
         }
 
+        function hideFeatureCollection(featureCollectionName) {
+            if (featureCollectionsFeatureGroups[featureCollectionName] != undefined) {
+                map.removeLayer(featureCollectionsFeatureGroups[featureCollectionName]);
+            }
+            if (featureCollectionsSelectedLayers[featureCollectionName] != undefined) {
+                map.removeLayer(featureCollectionsSelectedLayers[featureCollectionName]);
+            }
+        }
+
         var currentIndex = 0;
         var repeat = false;
 
@@ -2076,7 +2085,7 @@
             //map.removeLayer(featureCollectionsFeatureGroups['roads']);
 
             for (const [featureGroupKey, featureGroupValue] of Object.entries(featureCollectionsFeatureGroups)) {
-                map.removeLayer(featureGroupValue);
+                hideFeatureCollection(featureGroupKey);
             }
 
             switch (currentTask.type) {
