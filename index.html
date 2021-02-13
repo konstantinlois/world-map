@@ -198,6 +198,9 @@
                 <h4 class="details-heading">City</h4>
                 <p id="details-city">Test</p>
             </div>
+            <div id="details-feature-collections">
+
+            </div>
             <div id="details-country-indicators">
 
             </div>
@@ -597,6 +600,26 @@
                     detailsCity.innerHTML = "";
                 }
 
+                // Feature Collections
+                var detailsFeatureCollections = document.getElementById('details-feature-collections');
+                detailsFeatureCollections.innerHTML = '';
+
+                for (const [featureCollectionKey, featureCollectionCurrentFeature] of Object.entries(featureCollectionsCurrentFeatures)) {
+
+                    if (featureCollectionCurrentFeature != undefined) {
+                        var heading = document.createElement('h4');
+                        heading.innerHTML = featureCollections[featureCollectionKey].nameSingular;
+                        detailsFeatureCollections.appendChild(heading);
+
+                        featureCollections[featureCollectionKey].properties.forEach(property => {
+                            var info = document.createElement('p');
+                            info.innerHTML = property + ": " + featureCollectionCurrentFeature.feature.properties[property];
+                            detailsFeatureCollections.appendChild(info);
+                        });
+                    }
+                }
+
+                // Indicators
                 var detailsCountryIndicators = document.getElementById('details-country-indicators');
                 detailsCountryIndicators.innerHTML = '';
 
