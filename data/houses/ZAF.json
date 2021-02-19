@@ -1,0 +1,18 @@
+{
+    "type": "FeatureCollection",
+    "features": [{
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                28.37488481359734, -25.832753243986662
+            ]
+        },
+        "properties": {
+            "name": "The Conservatory",
+            "size": "600 sqm",
+            "costs-building": "5000000 ZAR",
+            "url": "https://engelbrechtnadine.wixsite.com/nadineengelb/the-conservatory"
+        }
+    }]
+}

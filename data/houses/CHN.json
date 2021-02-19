@@ -1,0 +1,19 @@
+{
+    "type": "FeatureCollection",
+    "features": [{
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                109.3544000644996,
+                34.72804748996869
+            ]
+        },
+        "properties": {
+            "name": "House For All Seasons",
+            "size": "380 sqm",
+            "costs-building": "53400 USD",
+            "url": "http://www.rufwork.org/index.php?/project/07-shanxi-village-house/"
+        }
+    }]
+}

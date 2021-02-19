@@ -1,0 +1,19 @@
+{
+    "type": "FeatureCollection",
+    "features": [{
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                1.305096,
+                52.144620
+            ]
+        },
+        "properties": {
+            "name": "Black Barn",
+            "costs-building": "£932000",
+            "costs-property": "£75000",
+            "url": "https://studiobark.co.uk/projects/black-barn/"
+        }
+    }]
+}
