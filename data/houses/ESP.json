@@ -1,0 +1,14 @@
+{
+    "type": "FeatureCollection",
+    "features": [{
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-5.632371350403622, 40.157637602856774]
+        },
+        "properties": {
+            "name": "Finca en Extremadura",
+            "url": "https://abaton.es/es/proyectos/finca-en-extremadura/"
+        }
+    }]
+}
