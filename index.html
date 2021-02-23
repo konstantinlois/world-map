@@ -337,7 +337,8 @@
                     "name": {
                         nameSingular: "Name"
                     }
-                }
+                },
+                zoomDepth: 14
             },
             'houses': {
                 name: "Houses",
@@ -1424,7 +1425,7 @@
                 if (quizQuestionTypes.includes("country-name")) {
                     var taskCountryName = {
                         "type": "country-name",
-                        "country": layerCountrySelected
+                        "layer": layerCountrySelected
                     }
                     tasksCountry.push(taskCountryName);
                 }
@@ -1432,7 +1433,7 @@
                 if (quizQuestionTypes.includes("country-population")) {
                     var taskCountryPopulation = {
                         "type": "country-population",
-                        "country": layerCountrySelected
+                        "layer": layerCountrySelected
                     }
                     tasksCountry.push(taskCountryPopulation);
                 }
@@ -1442,7 +1443,7 @@
                         if (quizCountryIndicators.includes(indicator.indicator.id)) {
                             var taskCountryIndicator = {
                                 "type": "country-indicator",
-                                "country": layerCountrySelected,
+                                "layer": layerCountrySelected,
                                 "indicator": indicator
                             }
                             tasksCountry.push(taskCountryIndicator);
@@ -1464,7 +1465,7 @@
                                 if (layerFeature.feature.properties[propertyKey] != undefined) {
                                     var task = {
                                         "type": "feature-collection-property",
-                                        "layerFeature": layerFeature,
+                                        "layer": layerFeature,
                                         "property": propertyKey
                                     }
                                     tasksFeatureCollectionProperties.push(task);
@@ -1524,35 +1525,51 @@
 
             switch (currentTask.type) {
                 case "country-name":
-                    selectCountry(currentTask.country);
+                    selectCountry(currentTask.layer);
                     //zoomToCountry(currentTask.country, 2);
-                    map.flyTo(currentTask.country.getCenter(), 3);
+                    //map.flyTo(currentTask.country.getCenter(), 3);
                     document.getElementById("quiz-panel-question").innerHTML = "What is the name of this country?";
                     break;
                 case "country-population":
-                    selectCountry(currentTask.country);
-                    map.flyTo(currentTask.country.getCenter(), 3);
-                    document.getElementById("quiz-panel-question").innerHTML = "What is the population of this country in " + currentTask.country.feature.properties.POP_YEAR + "?";
+                    selectCountry(currentTask.layer);
+                    //map.flyTo(currentTask.country.getCenter(), 3);
+                    document.getElementById("quiz-panel-question").innerHTML = "What is the population of this country in " + currentTask.layer.feature.properties.POP_YEAR + "?";
                     break;
                 case "country-indicator":
-                    selectCountry(currentTask.country);
-                    map.flyTo(currentTask.country.getCenter(), 3);
+                    selectCountry(currentTask.layer);
+                    //map.flyTo(currentTask.country.getCenter(), 3);
                     document.getElementById("quiz-panel-question").innerHTML = "What is the " + currentTask.indicator.indicator.value + " of this country in " + currentTask.indicator.date + "?";
                     break;
                 case "feature-collection-property":
-                    if (!map.hasLayer(featureCollectionsFeatureGroups[currentTask.layerFeature.featureCollectionName])) {
-                        featureCollectionsFeatureGroups[currentTask.layerFeature.featureCollectionName].addTo(map);
+                    if (!map.hasLayer(featureCollectionsFeatureGroups[currentTask.layer.featureCollectionName])) {
+                        featureCollectionsFeatureGroups[currentTask.layer.featureCollectionName].addTo(map);
                     }
-                    selectCountry(currentTask.layerFeature.feature.properties.layerCountry);
-                    selectFeature(currentTask.layerFeature);
-                    zoomToCountry(currentTask.layerFeature.feature.properties.layerCountry);
+                    selectCountry(currentTask.layer.feature.properties.layerCountry);
+                    selectFeature(currentTask.layer);
+                    //zoomToCountry(currentTask.layerFeature.feature.properties.layerCountry);
 
                     /*var point = currentTask.city.getLatLng();
                     map.flyTo([point.lat - 1, point.lng], 5);*/
 
-                    var featureCollectionDisplayNameSingular = featureCollections[currentTask.layerFeature.featureCollectionName].nameSingular;
+                    var featureCollectionDisplayNameSingular = featureCollections[currentTask.layer.featureCollectionName].nameSingular;
 
                     document.getElementById("quiz-panel-question").innerHTML = "What is the " + currentTask.property + " of this " + featureCollectionDisplayNameSingular + "?";
+                    break;
+            }
+
+            var zoomDepth;
+            if (featureCollections[currentTask.layer.featureCollectionName].zoomDepth != undefined) {
+                zoomDepth = featureCollections[currentTask.layer.featureCollectionName].zoomDepth;
+            } else {
+                zoomDepth = 3;
+            }
+
+            switch (currentTask.layer.feature.geometry.type) {
+                case "Polygon":
+                    map.flyTo(currentTask.layer.getCenter(), zoomDepth);
+                    break;
+                case "Point":
+                    map.flyTo(currentTask.layer.getLatLng(), zoomDepth);
                     break;
             }
         }
@@ -1561,21 +1578,21 @@
             questionState = false;
             switch (currentTask.type) {
                 case "country-name":
-                    if (document.getElementById("quiz-panel-input").value == currentTask.country.feature.properties.NAME_EN) {
+                    if (document.getElementById("quiz-panel-input").value == currentTask.layer.feature.properties.NAME_EN) {
                         answerRight(currentTask);
                         showAnswerRightWrong(true, null);
                     } else {
                         answerWrong(currentTask);
-                        showAnswerRightWrong(false, "The correct answer is: " + currentTask.country.feature.properties.NAME_EN);
+                        showAnswerRightWrong(false, "The correct answer is: " + currentTask.layer.feature.properties.NAME_EN);
                     }
                     break;
                 case "country-population":
-                    if (Math.abs(document.getElementById("quiz-panel-input").value.replace(/,/g, '') - currentTask.country.feature.properties.POP_EST) <= 1000000) {
+                    if (Math.abs(document.getElementById("quiz-panel-input").value.replace(/,/g, '') - currentTask.layer.feature.properties.POP_EST) <= 1000000) {
                         answerRight(currentTask);
-                        showAnswerRightWrong(true, "the exact answer is: " + numberWithCommas(currentTask.country.feature.properties.POP_EST));
+                        showAnswerRightWrong(true, "the exact answer is: " + numberWithCommas(currentTask.layer.feature.properties.POP_EST));
                     } else {
                         answerWrong(currentTask);
-                        showAnswerRightWrong(false, "the correct answer is: " + numberWithCommas(currentTask.country.feature.properties.POP_EST));
+                        showAnswerRightWrong(false, "the correct answer is: " + numberWithCommas(currentTask.layer.feature.properties.POP_EST));
                     }
                     break;
                 case "country-indicator":
@@ -1588,7 +1605,7 @@
                     }
                     break;
                 case "feature-collection-property":
-                    var property = featureCollections[currentTask.layerFeature.featureCollectionName].properties[currentTask.property];
+                    var property = featureCollections[currentTask.layer.featureCollectionName].properties[currentTask.property];
                     var checkFunction;
                     if (property.quizCheckAnswer != undefined) {
                         checkFunction = property.quizCheckAnswer;
@@ -1600,16 +1617,16 @@
 
                     // showAnswerRightWrong(true, "the exact answer is: " + numberWithCommas(currentTask.state.feature.properties.all_tags.population));
 
-                    if (checkFunction(currentTask.layerFeature.feature, document.getElementById("quiz-panel-input").value)) {
+                    if (checkFunction(currentTask.layer.feature, document.getElementById("quiz-panel-input").value)) {
                         answerRight(currentTask);
                         if (property.showAnswerOnCorrect == true) {
-                            showAnswerRightWrong(true, "The exact answer is: " + currentTask.layerFeature.feature.properties[currentTask.property]);
+                            showAnswerRightWrong(true, "The exact answer is: " + currentTask.layer.feature.properties[currentTask.property]);
                         } else {
                             showAnswerRightWrong(true, null);
                         }
                     } else {
                         answerWrong(currentTask);
-                        showAnswerRightWrong(false, "The correct answer is: " + currentTask.layerFeature.feature.properties[currentTask.property]);
+                        showAnswerRightWrong(false, "The correct answer is: " + currentTask.layer.feature.properties[currentTask.property]);
                     }
                     break;
             }
