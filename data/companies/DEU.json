@@ -1015,6 +1015,993 @@
                 ],
                 "user_ratings_total": 1
             }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.296469999999999,
+                    51.51817
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Walbecker Str. 182, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.51817,
+                        "lng": 6.296469999999999
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.52001587989272,
+                            "lng": 6.29787052989272
+                        },
+                        "southwest": {
+                            "lat": 51.51731622010728,
+                            "lng": 6.295170870107277
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "SCHWEVERS & RAAB Stahl - Hochbau GmbH",
+                "place_id": "ChIJz4fBJKlgx0cR0xm6ZG5n_i4",
+                "plus_code": {
+                    "compound_code": "G79W+7H Geldern",
+                    "global_code": "9F38G79W+7H"
+                },
+                "rating": 0,
+                "reference": "ChIJz4fBJKlgx0cR0xm6ZG5n_i4",
+                "types": [
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 0
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.242529999999999,
+                    51.53662
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Twistedener Str. 5, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.53662,
+                        "lng": 6.242529999999999
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.53803627989272,
+                            "lng": 6.243935079892722
+                        },
+                        "southwest": {
+                            "lat": 51.53533662010727,
+                            "lng": 6.241235420107278
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "Winkels Servicegesellschaft mbH",
+                "opening_hours": {
+                    "open_now": false
+                },
+                "photos": [{
+                    "height": 4032,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/107579467748637873611\">Martin Schlotze</a>"
+                    ],
+                    "photo_reference": "ATtYBwIeYvwquWMXB5emtGXMD8ceHpDoyms66_7Pe-D9eeHtvE3RKWLZyjoVaK1mvg5nb6gGjta0h6EwrdrjMjYg1wYXgio1inixhbzgJUQHsv0RsXqW14ioLO5I-R9SnL3scFmMZIFe1b8l-pPNzqAg39oP3cs8wkSAPp082UjCedLVt5wz",
+                    "width": 3024
+                }],
+                "place_id": "ChIJ88yVCHVnx0cRNXkRhAPR2Tk",
+                "plus_code": {
+                    "compound_code": "G6PV+J2 Geldern",
+                    "global_code": "9F38G6PV+J2"
+                },
+                "rating": 3.1,
+                "reference": "ChIJ88yVCHVnx0cRNXkRhAPR2Tk",
+                "types": [
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 11
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.297783900000001,
+                    51.51779639999999
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Walbecker Str. 178, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.51779639999999,
+                        "lng": 6.297783900000001
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.51980242989271,
+                            "lng": 6.299200829892722
+                        },
+                        "southwest": {
+                            "lat": 51.51710277010727,
+                            "lng": 6.296501170107278
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "H.R. Zerspanungstechnik UG (haftungsbeschränkt) & Co. KG",
+                "place_id": "ChIJNycnQalgx0cRMFQi29swLpg",
+                "plus_code": {
+                    "compound_code": "G79X+44 Geldern",
+                    "global_code": "9F38G79X+44"
+                },
+                "rating": 5,
+                "reference": "ChIJNycnQalgx0cRMFQi29swLpg",
+                "types": [
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 1
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.352049999999999,
+                    51.52578
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Liebigstraße 1, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.52578,
+                        "lng": 6.352049999999999
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.52712077989273,
+                            "lng": 6.353801629892722
+                        },
+                        "southwest": {
+                            "lat": 51.52442112010728,
+                            "lng": 6.351101970107278
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "Industriemontagen Karl Büssers GmbH",
+                "place_id": "ChIJx9PgaWRgx0cRcI1IVYgoZog",
+                "plus_code": {
+                    "compound_code": "G9G2+8R Geldern",
+                    "global_code": "9F38G9G2+8R"
+                },
+                "rating": 0,
+                "reference": "ChIJx9PgaWRgx0cRcI1IVYgoZog",
+                "types": [
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 0
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.349930000000001,
+                    51.52382000000001
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Dieselstraße 3, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.52382000000001,
+                        "lng": 6.349930000000001
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.52516967989273,
+                            "lng": 6.351411679892721
+                        },
+                        "southwest": {
+                            "lat": 51.52247002010728,
+                            "lng": 6.348712020107278
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "Setatex Produktions- und Handelsgesellschaft mbH",
+                "place_id": "ChIJX94sYGNgx0cRXHRRhbtXZGM",
+                "plus_code": {
+                    "compound_code": "G8FX+GX Geldern",
+                    "global_code": "9F38G8FX+GX"
+                },
+                "rating": 0,
+                "reference": "ChIJX94sYGNgx0cRXHRRhbtXZGM",
+                "types": [
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 0
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.3792555,
+                    51.5195952
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Hartefelder Dyck, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.5195952,
+                        "lng": 6.3792555
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.52085652989272,
+                            "lng": 6.380560479892722
+                        },
+                        "southwest": {
+                            "lat": 51.51815687010728,
+                            "lng": 6.377860820107278
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "Holcim concrete and concrete products GmbH",
+                "photos": [{
+                    "height": 1746,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/113597968010692000879\">Danny Peperstraete</a>"
+                    ],
+                    "photo_reference": "ATtYBwIsRU2ZK0JYtyOwqiifTU4g6lPTjUxLuvZrGWIuGQ7Iog8lFzqffUAKBQh6hcEqinQKJql-VYPvit0YNt6ZRP7RN3b1hEXYgBQLNbyOUa5PGpu8looRnO_5qijACbtOz5V_7njC9PgM8tzO0ZelyvJQ2XtLC7K_tatF0Xe0l9p2gJbM",
+                    "width": 3104
+                }],
+                "place_id": "ChIJVbosyg9gx0cRGPKLObdnIWE",
+                "plus_code": {
+                    "compound_code": "G99H+RP Geldern",
+                    "global_code": "9F38G99H+RP"
+                },
+                "rating": 4.7,
+                "reference": "ChIJVbosyg9gx0cRGPKLObdnIWE",
+                "types": [
+                    "point_of_interest",
+                    "store",
+                    "establishment"
+                ],
+                "user_ratings_total": 3
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.2912858,
+                    51.5230661
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Achter de Kat 2, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.5230661,
+                        "lng": 6.2912858
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.52436372989271,
+                            "lng": 6.292623979892722
+                        },
+                        "southwest": {
+                            "lat": 51.52166407010727,
+                            "lng": 6.289924320107279
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "Kunststoffhandel Boers GmbH",
+                "opening_hours": {
+                    "open_now": false
+                },
+                "place_id": "ChIJLQLQJq1gx0cRZJqQ9uYmF7k",
+                "plus_code": {
+                    "compound_code": "G7FR+6G Geldern",
+                    "global_code": "9F38G7FR+6G"
+                },
+                "rating": 0,
+                "reference": "ChIJLQLQJq1gx0cRZJqQ9uYmF7k",
+                "types": [
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 0
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.3531841,
+                    51.52621
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Liebigstraße 4, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.52621,
+                        "lng": 6.3531841
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.52757812989273,
+                            "lng": 6.354395379892723
+                        },
+                        "southwest": {
+                            "lat": 51.52487847010729,
+                            "lng": 6.351695720107279
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "Klinge Metalltechnik GmbH",
+                "place_id": "ChIJe2zSN2Rgx0cR4gcQv-p8JaA",
+                "plus_code": {
+                    "compound_code": "G9G3+F7 Geldern",
+                    "global_code": "9F38G9G3+F7"
+                },
+                "rating": 0,
+                "reference": "ChIJe2zSN2Rgx0cR4gcQv-p8JaA",
+                "types": [
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 0
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.3163057,
+                    51.514832
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Am Nierspark 4, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.514832,
+                        "lng": 6.3163057
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.51620797989273,
+                            "lng": 6.317792729892721
+                        },
+                        "southwest": {
+                            "lat": 51.51350832010728,
+                            "lng": 6.315093070107277
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "Dorenkamp Bauunternehmen GmbH & Co. KG",
+                "opening_hours": {
+                    "open_now": false
+                },
+                "place_id": "ChIJWy2qk59gx0cR-wfgjDnUPns",
+                "plus_code": {
+                    "compound_code": "G878+WG Geldern",
+                    "global_code": "9F38G878+WG"
+                },
+                "rating": 5,
+                "reference": "ChIJWy2qk59gx0cR-wfgjDnUPns",
+                "types": [
+                    "general_contractor",
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 1
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.352821199999999,
+                    51.5283636
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Gottlieb-Daimler-Straße 20, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.5283636,
+                        "lng": 6.352821199999999
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.52985272989272,
+                            "lng": 6.354243579892721
+                        },
+                        "southwest": {
+                            "lat": 51.52715307010727,
+                            "lng": 6.351543920107276
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/shopping-71.png",
+                "name": "Druckhaus Geldern Janßen u. Ortscheid GbR",
+                "opening_hours": {
+                    "open_now": false
+                },
+                "place_id": "ChIJg5QOumVgx0cR79HGX-tjwGw",
+                "plus_code": {
+                    "compound_code": "G9H3+84 Geldern",
+                    "global_code": "9F38G9H3+84"
+                },
+                "rating": 0,
+                "reference": "ChIJg5QOumVgx0cR79HGX-tjwGw",
+                "types": [
+                    "point_of_interest",
+                    "store",
+                    "establishment"
+                ],
+                "user_ratings_total": 0
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.34373,
+                    51.52462999999999
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Zeppelinstraße 8, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.52462999999999,
+                        "lng": 6.34373
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.52607957989271,
+                            "lng": 6.345213579892721
+                        },
+                        "southwest": {
+                            "lat": 51.52337992010727,
+                            "lng": 6.342513920107277
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "BSAB Elektronik",
+                "opening_hours": {
+                    "open_now": false
+                },
+                "photos": [{
+                    "height": 1562,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/107309192864129593747\">A Google User</a>"
+                    ],
+                    "photo_reference": "ATtYBwIioGhPXoa-ESX8p4mJbIuOThjnwfBT4KUZgXOaJzT76Et_isXXTLaGUApsprbnEzKMhByypcm-04MpalvlFoEXDaAiuagZHtUQ52H-xJmjUtlAQcn0gwzPiEJm46hk2hyaWeWEzuF2j9cB1xG4axFdfDe0MHpi8rRNLwAToWcBXOtQ",
+                    "width": 1562
+                }],
+                "place_id": "ChIJjevHn7Rhx0cRcKxcCyDPjwI",
+                "plus_code": {
+                    "compound_code": "G8FV+VF Geldern",
+                    "global_code": "9F38G8FV+VF"
+                },
+                "rating": 0,
+                "reference": "ChIJjevHn7Rhx0cRcKxcCyDPjwI",
+                "types": [
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 0
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.2428327,
+                    51.50627009999999
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Kevelaerer Str. 116, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.50627009999999,
+                        "lng": 6.2428327
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.50769287989272,
+                            "lng": 6.244056029892722
+                        },
+                        "southwest": {
+                            "lat": 51.50499322010728,
+                            "lng": 6.241356370107278
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "Delija Garten- und Landschaftsbau Walbeck b. Geldern",
+                "opening_hours": {
+                    "open_now": false
+                },
+                "photos": [{
+                    "height": 1400,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/107234900635760298923\">A Google User</a>"
+                    ],
+                    "photo_reference": "ATtYBwJfKbe0s6B5mCiV-H9QsKhiSbn9QYxGIrqK9sw77h5TtNzu8nCtn_fkKsZErGF_TrN3u2J4QuSQRuKRxqXnh7BiJu1p-T_encmwDG8yI51IrF2-nTYajDCe9QEC9t4tqO1-mFxtb19l8yIDz3sit10zb8COu_dFN6MnyM4VaR16VVs4",
+                    "width": 2164
+                }],
+                "place_id": "ChIJL-_jJZtdx0cRjAjadyym7Zo",
+                "plus_code": {
+                    "compound_code": "G64V+G4 Geldern",
+                    "global_code": "9F38G64V+G4"
+                },
+                "rating": 5,
+                "reference": "ChIJL-_jJZtdx0cRjAjadyym7Zo",
+                "types": [
+                    "general_contractor",
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 7
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.344679999999999,
+                    51.52453
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Zeppelinstraße 12, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.52453,
+                        "lng": 6.344679999999999
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.52598227989273,
+                            "lng": 6.346063279892721
+                        },
+                        "southwest": {
+                            "lat": 51.52328262010728,
+                            "lng": 6.343363620107278
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "Kempkens und Fronz Druckform GmbH",
+                "place_id": "ChIJywztkWJgx0cR_x-D0CWCRrQ",
+                "plus_code": {
+                    "compound_code": "G8FV+RV Geldern",
+                    "global_code": "9F38G8FV+RV"
+                },
+                "rating": 0,
+                "reference": "ChIJywztkWJgx0cR_x-D0CWCRrQ",
+                "types": [
+                    "point_of_interest",
+                    "store",
+                    "establishment"
+                ],
+                "user_ratings_total": 0
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.347865,
+                    51.529081
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Siemensstraße 32, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.529081,
+                        "lng": 6.347865
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.53042157989272,
+                            "lng": 6.349233729892721
+                        },
+                        "southwest": {
+                            "lat": 51.52772192010728,
+                            "lng": 6.346534070107277
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/shopping-71.png",
+                "name": "Futureworx I Studios GmbH",
+                "opening_hours": {
+                    "open_now": false
+                },
+                "place_id": "ChIJN4kEjWFgx0cRUPyb-Y8wWNU",
+                "plus_code": {
+                    "compound_code": "G8HX+J4 Geldern",
+                    "global_code": "9F38G8HX+J4"
+                },
+                "rating": 5,
+                "reference": "ChIJN4kEjWFgx0cRUPyb-Y8wWNU",
+                "types": [
+                    "electronics_store",
+                    "home_goods_store",
+                    "point_of_interest",
+                    "store",
+                    "establishment"
+                ],
+                "user_ratings_total": 4
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.2390723,
+                    51.49587520000001
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Maasstraße 24, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.49587520000001,
+                        "lng": 6.2390723
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.49718287989272,
+                            "lng": 6.240484579892721
+                        },
+                        "southwest": {
+                            "lat": 51.49448322010728,
+                            "lng": 6.237784920107277
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "Jemako Vertriebspartner Ludwigs in Geldern",
+                "opening_hours": {
+                    "open_now": false
+                },
+                "place_id": "ChIJRYJgV6ddx0cRW8yvsoX7-qQ",
+                "plus_code": {
+                    "compound_code": "F6WQ+9J Geldern",
+                    "global_code": "9F38F6WQ+9J"
+                },
+                "rating": 5,
+                "reference": "ChIJRYJgV6ddx0cRW8yvsoX7-qQ",
+                "types": [
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 1
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.3505141,
+                    51.52548609999999
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Max-Planck-Straße, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.52548609999999,
+                        "lng": 6.3505141
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.52680447989272,
+                            "lng": 6.351861679892722
+                        },
+                        "southwest": {
+                            "lat": 51.52410482010728,
+                            "lng": 6.349162020107278
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "STE Fördertechnik UG",
+                "photos": [{
+                    "height": 532,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/112641054324349889295\">Heinrich Franken und Karlheinz Ebel Fe-Cu GbR</a>"
+                    ],
+                    "photo_reference": "ATtYBwIH-34A3ixF8eYD_z_AoRj8Spw76jR9R4919bOL-YiC3fEOFawhQRRUZQeIVloOncun886cPK85jxQ6hpffrGWCArMTTzgQ3aJx54XCT-B-x-Pehx6HZdztfMunJkmwTbXS1sY_7KSVaQ6qqFC8OzcLZhVFaF3WitemQ9LUg_mRx-1G",
+                    "width": 640
+                }],
+                "place_id": "ChIJwd4LGmRgx0cRtAjqvqHib3k",
+                "plus_code": {
+                    "compound_code": "G9G2+56 Geldern",
+                    "global_code": "9F38G9G2+56"
+                },
+                "rating": 1.8,
+                "reference": "ChIJwd4LGmRgx0cRtAjqvqHib3k",
+                "types": [
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 5
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.2906954,
+                    51.5305506
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Am Heytgraben 79, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.5305506,
+                        "lng": 6.2906954
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.53184397989272,
+                            "lng": 6.292035529892721
+                        },
+                        "southwest": {
+                            "lat": 51.52914432010728,
+                            "lng": 6.289335870107277
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "La Lotte e.K.",
+                "place_id": "ChIJ5TSSpkxnx0cRuQILmbpq3mU",
+                "plus_code": {
+                    "compound_code": "G7JR+67 Geldern",
+                    "global_code": "9F38G7JR+67"
+                },
+                "rating": 0,
+                "reference": "ChIJ5TSSpkxnx0cRuQILmbpq3mU",
+                "types": [
+                    "general_contractor",
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 0
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.3478616,
+                    51.5189298
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Am Pannofen 17-19, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.5189298,
+                        "lng": 6.3478616
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.52044367989273,
+                            "lng": 6.349446579892722
+                        },
+                        "southwest": {
+                            "lat": 51.51774402010728,
+                            "lng": 6.346746920107278
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "Pinelli GmbH",
+                "opening_hours": {
+                    "open_now": false
+                },
+                "photos": [{
+                    "height": 1461,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/102897367763998590988\">Pinelli GmbH</a>"
+                    ],
+                    "photo_reference": "ATtYBwIUpcXf-iVYN0GqpFXGM7xOdaLnNCeFXQPTMVInfH5vi2a2q7sP-ErdAcS83iz10Eivy-AGAQMVRur7suf1l7c7UJmWCGOnQ_e-9g64Yq8hsDCARUVRNrD_a-WmhRnQAPCdNaaZdHixajnsd1N3b7Fi90qGTL9_L-DbbJ8Y_5rBKDRE",
+                    "width": 1588
+                }],
+                "place_id": "ChIJX1_7bmRgx0cREh1yPFkdRBc",
+                "plus_code": {
+                    "compound_code": "G89X+H4 Geldern",
+                    "global_code": "9F38G89X+H4"
+                },
+                "rating": 0,
+                "reference": "ChIJX1_7bmRgx0cREh1yPFkdRBc",
+                "types": [
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 0
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.35159,
+                    51.52984
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Robert-Bosch-Straße 8, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.52984,
+                        "lng": 6.35159
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.53128102989272,
+                            "lng": 6.352986329892722
+                        },
+                        "southwest": {
+                            "lat": 51.52858137010728,
+                            "lng": 6.350286670107278
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "EMB Elektromontagebau GmbH",
+                "opening_hours": {
+                    "open_now": false
+                },
+                "photos": [{
+                    "height": 1738,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/116884741914728802572\">A Google User</a>"
+                    ],
+                    "photo_reference": "ATtYBwIaPaxLfDjOj1SFZ03HkSRW_Zf1OBJrE9mUGKfEhLG0G5Nd0RZ1Er4cXyIJBmXX0oc1T-sCkV6EhuDfnSNGB5sHQfh9lZX2ag-A8sUzoGyQUZrgfzkr8sG6KmRJnUB9qekCXyHRRSr2MU-ITSmMVI5rlhsyngWDZAKgLihx6p9B90wJ",
+                    "width": 2413
+                }],
+                "place_id": "ChIJP3141GZgx0cRoWpBLUD7niM",
+                "plus_code": {
+                    "compound_code": "G9H2+WJ Geldern",
+                    "global_code": "9F38G9H2+WJ"
+                },
+                "rating": 5,
+                "reference": "ChIJP3141GZgx0cRoWpBLUD7niM",
+                "types": [
+                    "electrician",
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 3
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.347508299999999,
+                    51.53058100000001
+                ]
+            },
+            "properties": {
+                "business_status": "OPERATIONAL",
+                "formatted_address": "Siemensstraße 18, 47608 Geldern, Germany",
+                "geometry": {
+                    "location": {
+                        "lat": 51.53058100000001,
+                        "lng": 6.347508299999999
+                    },
+                    "viewport": {
+                        "northeast": {
+                            "lat": 51.53198592989272,
+                            "lng": 6.348866329892722
+                        },
+                        "southwest": {
+                            "lat": 51.52928627010728,
+                            "lng": 6.346166670107278
+                        }
+                    }
+                },
+                "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+                "name": "PEER Energy GmbH",
+                "opening_hours": {
+                    "open_now": false
+                },
+                "photos": [{
+                    "height": 1192,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/113072008788401574286\">A Google User</a>"
+                    ],
+                    "photo_reference": "ATtYBwKVugZ5ogQ2bmLKDpvYEzfzCRkQPIgE9x5GXR6T871zv6xQSuoJ0gF-uJtCWt5LnQE1qvgrSuRwkyGD1PIIAvdkzqiFVttm-PxGMR7Xyu24g4DotxCxRAitS-7a7_EZolP-2BZKp0B65ovQ5-6iuEt-dGkinOZE5e6b_VcBaXf4o2bu",
+                    "width": 2118
+                }],
+                "place_id": "ChIJRVwCcZhgx0cRGTUwigGYtFU",
+                "plus_code": {
+                    "compound_code": "G8JX+62 Geldern",
+                    "global_code": "9F38G8JX+62"
+                },
+                "rating": 0,
+                "reference": "ChIJRVwCcZhgx0cRGTUwigGYtFU",
+                "types": [
+                    "point_of_interest",
+                    "establishment"
+                ],
+                "user_ratings_total": 0
+            }
         }
     ]
 }
