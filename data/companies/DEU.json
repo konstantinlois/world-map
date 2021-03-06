@@ -41,7 +41,16 @@
                     "point_of_interest",
                     "establishment"
                 ],
-                "user_ratings_total": 12
+                "user_ratings_total": 12,
+                "website": "www.unimicron-germany.de",
+                "employees": "300",
+                "industries": [
+                    "Semiconductor & Other Electronic Component Manufacturing",
+                    "Manufacturing Sector",
+                    "Printed circuit boards",
+                    "Electronic components, nec"
+                ],
+                "sales_revenue": "$84.190.000 USD"
             }
         },
         {
